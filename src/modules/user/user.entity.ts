@@ -1,4 +1,3 @@
-import { ArticleEntity } from '../article/article.entity';
 import { UserType } from '../../interfaces/index';
 import {
   BaseEntity, Entity,
@@ -25,9 +24,6 @@ export class UserEntity extends BaseEntity {
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
-
-  @OneToMany(type => ArticleEntity, article => article.userId)
-  articles: ArticleEntity[]
 
   @BeforeInsert()
   async hashPassword() {

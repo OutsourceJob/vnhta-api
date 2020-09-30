@@ -6,7 +6,7 @@ import { FileType } from '../../interfaces/index';
 @Injectable()
 export class UploadService {
 
-  async uploadFile(dataBuffer: Buffer, fileName: string, fileType: FileType = FileType.image) {
+  async uploadFile(dataBuffer: Buffer, fileName: string, fileType: FileType = FileType.Image) {
     const s3 = new S3();
     const uploadResult = await s3.upload({
       Bucket: `${config.AWS_PUBLIC_BUCKET_NAME}/${fileType}s`,
