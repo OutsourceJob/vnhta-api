@@ -1,8 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseInterceptors } from '@nestjs/common';
+import { SerializerInterceptor } from '../../serialization/serializer.interceptor';
 
+@UseInterceptors(SerializerInterceptor)
 @Controller("/collections")
 export class CollectionController {
-
   @Get()
   getCollections() {
     return [
