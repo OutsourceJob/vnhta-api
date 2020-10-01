@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { mysqlOrmConfig } from './datasource/mysql.config';
-import { UserModule } from './modules/user/user.module';
+import { AccountModule } from './modules/account/account.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { AuthModule } from './modules/auth/auth.modules';
 
@@ -12,7 +12,7 @@ import { AuthModule } from './modules/auth/auth.modules';
   imports: [
     CollectionModule,
     TypeOrmModule.forRoot(mysqlOrmConfig),
-    UserModule,
+    AccountModule,
     UploadModule,
     AuthModule
   ],

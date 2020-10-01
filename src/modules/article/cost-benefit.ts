@@ -1,9 +1,12 @@
-import { Entity, BaseEntity, PrimaryColumn, Column } from 'typeorm';
+import { Entity, BaseEntity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({ name: "cost_benefit" })
 export class CostBenefitEntity extends BaseEntity {
   @PrimaryColumn()
   id: number;
+
+  @Column({ name: "article_id" })
+  articleId: number
 
   @Column()
   pathology: string;
@@ -38,5 +41,13 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "cost_type" })
   costType: string;
 
+  @CreateDateColumn({
+    name: "created_at"
+  })
+  createdAt: Date
 
+  @UpdateDateColumn({
+    name: "updated_at"
+  })
+  updatedAt: Date;
 }

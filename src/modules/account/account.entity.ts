@@ -1,12 +1,12 @@
-import { UserType } from '../../interfaces/index';
+import { AccountType } from '../../interfaces/index';
 import {
   BaseEntity, Entity,
   PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, BeforeInsert
 } from "typeorm";
 import * as bcrypt from "bcrypt";
 
-@Entity({ name: "user" })
-export class UserEntity extends BaseEntity {
+@Entity({ name: "account" })
+export class AccountEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
@@ -16,8 +16,8 @@ export class UserEntity extends BaseEntity {
   @Column()
   password: String;
 
-  @Column({ name: "user_type" })
-  userType: string = UserType.Admin;
+  @Column({ name: "account_type" })
+  accountType: string = AccountType.Admin;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

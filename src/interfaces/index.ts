@@ -3,7 +3,7 @@ export enum Language {
   Vietnamese = "Vietnamese"
 }
 
-export enum UserType {
+export enum AccountType {
   Admin = "Admin",
   Member = "Member",
   Author = "Author"
