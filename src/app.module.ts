@@ -1,3 +1,5 @@
+import { AuthorModule } from './modules/author/author.module';
+import { AuthorController } from './modules/author/author.controller';
 import { SerializerModule } from './serialization/serializer.module';
 import { CollectionController } from './modules/collection/collection.controller';
 import { CollectionModule } from './modules/collection/collection.module';
@@ -11,6 +13,7 @@ import { AuthModule } from './modules/auth/auth.modules';
 
 @Module({
   imports: [
+    AuthorModule,
     SerializerModule,
     CollectionModule,
     TypeOrmModule.forRoot(mysqlOrmConfig),
@@ -18,7 +21,6 @@ import { AuthModule } from './modules/auth/auth.modules';
     UploadModule,
     AuthModule
   ],
-  controllers: [
-    CollectionController, AppController],
+  controllers: [CollectionController, AppController],
 })
 export class AppModule { }

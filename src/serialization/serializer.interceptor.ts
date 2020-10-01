@@ -2,7 +2,7 @@ import { Injectable, NestInterceptor, ExecutionContext, CallHandler } from '@nes
 import { Observable, from, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import * as _ from "lodash";
-import { JsonApiResource, JsonApiCollection } from '../../dist/serialization/serializer.interface';
+import { JsonApiResource, JsonApiCollection } from './serializer.interface';
 
 @Injectable()
 export class SerializerInterceptor implements NestInterceptor {
