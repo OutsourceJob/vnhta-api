@@ -35,19 +35,19 @@ export class ArticleEntity extends BaseEntity {
   @Column({ type: "json" })
   authors: string[] = [];
 
-  @Column({ name: "journal_id" })
-  journalId: number;
+  @Column({ name: "journal_id", type: "json" })
+  journalId: number[] = [];
 
-  @Column()
+  @Column({ nullable: true })
   vol: number;
 
-  @Column()
+  @Column({ nullable: true })
   issue: number;
 
-  @Column()
+  @Column({ nullable: true })
   page: number;
 
-  @Column()
+  @Column({ nullable: true })
   year: number;
 
   @CreateDateColumn({
