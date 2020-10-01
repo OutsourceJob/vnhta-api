@@ -6,6 +6,7 @@ import {
 import * as _ from "lodash";
 import { cleanAccents, removeSpecialCharacters } from "../../utils/handleString";
 import { ArticleStatus } from "../../interfaces"
+import { AccountEntity } from '../account/account.entity';
 
 @Entity({
   name: "article"
@@ -14,8 +15,11 @@ export class ArticleEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: "user_id" })
-  userId: number;
+  @ManyToOne(type => AccountEntity, e => e.articles, {
+    onDelete: "SET NULL"
+  })
+  @JoinColumn({ name: "account_id" })
+  accountId: number;
 
   @Column({ nullable: true })
   title: string;

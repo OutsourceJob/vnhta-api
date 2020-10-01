@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, BeforeInsert
 } from "typeorm";
 import * as bcrypt from "bcrypt";
+import { ArticleEntity } from '../article/article.entity';
 
 @Entity({ name: "account" })
 export class AccountEntity extends BaseEntity {
@@ -24,6 +25,12 @@ export class AccountEntity extends BaseEntity {
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
+
+  // relations
+  @OneToMany(type => ArticleEntity, e => e.accountId, {
+    cascade: true
+  })
+  articles: ArticleEntity[]
 
   @BeforeInsert()
   async hashPassword() {
