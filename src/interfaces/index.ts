@@ -13,3 +13,8 @@ export enum FileType {
   PDF = "PDF",
   Image = "Image"
 }
+
+export enum ArticleStatus {
+  Unverified = "Unverified",
+  Verified = "Verified"
+}
