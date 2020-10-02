@@ -30,7 +30,8 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
       .create(_.pick(data, ["accountId", "title", "vol", "issue", "page", "year"]))
       .save()
 
-    const { authorIdArray, journalIdArray } = data;
+    const authorIdArray = _.get(data, "authorIdArray", [])
+    const journalIdArray = _.get(data, "journalIdArray", [])
 
     /**
      * @todo  create article_author records
@@ -57,6 +58,13 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     await this.articleJournalService.createArticleJournals(articleJournals)
     const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
     _.set(newArticle, "relationships.journals", journals)
+
+
+
+    /**
+     * @todo quality of life
+     */
+
 
     return newArticle;
   }
@@ -107,7 +115,10 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     const foundArticle = await this.repo.findOne(id);
     if (!foundArticle) if (!foundArticle) throw new NotFoundException("Article Not Found")
 
-    const { accountId, title, vol, issue, page, year, authorIdArray, journalIdArray } = data;
+    const { accountId, title, vol, issue, page, year } = data;
+
+    const authorIdArray = _.get(data, "authorIdArray", [])
+    const journalIdArray = _.get(data, "journalIdArray", [])
 
     if (accountId) foundArticle.accountId = accountId;
     if (title) foundArticle.title = title;
