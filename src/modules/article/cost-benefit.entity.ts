@@ -17,8 +17,8 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ type: "json" })
   interventions: string[] = []
 
-  @Column({ name: "studied_location" })
-  studiedLocation: string[] = []
+  // @Column({ name: "studied_location" })
+  // studiedLocation: string[] = []
 
   @Column({ name: "study_design" })
   studyDesign: string;
@@ -29,14 +29,14 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "sample_size" })
   sampleSize: string;
 
-  @Column({ name: "inclusion_criteria", type: "json" })
-  inclusionCriteria: string[] = []
+  // @Column({ name: "inclusion_criteria", type: "json" })
+  // inclusionCriteria: string[] = []
 
-  @Column({ name: "exclusion_criteria", type: "json" })
-  exclusionCriteria: string[] = []
+  // @Column({ name: "exclusion_criteria", type: "json" })
+  // exclusionCriteria: string[] = []
 
-  @Column({ name: "sampling_method", type: "json" })
-  samplingMethod: string[] = []
+  // @Column({ name: "sampling_method", type: "json" })
+  // samplingMethod: string[] = []
 
   @Column({ name: "cost_type" })
   costType: string;

@@ -43,7 +43,7 @@ export class SerializerInterceptor implements NestInterceptor {
         limit: null,
         skip: 0
       },
-      data: response
+      data: _.map(response, resource => this.serializeResource(resource))
     }
   }
 }
