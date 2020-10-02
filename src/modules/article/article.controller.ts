@@ -36,10 +36,24 @@ export class ArticleController {
   ) {
     let articleId: number;
     const fieldId = req.parsed.paramsFilter.find(item => item.field === "id")
-    if (!fieldId) throw new BadRequestException("Aritcle Id is required")
+    if (!fieldId) throw new BadRequestException("Article Id is required")
 
     if (fieldId) articleId = fieldId.value;
 
     return this.service.getArticleById(articleId)
+  }
+
+  @Override()
+  updateOne(
+    @ParsedRequest() req: CrudRequest,
+    @ParsedBody() data: WriteArticleDTO
+  ) {
+    let articleId: number;
+    const fieldId = req.parsed.paramsFilter.find(item => item.field === "id")
+    if (!fieldId) throw new BadRequestException("Article Id is required")
+
+    if (fieldId) articleId = fieldId.value;
+
+    return this.service.updateArticleById(articleId, data)
   }
 }

@@ -25,7 +25,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     super(repo);
   }
 
-  async createArticle(data: WriteArticleDTO) {
+  async createArticle(data: WriteArticleDTO): Promise<ArticleEntity> {
     const newArticle = await this.repo
       .create(_.pick(data, ["accountId", "title", "vol", "issue", "page", "year"]))
       .save()
@@ -61,7 +61,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     return newArticle;
   }
 
-  async getArticleById(id: number) {
+  async getArticleById(id: number): Promise<ArticleEntity> {
     const foundArticle = await this.repo.findOne(id)
     if (!foundArticle) throw new NotFoundException("Article Not Found")
 
@@ -99,6 +99,48 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
 
     _.set(foundArticle, "relationships.journals", journals);
 
+
+    return foundArticle;
+  }
+
+  async updateArticleById(id: number, data: WriteArticleDTO): Promise<ArticleEntity> {
+    const foundArticle = await this.repo.findOne(id);
+    if (!foundArticle) if (!foundArticle) throw new NotFoundException("Article Not Found")
+
+    const { accountId, title, vol, issue, page, year, authorIdArray, journalIdArray } = data;
+
+    if (accountId) foundArticle.accountId = accountId;
+    if (title) foundArticle.title = title;
+    if (vol) foundArticle.vol = vol;
+    if (issue) foundArticle.issue = issue;
+    if (page) foundArticle.page = page;
+    if (year) foundArticle.year = year;
+
+    if (authorIdArray) {
+      await this.connection.query(`DELETE FROM article_author WHERE article_id = ${id}`)
+      const articleAuthors = _.map(authorIdArray, authorId => {
+        return {
+          authorId,
+          articleId: foundArticle.id
+        } as WriteArticleAuthorDTO
+      })
+      await this.articleAuthorService.createArticleAuthors(articleAuthors)
+      const authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
+      _.set(foundArticle, "relationships.authors", authors)
+    }
+
+    if (journalIdArray) {
+      await this.connection.query(`DELETE FROM article_journal WHERE article_id = ${id}`)
+      const articleJournals = _.map(journalIdArray, journalId => {
+        return {
+          journalId,
+          articleId: foundArticle.id
+        }
+      })
+      await this.articleJournalService.createArticleJournals(articleJournals)
+      const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
+      _.set(foundArticle, "relationships.journals", journals)
+    }
 
     return foundArticle;
   }
