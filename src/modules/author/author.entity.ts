@@ -8,7 +8,7 @@ export class AuthorEntity extends BaseEntity {
   @Column()
   fullName: string;
 
-  @Column()
+  @Column({ nullable: true })
   abbreviation: string;
 
   @CreateDateColumn({ name: "created_at" })

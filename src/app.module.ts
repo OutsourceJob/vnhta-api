@@ -9,6 +9,7 @@ import { mysqlOrmConfig } from './datasource/mysql.config';
 import { AccountModule } from './modules/account/account.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { AuthModule } from './modules/auth/auth.modules';
+import { JournalModule } from './modules/journal/journal.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AuthModule } from './modules/auth/auth.modules';
     AccountModule,
     UploadModule,
     AuthModule,
+    JournalModule
   ],
   controllers: [
     AppController
