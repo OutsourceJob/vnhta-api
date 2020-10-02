@@ -9,13 +9,17 @@ import { ArticleAuthorService } from '../author/article-author/article-author.se
 import { WriteArticleAuthorDTO } from '../author/article-author/article-author.dto';
 import { AuthorService } from '../author/author.service';
 import { Connection } from "typeorm";
+import { ArticleJournalService } from '../journal/article-journal/article-journal.service';
+import { JournalService } from '../journal/journal.service';
 
 @Injectable()
 export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
   constructor(
     @InjectRepository(ArticleEntity) repo: Repository<ArticleEntity>,
     private articleAuthorService: ArticleAuthorService,
+    private articleJournalService: ArticleJournalService,
     private authorService: AuthorService,
+    private journalService: JournalService,
     private connection: Connection
   ) {
     super(repo);
@@ -39,7 +43,6 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     })
     await this.articleAuthorService.createArticleAuthors(articleAuthors)
     const authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
-
     _.set(newArticle, "relationships.authors", authors)
 
     /**
@@ -51,6 +54,9 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
         articleId: newArticle.id
       }
     })
+    await this.articleJournalService.createArticleJournals(articleJournals)
+    const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
+    _.set(newArticle, "relationships.journals", journals)
 
     return newArticle;
   }
@@ -79,6 +85,19 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     /**
      * @todo  include journals
      */
+    const journals = await this.connection.query(
+      `
+        SELECT journal.* 
+        FROM article
+        INNER JOIN article_journal
+          ON article_journal.article_id = article.id
+        INNER JOIN journal
+          ON journal.id = article_journal.journal_id
+        WHERE article.id = ${id}
+      `
+    )
+
+    _.set(foundArticle, "relationships.journals", journals);
 
 
     return foundArticle;
