@@ -13,6 +13,7 @@ import { AuthModule } from './modules/auth/auth.modules';
 import { JournalModule } from './modules/journal/journal.module';
 import { Icd20Module } from './modules/icd-20/icd-20.module';
 import { InterventionModule } from './modules/intervention/intervention.module';
+import { StudyLocationModule } from './modules/study-location/study-location.module';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { InterventionModule } from './modules/intervention/intervention.module';
     // catalog
     AuthorModule, JournalModule,
     PathologyModule, Icd20Module,
-    InterventionModule
+    InterventionModule, StudyLocationModule
 
   ],
   controllers: [
