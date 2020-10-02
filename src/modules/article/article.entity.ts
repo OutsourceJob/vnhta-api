@@ -32,12 +32,6 @@ export class ArticleEntity extends BaseEntity {
   @Column({ nullable: true })
   slug: string;
 
-  @Column({ type: "json" })
-  authors: string[] = [];
-
-  @Column({ name: "journal_id", type: "json" })
-  journalId: number[] = [];
-
   @Column({ nullable: true })
   vol: number;
 
