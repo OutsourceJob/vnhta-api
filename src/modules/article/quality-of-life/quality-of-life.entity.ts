@@ -2,10 +2,12 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
+  Entity,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+@Entity({ name: 'quality_of_life' })
 export class QualityOfLifeEntity extends BaseEntity {
   @PrimaryColumn()
   id: number;
@@ -22,35 +24,35 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ type: 'json' })
   interventions: string[] = [];
 
-  @Column({ name: 'studied_location' })
-  studiedLocation: string[] = [];
+//   @Column({ name: 'studied_location' })
+//   studiedLocation: string[] = [];
 
   @Column({ name: 'study_design' })
-  studyDesign: string; // Here
+  studyDesign: string;
 
   @Column({ name: 'data_collecting_method' })
-  dataCollectingMethod: string; // here
+  dataCollectingMethod: string;
 
-  @Column({ name: 'quality_of_life_toolkit' })
-  qualityOfLifeToolkit: string[] = []; // here
+//   @Column({ name: 'quality_of_life_toolkit' })
+//   qualityOfLifeToolkit: string[] = [];
 
   @Column({ name: 'sample_size' })
-  sampleSize: string; // here
+  sampleSize: string;
 
-  @Column({ name: 'inclusion_criteria', type: 'json' })
-  inclusionCriteria: string[] = []; // here
+//   @Column({ name: 'inclusion_criteria', type: 'json' })
+//   inclusionCriteria: string[] = []; //here
 
-  @Column({ name: 'exclusion_criteria', type: 'json' })
-  exclusionCriteria: string[] = []; // here
+//   @Column({ name: 'exclusion_criteria', type: 'json' })
+//   exclusionCriteria: string[] = []; // here
 
-  @Column({ name: 'sampling_method' }) 
-  samplingMethod: string; // here
+  @Column({ name: 'sampling_method' })
+  samplingMethod: string;
 
   @Column({ name: 'sampling_start_time' })
   samplingStartTime: Date;
 
   @Column({ name: 'sampling_end_time' })
-  samplingEndTime: Date; 
+  samplingEndTime: Date;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

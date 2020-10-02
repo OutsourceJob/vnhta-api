@@ -14,6 +14,7 @@ import { JournalModule } from './modules/journal/journal.module';
 import { Icd20Module } from './modules/icd-20/icd-20.module';
 import { InterventionModule } from './modules/intervention/intervention.module';
 import { StudyLocationModule } from './modules/study-location/study-location.module';
+import { SamplingMethodModule } from './modules/sampling-method/sampling-method.module';
 
 @Module({
   imports: [
@@ -21,22 +22,25 @@ import { StudyLocationModule } from './modules/study-location/study-location.mod
     TypeOrmModule.forRoot(mysqlOrmConfig),
 
     // article
-    CollectionModule, ArticleModule,
+    CollectionModule,
+    ArticleModule,
 
     // Auth
-    AuthModule, AccountModule,
+    AuthModule,
+    AccountModule,
 
     // Utils
     UploadModule,
 
     // catalog
-    AuthorModule, JournalModule,
-    PathologyModule, Icd20Module,
-    InterventionModule, StudyLocationModule
-
+    AuthorModule,
+    JournalModule,
+    PathologyModule,
+    Icd20Module,
+    InterventionModule,
+    StudyLocationModule,
+    SamplingMethodModule,
   ],
-  controllers: [
-    AppController
-  ],
+  controllers: [AppController],
 })
-export class AppModule { }
+export class AppModule {}
