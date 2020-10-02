@@ -11,18 +11,25 @@ import { AccountModule } from './modules/account/account.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { AuthModule } from './modules/auth/auth.modules';
 import { JournalModule } from './modules/journal/journal.module';
+import { Icd20Module } from './modules/icd-20/icd-20.module';
 
 @Module({
   imports: [
-    PathologyModule,
+    // mysql
     TypeOrmModule.forRoot(mysqlOrmConfig),
-    ArticleModule,
-    AuthorModule,
-    CollectionModule,
-    AccountModule,
+
+    // article
+    CollectionModule, ArticleModule,
+
+    // Auth
+    AuthModule, AccountModule,
+
+    // Utils
     UploadModule,
-    AuthModule,
-    JournalModule
+
+    // catalog
+    AuthorModule, JournalModule,
+    PathologyModule, Icd20Module
   ],
   controllers: [
     AppController
