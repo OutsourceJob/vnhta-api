@@ -1,7 +1,6 @@
+import { ArticleModule } from './modules/article/article.module';
 import { AuthorModule } from './modules/author/author.module';
-import { AuthorController } from './modules/author/author.controller';
 import { SerializerModule } from './serialization/serializer.module';
-import { CollectionController } from './modules/collection/collection.controller';
 import { CollectionModule } from './modules/collection/collection.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -13,14 +12,17 @@ import { AuthModule } from './modules/auth/auth.modules';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot(mysqlOrmConfig),
+    ArticleModule,
     AuthorModule,
     SerializerModule,
     CollectionModule,
-    TypeOrmModule.forRoot(mysqlOrmConfig),
     AccountModule,
     UploadModule,
-    AuthModule
+    AuthModule,
   ],
-  controllers: [CollectionController, AppController],
+  controllers: [
+    AppController
+  ],
 })
 export class AppModule { }
