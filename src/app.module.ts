@@ -1,3 +1,4 @@
+import { PathologyModule } from './modules/pathology/pathology.module';
 import { JournalController } from './modules/journal/journal.controller';
 import { ArticleModule } from './modules/article/article.module';
 import { AuthorModule } from './modules/author/author.module';
@@ -13,6 +14,7 @@ import { JournalModule } from './modules/journal/journal.module';
 
 @Module({
   imports: [
+    PathologyModule,
     TypeOrmModule.forRoot(mysqlOrmConfig),
     ArticleModule,
     AuthorModule,
