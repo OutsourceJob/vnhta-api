@@ -15,6 +15,7 @@ import { Icd20Module } from './modules/icd-20/icd-20.module';
 import { InterventionModule } from './modules/intervention/intervention.module';
 import { StudyLocationModule } from './modules/study-location/study-location.module';
 import { SamplingMethodModule } from './modules/sampling-method/sampling-method.module';
+import { StudyDesignModule } from './modules/study-design/study-design.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { SamplingMethodModule } from './modules/sampling-method/sampling-method.
     InterventionModule,
     StudyLocationModule,
     SamplingMethodModule,
+    StudyDesignModule,
   ],
   controllers: [AppController],
 })
