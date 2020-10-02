@@ -4,11 +4,12 @@ import { ArticleService } from './article.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ArticleEntity } from './article.entity';
 import { AuthorModule } from '../author/author.module';
+import { JournalModule } from '../journal/journal.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([ArticleEntity]),
-        AuthorModule
+        AuthorModule, JournalModule
     ],
     controllers: [ArticleController],
     providers: [ArticleService],
