@@ -9,7 +9,7 @@ export class CostBenefitEntity extends BaseEntity {
   articleId: number
 
   @Column()
-  pathology: string;
+  pathologyId: string;
 
   @Column({ name: "icd_20" })
   icd20: string;

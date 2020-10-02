@@ -12,6 +12,7 @@ import { UploadModule } from './modules/upload/upload.module';
 import { AuthModule } from './modules/auth/auth.modules';
 import { JournalModule } from './modules/journal/journal.module';
 import { Icd20Module } from './modules/icd-20/icd-20.module';
+import { InterventionModule } from './modules/intervention/intervention.module';
 
 @Module({
   imports: [
@@ -29,7 +30,9 @@ import { Icd20Module } from './modules/icd-20/icd-20.module';
 
     // catalog
     AuthorModule, JournalModule,
-    PathologyModule, Icd20Module
+    PathologyModule, Icd20Module,
+    InterventionModule
+
   ],
   controllers: [
     AppController
