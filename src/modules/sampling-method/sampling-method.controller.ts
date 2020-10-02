@@ -14,7 +14,7 @@ import { WriteSamplingMethodDTO } from './sampling-method.dto';
     update: WriteSamplingMethodDTO,
   },
 })
-@Controller('/sampling-methods')
+@Controller('sampling-methods')
 @UseInterceptors(SerializerInterceptor)
 export class SamplingMethodController
   implements CrudController<SamplingMethodEntity> {
