@@ -12,4 +12,8 @@ export class AuthorService extends TypeOrmCrudService<AuthorEntity>{
   ) {
     super(repo);
   }
+
+  async findAuthorsByIdArray(authorIdArray: Array<number>): Promise<AuthorEntity[]> {
+    return await this.repo.findByIds(authorIdArray)
+  }
 }

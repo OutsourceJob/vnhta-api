@@ -7,7 +7,6 @@ import { JsonApiResource, JsonApiCollection } from './serializer.interface';
 @Injectable()
 export class SerializerInterceptor implements NestInterceptor {
   intercept(ctx: ExecutionContext, next: CallHandler): Observable<any> {
-
     return next
       .handle()
       .pipe(
@@ -32,6 +31,11 @@ export class SerializerInterceptor implements NestInterceptor {
   }
 
   serializeCollection(response: Array<any>): JsonApiCollection {
+    // let relationships;
+    // if (!_.isEmpty(response)) {
+    //   console.log(response[0])
+    // }
+
     return {
       meta: {
         count: response.length,

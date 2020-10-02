@@ -1,6 +1,6 @@
+import { JournalController } from './modules/journal/journal.controller';
 import { ArticleModule } from './modules/article/article.module';
 import { AuthorModule } from './modules/author/author.module';
-import { SerializerModule } from './serialization/serializer.module';
 import { CollectionModule } from './modules/collection/collection.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -15,7 +15,6 @@ import { AuthModule } from './modules/auth/auth.modules';
     TypeOrmModule.forRoot(mysqlOrmConfig),
     ArticleModule,
     AuthorModule,
-    SerializerModule,
     CollectionModule,
     AccountModule,
     UploadModule,
