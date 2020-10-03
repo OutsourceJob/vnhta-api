@@ -16,7 +16,6 @@ import { InterventionModule } from './modules/intervention/intervention.module';
 import { StudyLocationModule } from './modules/study-location/study-location.module';
 import { SamplingMethodModule } from './modules/sampling-method/sampling-method.module';
 import { StudyDesignModule } from './modules/study-design/study-design.module';
-import { QualityOfLifeToolkitModule } from './modules/quality-of-life-toolkit/quality-of-life-toolkit.module';
 import { DataCollectingMethodModule } from './modules/data-collecting-method/data-collecting-method.module';
 
 @Module({
@@ -44,7 +43,6 @@ import { DataCollectingMethodModule } from './modules/data-collecting-method/dat
     StudyLocationModule,
     SamplingMethodModule,
     StudyDesignModule,
-    QualityOfLifeToolkitModule,
     DataCollectingMethodModule,
   ],
   controllers: [AppController],

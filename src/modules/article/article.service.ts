@@ -156,3 +156,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     return foundArticle;
   }
 }
+
+// nest g mo modules/model-type/model-type --flat --no-spec
+// nest g co modules/model-type/model-type --flat --no-spec
+// nest g s modules/model-type/model-type --flat --no-spec

@@ -24,8 +24,8 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ type: 'json' })
   interventions: string[] = [];
 
-//   @Column({ name: 'studied_location' })
-//   studiedLocation: string[] = [];
+  //   @Column({ name: 'studied_location' })
+  //   studiedLocation: string[] = [];
 
   @Column({ name: 'study_design' })
   studyDesign: string;
@@ -33,17 +33,17 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: 'data_collecting_method' })
   dataCollectingMethod: string;
 
-//   @Column({ name: 'quality_of_life_toolkit' })
-//   qualityOfLifeToolkit: string[] = [];
+  @Column({ name: 'quality_of_life_toolkit' })
+  qualityOfLifeToolkit: string;
 
   @Column({ name: 'sample_size' })
   sampleSize: string;
 
-//   @Column({ name: 'inclusion_criteria', type: 'json' })
-//   inclusionCriteria: string[] = []; //here
+  @Column({ name: 'inclusion_criteria', type: 'json' })
+  inclusionCriteria: string;
 
-//   @Column({ name: 'exclusion_criteria', type: 'json' })
-//   exclusionCriteria: string[] = []; // here
+  @Column({ name: 'exclusion_criteria', type: 'json' })
+  exclusionCriteria: string;
 
   @Column({ name: 'sampling_method' })
   samplingMethod: string;

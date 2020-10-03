@@ -7,8 +7,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'quality_of_life_toolkit' })
-export class QualityOfLifeToolkitEntity extends BaseEntity {
+@Entity({ name: 'outcome' })
+export class OutcomeEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
