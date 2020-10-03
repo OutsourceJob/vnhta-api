@@ -24,8 +24,8 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ type: 'json' })
   interventions: string[] = [];
 
-  //   @Column({ name: 'studied_location' })
-  //   studiedLocation: string[] = [];
+  @Column({ name: 'studied_location', type: 'json' })
+  studiedLocation: string[] = [];
 
   @Column({ name: 'study_design' })
   studyDesign: string;
