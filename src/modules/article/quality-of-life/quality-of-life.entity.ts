@@ -1,3 +1,4 @@
+import { DataCollectingMethodEntity } from 'src/modules/catalog/data-collecting-method/data-collecting-method.entity';
 import { Icd20Entity } from 'src/modules/catalog/icd-20/icd-20.entity';
 import { PathologyEntity } from 'src/modules/catalog/pathology/pathology.entity';
 import { StudyDesignEntity } from 'src/modules/catalog/study-design/study-design.entity';
@@ -53,10 +54,13 @@ export class QualityOfLifeEntity extends BaseEntity {
     onDelete: "SET NULL"
   })
   @JoinColumn({ name: 'study_design_id' })
-  studyDesignId: string;
+  studyDesignId: number;
 
-  @Column({ name: 'data_collecting_method' })
-  dataCollectingMethod: string; // here
+  @ManyToOne(type => DataCollectingMethodEntity, d => d.qualityOfLives, {
+    onDelete: "SET NULL"
+  })
+  @JoinColumn({ name: 'data_collecting_method_id' })
+  dataCollectingMethodId: number;
 
   @Column({ name: 'quality_of_life_toolkit' })
   qualityOfLifeToolkit: string;
