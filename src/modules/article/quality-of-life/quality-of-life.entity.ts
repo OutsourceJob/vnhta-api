@@ -1,5 +1,6 @@
 import { Icd20Entity } from 'src/modules/catalog/icd-20/icd-20.entity';
 import { PathologyEntity } from 'src/modules/catalog/pathology/pathology.entity';
+import { StudyDesignEntity } from 'src/modules/catalog/study-design/study-design.entity';
 import {
   BaseEntity,
   Column,
@@ -7,6 +8,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -25,6 +27,9 @@ export class QualityOfLifeEntity extends BaseEntity {
   @ManyToOne(
     type => PathologyEntity,
     p => p.qualityOfLives,
+    {
+      onDelete: "SET NULL"
+    }
   )
   @JoinColumn({ name: 'pathology_id' })
   pathologyId: string;
@@ -45,8 +50,11 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: 'studied_location', type: 'json' })
   studiedLocation: string[] = [];
 
-  @Column({ name: 'study_design' })
-  studyDesign: string; // here
+  @ManyToOne(type => StudyDesignEntity, s => s.qualityOfLives, {
+    onDelete: "SET NULL"
+  })
+  @JoinColumn({ name: 'study_design_id' })
+  studyDesignId: string;
 
   @Column({ name: 'data_collecting_method' })
   dataCollectingMethod: string; // here
