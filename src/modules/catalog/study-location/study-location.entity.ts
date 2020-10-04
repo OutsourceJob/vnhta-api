@@ -16,9 +16,5 @@ export class StudyLocationEntity extends BaseEntity {
   updatedAt: Date
 
   // relation
-  @ManyToMany(
-    type => CostBenefitEntity,
-    e => e.studyLocations
-  )
   costBenefits: CostBenefitEntity[]
 }
