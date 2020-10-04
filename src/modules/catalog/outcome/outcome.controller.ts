@@ -2,7 +2,7 @@ import { Controller, UseInterceptors } from '@nestjs/common';
 import { Crud } from '@nestjsx/crud';
 import { OutcomeEntity } from './outcome.entity';
 import { OutcomeService } from './outcome.service';
-import { SerializerInterceptor } from '../../serialization/serializer.interceptor';
+import { SerializerInterceptor } from '../../../serialization/serializer.interceptor';
 import { WriteOutcomeDTO } from './outcome.dto';
 
 @Crud({
@@ -17,5 +17,5 @@ import { WriteOutcomeDTO } from './outcome.dto';
 @Controller('outcomes')
 @UseInterceptors(SerializerInterceptor)
 export class OutcomeController {
-  constructor(public service: OutcomeService) {}
+  constructor(public service: OutcomeService) { }
 }

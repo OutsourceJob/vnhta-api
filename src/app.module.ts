@@ -1,6 +1,6 @@
 import { PathologyModule } from './modules/catalog/pathology/pathology.module';
 import { ArticleModule } from './modules/article/article.module';
-import { AuthorModule } from './modules/author/author.module';
+import { AuthorModule } from './modules/catalog/author/author.module';
 import { CollectionModule } from './modules/collection/collection.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -12,9 +12,9 @@ import { AuthModule } from './modules/auth/auth.modules';
 import { JournalModule } from './modules/catalog/journal/journal.module';
 import { Icd20Module } from './modules/catalog/icd-20/icd-20.module';
 import { InterventionModule } from './modules/catalog/intervention/intervention.module';
-import { StudyLocationModule } from './modules/study-location/study-location.module';
-import { SamplingMethodModule } from './modules/sampling-method/sampling-method.module';
-import { StudyDesignModule } from './modules/study-design/study-design.module';
+import { StudyLocationModule } from './modules/catalog/study-location/study-location.module';
+import { SamplingMethodModule } from './modules/catalog/sampling-method/sampling-method.module';
+import { StudyDesignModule } from './modules/catalog/study-design/study-design.module';
 import { DataCollectingMethodModule } from './modules/catalog/data-collecting-method/data-collecting-method.module';
 
 @Module({

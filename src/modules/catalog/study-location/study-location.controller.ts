@@ -2,7 +2,7 @@ import { Controller, UseInterceptors } from '@nestjs/common';
 import { Crud } from "@nestjsx/crud";
 import { StudyLocationEntity } from './study-location.entity';
 import { StudyLocationService } from './study-location.service';
-import { SerializerInterceptor } from '../../serialization/serializer.interceptor';
+import { SerializerInterceptor } from '../../../serialization/serializer.interceptor';
 import { WriteStudyLocationDTO } from './study-location.dto';
 
 @Crud({
