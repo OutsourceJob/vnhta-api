@@ -1,12 +1,14 @@
 import {
   Entity, BaseEntity, PrimaryGeneratedColumn,
   Column, CreateDateColumn, UpdateDateColumn,
-  BeforeInsert, BeforeUpdate, ManyToOne, JoinColumn, OneToMany, OneToOne
+  BeforeInsert, BeforeUpdate, ManyToOne, JoinColumn, OneToMany, OneToOne, ManyToMany, JoinTable
 } from "typeorm";
 import * as _ from "lodash";
 import { cleanAccents, removeSpecialCharacters } from "../../utils/handleString";
 import { ArticleStatus } from "../../interfaces"
 import { AccountEntity } from '../account/account.entity';
+import { AuthorEntity } from '../catalog/author/author.entity';
+import { JournalEntity } from '../catalog/journal/journal.entity';
 
 @Entity({
   name: "article"
@@ -20,6 +22,26 @@ export class ArticleEntity extends BaseEntity {
   })
   @JoinColumn({ name: "account_id" })
   accountId: number;
+
+  @ManyToMany(
+    type => AuthorEntity
+  )
+  @JoinTable({
+    name: "article_author",
+    joinColumns: [{ name: "article_id" }],
+    inverseJoinColumns: [{ name: "author_id" }]
+  })
+  authors: AuthorEntity[]
+
+  @ManyToMany(
+    type => JournalEntity
+  )
+  @JoinTable({
+    name: "article_journal",
+    joinColumns: [{ name: "article_id" }],
+    inverseJoinColumns: [{ name: "journal_id" }]
+  })
+  journals: JournalEntity[]
 
   @Column({ nullable: true })
   title: string;

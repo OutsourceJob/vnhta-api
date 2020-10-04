@@ -26,30 +26,17 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     const authorIdArray = _.get(data, "authorIdArray", [])
     const journalIdArray = _.get(data, "journalIdArray", [])
 
+    const authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
+    const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
+
+    _.assign(data, { authors, journals })
+
     const newArticle = await this.repo
       .create(data)
       .save()
 
-
-    const authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
-    _.set(newArticle, "relationships.authors", authors)
-
     /**
-     * @todo  create article_journal records
-     */
-    const articleJournals = _.map(journalIdArray, journalId => {
-      return {
-        journalId,
-        articleId: newArticle.id
-      }
-    })
-    const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
-    _.set(newArticle, "relationships.journals", journals)
-
-
-
-    /**
-     * @todo quality of life
+     * @todo Cost Benefit
      */
     await this.costBenefitService.createCostBenefit({ articleId: newArticle.id })
 
@@ -75,7 +62,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
       `
     )
 
-    _.set(foundArticle, "relationships.authors", authors);
+    _.set(foundArticle, "authors", authors);
 
     /**
      * @todo  include journals
@@ -92,8 +79,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
       `
     )
 
-    _.set(foundArticle, "relationships.journals", journals);
-
+    _.set(foundArticle, "journals", journals);
 
     return foundArticle;
   }
@@ -102,10 +88,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     const foundArticle = await this.repo.findOne(id);
     if (!foundArticle) if (!foundArticle) throw new NotFoundException("Article Not Found")
 
-    const { accountId, title, vol, issue, page, year } = data;
-
-    const authorIdArray = _.get(data, "authorIdArray", [])
-    const journalIdArray = _.get(data, "journalIdArray", [])
+    const { accountId, title, vol, issue, page, year, authorIdArray, journalIdArray } = data;
 
     if (accountId) foundArticle.accountId = accountId;
     if (title) foundArticle.title = title;
@@ -114,25 +97,9 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     if (page) foundArticle.page = page;
     if (year) foundArticle.year = year;
 
-    if (authorIdArray) {
-      await this.connection.query(`DELETE FROM article_author WHERE article_id = ${id}`)
+    if (authorIdArray && _.isArray(authorIdArray)) foundArticle.authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
+    if (journalIdArray && _.isArray(journalIdArray)) foundArticle.journals = await this.journalService.findJournalsByIdArray(journalIdArray)
 
-      const authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
-      _.set(foundArticle, "relationships.authors", authors)
-    }
-
-    if (journalIdArray) {
-      await this.connection.query(`DELETE FROM article_journal WHERE article_id = ${id}`)
-      const articleJournals = _.map(journalIdArray, journalId => {
-        return {
-          journalId,
-          articleId: foundArticle.id
-        }
-      })
-      const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
-      _.set(foundArticle, "relationships.journals", journals)
-    }
-
-    return foundArticle;
+    return foundArticle.save();
   }
 }
