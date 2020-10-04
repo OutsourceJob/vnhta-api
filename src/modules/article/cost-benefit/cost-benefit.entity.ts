@@ -1,6 +1,7 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, JoinColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne } from 'typeorm';
 import { PathologyEntity } from '../../catalog/pathology/pathology.entity';
 import { Icd20Entity } from '../../catalog/icd-20/icd-20.entity';
+import { CostBenefitInterventionEntity } from '../../catalog/intervention/cost-benefit-intervention/cost-benefit-intervention.entity';
 
 @Entity({ name: "cost_benefit" })
 export class CostBenefitEntity extends BaseEntity {
@@ -25,8 +26,12 @@ export class CostBenefitEntity extends BaseEntity {
   @JoinColumn({ name: "icd_20_id" })
   icd20Id: string;
 
-  // interventions
-
+  @OneToMany(
+    type => CostBenefitInterventionEntity,
+    e => e.costBenefitId,
+    { onDelete: "CASCADE" }
+  )
+  costBenefitInterventions: CostBenefitInterventionEntity[]
 
   // @Column({ name: "study_location_id" })
   // studyLocationId: number;
@@ -35,7 +40,7 @@ export class CostBenefitEntity extends BaseEntity {
   studyDesignId: number;
 
   @Column({ name: "data_collecting_method_id" })
-  dataCollectingMethodID: number;
+  dataCollectingMethodId: number;
 
   @Column({ name: "sample_size_id" })
   sampleSizeId: number;
@@ -55,8 +60,8 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "end_sampling_time" })
   endSamplingTime: Date;
 
-  @Column({ name: "cost_type" })
-  costType: string;
+  @Column({ name: "cost_type_id" })
+  costTypeId: number;
 
   @Column({ name: "cost_component_id" })
   costComponentId: string;

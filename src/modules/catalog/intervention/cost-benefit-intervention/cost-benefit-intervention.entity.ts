@@ -1,14 +1,22 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { InterventionEntity } from '../intervention.entity';
+import { CostBenefitEntity } from '../../../article/cost-benefit/cost-benefit.entity';
 
 @Entity({ name: "cost_benefit_intervention" })
-export class CostBenefitIntervention extends BaseEntity {
+export class CostBenefitInterventionEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: "intervention_id" })
+  @ManyToOne(
+    type => InterventionEntity
+  )
+  @JoinColumn({ name: "intervention_id" })
   interventionId: number;
 
-  @Column({ name: "cost_benefit_id" })
+  @ManyToOne(
+    type => CostBenefitEntity
+  )
+  @JoinColumn({ name: "cost_benefit_id" })
   costBenefitId: number;
 
   @CreateDateColumn({ name: "created_at" })
