@@ -1,7 +1,8 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { CostBenefitEntity } from '../../article/cost-benefit/cost-benefit.entity';
+import { QualityOfLifeEntity } from 'src/modules/article/quality-of-life/quality-of-life.entity';
 
-@Entity({ name: "icd_20" })
+@Entity({ name: 'icd_20' })
 export class Icd20Entity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -9,17 +10,26 @@ export class Icd20Entity extends BaseEntity {
   @Column()
   code: string;
 
-  @CreateDateColumn({ name: "created_at" })
-  createdAt: Date
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date
 
   // relations
-  @ManyToOne(
+  @OneToMany(
     type => CostBenefitEntity,
     e => e.icd20Id,
     { onDelete: "SET NULL" }
   )
   costBenefits: CostBenefitEntity[]
+
+  @OneToMany(
+    type => QualityOfLifeEntity,
+    q => q.icd20Id,
+    {
+      cascade: true,
+    },
+  )
+  qualityOfLives: QualityOfLifeEntity[];
 }
