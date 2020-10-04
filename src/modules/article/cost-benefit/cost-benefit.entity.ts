@@ -7,6 +7,10 @@ import { ArticleEntity } from '../article.entity';
 import { StudyDesignEntity } from '../../catalog/study-design/study-design.entity';
 import { DataCollectingMethodEntity } from '../../catalog/data-collecting-method/data-collecting-method.entity';
 import { SampleSizeEntity } from '../../catalog/sample-size/sample-size.entity';
+import { SamplingMethodEntity } from '../../catalog/sampling-method/sampling-method.entity';
+import { CostTypeEntity } from 'src/modules/catalog/cost-type/cost-type.entity';
+import { CostComponentEntity } from '../../catalog/cost-component/cost-component.entity';
+import { StudyPerspectiveEntity } from '../../catalog/study-perspective/study-perspective.entity';
 
 @Entity({ name: "cost_benefit" })
 export class CostBenefitEntity extends BaseEntity {
@@ -91,7 +95,12 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "exclusive_criteria", nullable: true })
   exclusiveCriteria: string;
 
-  @Column({ name: "sampling_method_id", nullable: true })
+  @ManyToOne(
+    type => SamplingMethodEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "sampling_method_id" })
+  @Column({ nullable: true })
   samplingMethodId: number;
 
   @Column({ name: "start_sampling_time", nullable: true })
@@ -100,13 +109,28 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "end_sampling_time", nullable: true })
   endSamplingTime: Date;
 
-  @Column({ name: "cost_type_id", nullable: true })
+  @ManyToOne(
+    type => CostTypeEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "cost_type_id" })
+  @Column({ nullable: true })
   costTypeId: number;
 
-  @Column({ name: "cost_component_id", nullable: true })
+  @ManyToOne(
+    type => CostComponentEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "cost_component_id" })
+  @Column({ nullable: true })
   costComponentId: string;
 
-  @Column({ name: "study_perspective_id", nullable: true })
+  @ManyToOne(
+    type => StudyPerspectiveEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "study_perspective_id" })
+  @Column({ nullable: true })
   studyPerspectiveId: number;
 
   @CreateDateColumn({
