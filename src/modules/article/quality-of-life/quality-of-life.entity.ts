@@ -1,8 +1,12 @@
+import { Icd20Entity } from 'src/modules/catalog/icd-20/icd-20.entity';
+import { PathologyEntity } from 'src/modules/catalog/pathology/pathology.entity';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -18,11 +22,22 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: 'article_id' })
   articleId: number;
 
-  @Column()
+  @ManyToOne(
+    type => PathologyEntity,
+    p => p.qualityOfLives,
+  )
+  @JoinColumn({ name: 'pathology_id' })
   pathologyId: string;
 
-  @Column({ name: 'icd_20' })
-  icd20: string;
+  @ManyToOne(
+    type => Icd20Entity,
+    i => i.qualityOfLives,
+    {
+      onDelete: 'SET NULL',
+    },
+  )
+  @JoinColumn({ name: 'icd20_id' })
+  icd20Id: number;
 
   @Column({ type: 'json' })
   interventions: string[] = [];
@@ -31,16 +46,16 @@ export class QualityOfLifeEntity extends BaseEntity {
   studiedLocation: string[] = [];
 
   @Column({ name: 'study_design' })
-  studyDesign: string;
+  studyDesign: string; // here
 
   @Column({ name: 'data_collecting_method' })
-  dataCollectingMethod: string;
+  dataCollectingMethod: string; // here
 
   @Column({ name: 'quality_of_life_toolkit' })
   qualityOfLifeToolkit: string;
 
   @Column({ name: 'sample_size' })
-  sampleSize: string;
+  sampleSize: string; // here
 
   @Column({ name: 'inclusion_criteria', type: 'json' })
   inclusionCriteria: string;
@@ -49,7 +64,7 @@ export class QualityOfLifeEntity extends BaseEntity {
   exclusionCriteria: string;
 
   @Column({ name: 'sampling_method' })
-  samplingMethod: string;
+  samplingMethod: string; // here
 
   @Column({ name: 'sampling_start_time' })
   samplingStartTime: Date;
