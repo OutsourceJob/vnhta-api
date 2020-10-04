@@ -14,7 +14,7 @@ import { WriteSampleSizeDTO } from './sample-size.dto';
     update: WriteSampleSizeDTO,
   },
 })
-@Controller('sampling-sizes')
+@Controller('sample-sizes')
 @UseInterceptors(SerializerInterceptor)
 export class SampleSizeController implements CrudController<SampleSizeEntity> {
   constructor(public service: SampleSizeService) { }
