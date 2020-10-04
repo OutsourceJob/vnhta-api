@@ -19,6 +19,7 @@ import { DataCollectingMethodModule } from './modules/catalog/data-collecting-me
 import { CostTypeModule } from './modules/catalog/cost-type/cost-type.module';
 import { CostComponentModule } from './modules/catalog/cost-component/cost-component.module';
 import { StudyPerspectiveModule } from './modules/catalog/study-perspective/study-perspective.module';
+import { SampleSizeModule } from './modules/catalog/sample-size/sample-size.module';
 
 @Module({
   imports: [
@@ -47,7 +48,8 @@ import { StudyPerspectiveModule } from './modules/catalog/study-perspective/stud
     StudyDesignModule,
     DataCollectingMethodModule,
     CostTypeModule, CostComponentModule,
-    StudyPerspectiveModule
+    StudyPerspectiveModule,
+    SampleSizeModule
   ],
   controllers: [AppController],
 })
