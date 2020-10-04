@@ -5,11 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { WriteArticleDTO } from './article.dto';
 import * as _ from "lodash";
-import { ArticleAuthorService } from '../catalog/author/article-author/article-author.service';
-import { WriteArticleAuthorDTO } from '../catalog/author/article-author/article-author.dto';
 import { AuthorService } from '../catalog/author/author.service';
 import { Connection } from "typeorm";
-import { ArticleJournalService } from '../catalog/journal/article-journal/article-journal.service';
 import { JournalService } from '../catalog/journal/journal.service';
 import { CostBenefitService } from './cost-benefit/cost-benefit.service';
 
@@ -17,8 +14,6 @@ import { CostBenefitService } from './cost-benefit/cost-benefit.service';
 export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
   constructor(
     @InjectRepository(ArticleEntity) repo: Repository<ArticleEntity>,
-    private articleAuthorService: ArticleAuthorService,
-    private articleJournalService: ArticleJournalService,
     private authorService: AuthorService,
     private journalService: JournalService,
     private connection: Connection,
@@ -35,16 +30,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
       .create(data)
       .save()
 
-    /**
-     * @todo  create article_author records
-     */
-    const articleAuthors = _.map(authorIdArray, authorId => {
-      return {
-        authorId,
-        articleId: newArticle.id
-      } as WriteArticleAuthorDTO
-    })
-    await this.articleAuthorService.createArticleAuthors(articleAuthors)
+
     const authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
     _.set(newArticle, "relationships.authors", authors)
 
@@ -57,7 +43,6 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
         articleId: newArticle.id
       }
     })
-    await this.articleJournalService.createArticleJournals(articleJournals)
     const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
     _.set(newArticle, "relationships.journals", journals)
 
@@ -131,13 +116,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
 
     if (authorIdArray) {
       await this.connection.query(`DELETE FROM article_author WHERE article_id = ${id}`)
-      const articleAuthors = _.map(authorIdArray, authorId => {
-        return {
-          authorId,
-          articleId: foundArticle.id
-        } as WriteArticleAuthorDTO
-      })
-      await this.articleAuthorService.createArticleAuthors(articleAuthors)
+
       const authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
       _.set(foundArticle, "relationships.authors", authors)
     }
@@ -150,7 +129,6 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
           articleId: foundArticle.id
         }
       })
-      await this.articleJournalService.createArticleJournals(articleJournals)
       const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
       _.set(foundArticle, "relationships.journals", journals)
     }
@@ -158,7 +136,3 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     return foundArticle;
   }
 }
-
-// nest g mo modules/model-type/model-type --flat --no-spec
-// nest g co modules/model-type/model-type --flat --no-spec
-// nest g s modules/model-type/model-type --flat --no-spec
