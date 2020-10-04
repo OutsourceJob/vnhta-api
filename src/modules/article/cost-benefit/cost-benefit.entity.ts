@@ -4,6 +4,9 @@ import { Icd20Entity } from '../../catalog/icd-20/icd-20.entity';
 import { StudyLocationEntity } from '../../catalog/study-location/study-location.entity';
 import { InterventionEntity } from '../../catalog/intervention/intervention.entity';
 import { ArticleEntity } from '../article.entity';
+import { StudyDesignEntity } from '../../catalog/study-design/study-design.entity';
+import { DataCollectingMethodEntity } from '../../catalog/data-collecting-method/data-collecting-method.entity';
+import { SampleSizeEntity } from '../../catalog/sample-size/sample-size.entity';
 
 @Entity({ name: "cost_benefit" })
 export class CostBenefitEntity extends BaseEntity {
@@ -60,12 +63,25 @@ export class CostBenefitEntity extends BaseEntity {
   })
   studyLocations: StudyLocationEntity[]
 
-  @Column({ name: "study_design_id", nullable: true })
+  @ManyToOne(
+    type => StudyDesignEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "study_design_id" })
+  @Column({ nullable: true })
   studyDesignId: number;
 
+  @ManyToOne(
+    type => DataCollectingMethodEntity,
+    { onDelete: "SET NULL" }
+  )
   @Column({ name: "data_collecting_method_id", nullable: true })
   dataCollectingMethodId: number;
 
+  @ManyToOne(
+    type => SampleSizeEntity,
+    { onDelete: "SET NULL" }
+  )
   @Column({ name: "sample_size_id", nullable: true })
   sampleSizeId: number;
 
