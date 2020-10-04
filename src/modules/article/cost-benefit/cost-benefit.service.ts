@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { CostBenefitEntity } from './cost-benefit.entity';
 import { InjectRepository } from "@nestjs/typeorm";
@@ -34,5 +34,19 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
       .save()
 
     return newCostBenefit;
+  }
+
+  async updateCostBenefitById(costBenefitId: number, data: WriteCostBenefitDTO) {
+    const costBenefit = await this.repo.findOne(costBenefitId);
+    if (!costBenefit) throw new NotFoundException("Cost Benefit Not Found")
+
+    _.chain(data)
+      .omit(["interventionIdArray", "studyLocationIdArray"])
+      .keys()
+      .forEach(key => {
+        costBenefit[key] = data[key];
+      })
+
+
   }
 }
