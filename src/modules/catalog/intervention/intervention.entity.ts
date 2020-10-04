@@ -1,4 +1,5 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany } from 'typeorm';
+import { CostBenefitEntity } from '../../article/cost-benefit/cost-benefit.entity';
 
 @Entity({ name: "intervention" })
 export class InterventionEntity extends BaseEntity {
@@ -15,5 +16,8 @@ export class InterventionEntity extends BaseEntity {
   updatedAt: Date
 
   // relations
-
+  @ManyToMany(
+    type => CostBenefitEntity
+  )
+  costBenefits: CostBenefitEntity[]
 }

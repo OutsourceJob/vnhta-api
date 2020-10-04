@@ -1,7 +1,7 @@
 import {
   Entity, BaseEntity, PrimaryGeneratedColumn,
   Column, CreateDateColumn, UpdateDateColumn,
-  BeforeInsert, BeforeUpdate, ManyToOne, JoinColumn
+  BeforeInsert, BeforeUpdate, ManyToOne, JoinColumn, OneToMany, OneToOne
 } from "typeorm";
 import * as _ from "lodash";
 import { cleanAccents, removeSpecialCharacters } from "../../utils/handleString";
