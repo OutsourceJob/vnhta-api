@@ -11,4 +11,8 @@ export class InterventionService extends TypeOrmCrudService<InterventionEntity>{
   ) {
     super(repo);
   }
+
+  async findInterventionByIdArray(idArray: number[]): Promise<InterventionEntity[]> {
+    return await this.repo.findByIds(idArray);
+  }
 }

@@ -6,12 +6,14 @@ import { Repository } from 'typeorm';
 import * as _ from "lodash";
 import { StudyLocationService } from '../../catalog/study-location/study-location.service';
 import { WriteCostBenefitDTO } from './cost-benefit.dto';
+import { InterventionService } from '../../catalog/intervention/intervention.service';
 
 @Injectable()
 export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
   constructor(
     @InjectRepository(CostBenefitEntity) repo: Repository<CostBenefitEntity>,
-    private studyLocationService: StudyLocationService
+    private studyLocationService: StudyLocationService,
+    private interventionService: InterventionService
   ) {
     super(repo)
   }
@@ -20,11 +22,13 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     const interventionIdArray = _.get(data, "interventionIdArray", []);
     const studyLocationIdArray = _.get(data, "studyLocationIdArray", []);
 
+    const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
     const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
 
     const newCostBenefit = await this.repo
       .create({
         articleId: data.articleId,
+        interventions,
         studyLocations
       })
       .save()

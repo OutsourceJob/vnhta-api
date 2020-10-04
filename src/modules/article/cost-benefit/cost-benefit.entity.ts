@@ -1,8 +1,8 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, JoinColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
 import { PathologyEntity } from '../../catalog/pathology/pathology.entity';
 import { Icd20Entity } from '../../catalog/icd-20/icd-20.entity';
-import { CostBenefitInterventionEntity } from '../../catalog/intervention/cost-benefit-intervention/cost-benefit-intervention.entity';
 import { StudyLocationEntity } from '../../catalog/study-location/study-location.entity';
+import { InterventionEntity } from '../../catalog/intervention/intervention.entity';
 
 @Entity({ name: "cost_benefit" })
 export class CostBenefitEntity extends BaseEntity {
@@ -29,12 +29,16 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ nullable: true })
   icd20Id: string;
 
-  @OneToMany(
-    type => CostBenefitInterventionEntity,
-    e => e.costBenefitId,
-    { onDelete: "CASCADE" }
+  @ManyToMany(
+    type => InterventionEntity,
+    // e => e.costBenefits
   )
-  costBenefitInterventions: CostBenefitInterventionEntity[]
+  @JoinTable({
+    name: "cost_benefit_intervention",
+    joinColumns: [{ name: "cost_benefit_id" }],
+    inverseJoinColumns: [{ name: "intervention_id" }]
+  })
+  interventions: InterventionEntity[]
 
   @ManyToMany(
     type => StudyLocationEntity,
