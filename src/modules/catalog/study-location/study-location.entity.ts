@@ -17,8 +17,8 @@ export class StudyLocationEntity extends BaseEntity {
 
   // relation
   @ManyToMany(
-    type => CostBenefitEntity
+    type => CostBenefitEntity,
+    e => e.studyLocations
   )
-  @JoinTable({ name: "cost_benefit_study_location" })
   costBenefits: CostBenefitEntity[]
 }

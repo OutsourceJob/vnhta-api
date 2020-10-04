@@ -11,4 +11,8 @@ export class StudyLocationService extends TypeOrmCrudService<StudyLocationEntity
   ) {
     super(repo);
   }
+
+  async findStudyLocationByIdArray(idArray: number[]): Promise<StudyLocationEntity[]> {
+    return await this.repo.findByIds(idArray)
+  }
 }

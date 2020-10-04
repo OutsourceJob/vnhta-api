@@ -1,4 +1,4 @@
-import { Entity, BaseEntity, PrimaryColumn, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity({ name: "article_journal" })
 export class ArticleJournalEntity extends BaseEntity {
