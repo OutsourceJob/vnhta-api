@@ -16,6 +16,7 @@ import { StudyLocationModule } from './modules/catalog/study-location/study-loca
 import { SamplingMethodModule } from './modules/catalog/sampling-method/sampling-method.module';
 import { StudyDesignModule } from './modules/catalog/study-design/study-design.module';
 import { DataCollectingMethodModule } from './modules/catalog/data-collecting-method/data-collecting-method.module';
+import { CostTypeModule } from './modules/catalog/cost-type/cost-type.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { DataCollectingMethodModule } from './modules/catalog/data-collecting-me
     SamplingMethodModule,
     StudyDesignModule,
     DataCollectingMethodModule,
+    CostTypeModule
   ],
   controllers: [AppController],
 })
