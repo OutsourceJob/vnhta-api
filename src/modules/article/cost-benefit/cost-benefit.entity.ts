@@ -27,6 +27,7 @@ export class CostBenefitEntity extends BaseEntity {
 
   // interventions
 
+
   // @Column({ name: "study_location_id" })
   // studyLocationId: number;
 
