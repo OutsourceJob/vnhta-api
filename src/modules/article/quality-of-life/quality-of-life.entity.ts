@@ -1,9 +1,11 @@
 import { DataCollectingMethodEntity } from 'src/modules/catalog/data-collecting-method/data-collecting-method.entity';
 import { Icd20Entity } from 'src/modules/catalog/icd-20/icd-20.entity';
+import { InterventionEntity } from 'src/modules/catalog/intervention/intervention.entity';
 import { PathologyEntity } from 'src/modules/catalog/pathology/pathology.entity';
 import { SampleSizeEntity } from 'src/modules/catalog/sample-size/sample-size.entity';
 import { SamplingMethodEntity } from 'src/modules/catalog/sampling-method/sampling-method.entity';
 import { StudyDesignEntity } from 'src/modules/catalog/study-design/study-design.entity';
+import { StudyLocationEntity } from 'src/modules/catalog/study-location/study-location.entity';
 import {
   BaseEntity,
   Column,
@@ -47,10 +49,10 @@ export class QualityOfLifeEntity extends BaseEntity {
   icd20Id: number;
 
   @Column({ type: 'json' })
-  interventionIdArray: number[] = [];
+  interventions: InterventionEntity[];
 
   @Column({ name: 'studied_location', type: 'json' })
-  studyLocationIdArray: number[] = [];
+  studyLocations: StudyLocationEntity[];
 
   @ManyToOne(type => StudyDesignEntity, s => s.qualityOfLives, {
     onDelete: "SET NULL"

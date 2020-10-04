@@ -5,15 +5,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ArticleEntity } from './article.entity';
 import { AuthorModule } from '../catalog/author/author.module';
 import { JournalModule } from '../catalog/journal/journal.module';
-import { StudyLocationModule } from '../catalog/study-location/study-location.module';
 import { CostBenefitModule } from './cost-benefit/cost-benefit.module';
+import { QualityOfLifeModule } from './quality-of-life/quality-of-life.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([ArticleEntity]),
 
         // sub-article
-        CostBenefitModule,
+        CostBenefitModule, QualityOfLifeModule,
 
         // Catalog
         AuthorModule, JournalModule,
