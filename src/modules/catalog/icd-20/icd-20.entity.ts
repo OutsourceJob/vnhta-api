@@ -1,4 +1,5 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { CostBenefitEntity } from '../../article/cost-benefit/cost-benefit.entity';
 
 @Entity({ name: "icd_20" })
 export class Icd20Entity extends BaseEntity {
@@ -13,4 +14,12 @@ export class Icd20Entity extends BaseEntity {
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date
+
+  // relations
+  @ManyToOne(
+    type => CostBenefitEntity,
+    e => e.icd20Id,
+    { onDelete: "SET NULL" }
+  )
+  costBenefits: CostBenefitEntity[]
 }

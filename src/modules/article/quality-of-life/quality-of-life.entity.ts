@@ -12,6 +12,9 @@ export class QualityOfLifeEntity extends BaseEntity {
   @PrimaryColumn()
   id: number;
 
+  @Column({ name: "is_active" })
+  isActive: boolean = false;
+
   @Column({ name: 'article_id' })
   articleId: number;
 

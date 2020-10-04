@@ -1,4 +1,5 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { CostBenefitEntity } from '../../article/cost-benefit/cost-benefit.entity';
 
 @Entity({ name: "pathology" })
 export class PathologyEntity extends BaseEntity {
@@ -10,6 +11,13 @@ export class PathologyEntity extends BaseEntity {
 
   @Column({ nullable: true })
   abbreviation: string;
+
+  @OneToMany(
+    type => CostBenefitEntity,
+    e => e.pathologyId,
+    { onDelete: "SET NULL" }
+  )
+  costBenefits: CostBenefitEntity[]
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date
