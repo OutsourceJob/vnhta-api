@@ -6,7 +6,7 @@ export class StudyPerspectiveEntity extends BaseEntity {
   id: number;
 
   @Column()
-  fullName: string;
+  name: string;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date
