@@ -1,10 +1,10 @@
 import { Controller, UseInterceptors } from '@nestjs/common';
 import { Crud, Override, ParsedRequest, CrudRequest, ParsedBody } from "@nestjsx/crud";
-import { SerializerInterceptor } from '../../serialization/serializer.interceptor';
 import * as _ from "lodash";
 import { InterventionEntity } from './intervention.entity';
 import { WriteInterventionDTO } from './intervention.dto';
 import { InterventionService } from './intervention.service';
+import { SerializerInterceptor } from '../../../serialization/serializer.interceptor';
 
 @UseInterceptors(SerializerInterceptor)
 @Crud({

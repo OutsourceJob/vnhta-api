@@ -9,8 +9,8 @@ import { ArticleAuthorService } from '../author/article-author/article-author.se
 import { WriteArticleAuthorDTO } from '../author/article-author/article-author.dto';
 import { AuthorService } from '../author/author.service';
 import { Connection } from "typeorm";
-import { ArticleJournalService } from '../journal/article-journal/article-journal.service';
-import { JournalService } from '../journal/journal.service';
+import { ArticleJournalService } from '../catalog/journal/article-journal/article-journal.service';
+import { JournalService } from '../catalog/journal/journal.service';
 
 @Injectable()
 export class ArticleService extends TypeOrmCrudService<ArticleEntity> {

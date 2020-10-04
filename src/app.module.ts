@@ -1,5 +1,4 @@
-import { PathologyModule } from './modules/pathology/pathology.module';
-import { JournalController } from './modules/journal/journal.controller';
+import { PathologyModule } from './modules/catalog/pathology/pathology.module';
 import { ArticleModule } from './modules/article/article.module';
 import { AuthorModule } from './modules/author/author.module';
 import { CollectionModule } from './modules/collection/collection.module';
@@ -10,13 +9,13 @@ import { mysqlOrmConfig } from './datasource/mysql.config';
 import { AccountModule } from './modules/account/account.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { AuthModule } from './modules/auth/auth.modules';
-import { JournalModule } from './modules/journal/journal.module';
-import { Icd20Module } from './modules/icd-20/icd-20.module';
-import { InterventionModule } from './modules/intervention/intervention.module';
+import { JournalModule } from './modules/catalog/journal/journal.module';
+import { Icd20Module } from './modules/catalog/icd-20/icd-20.module';
+import { InterventionModule } from './modules/catalog/intervention/intervention.module';
 import { StudyLocationModule } from './modules/study-location/study-location.module';
 import { SamplingMethodModule } from './modules/sampling-method/sampling-method.module';
 import { StudyDesignModule } from './modules/study-design/study-design.module';
-import { DataCollectingMethodModule } from './modules/data-collecting-method/data-collecting-method.module';
+import { DataCollectingMethodModule } from './modules/catalog/data-collecting-method/data-collecting-method.module';
 
 @Module({
   imports: [
@@ -47,4 +46,4 @@ import { DataCollectingMethodModule } from './modules/data-collecting-method/dat
   ],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule { }

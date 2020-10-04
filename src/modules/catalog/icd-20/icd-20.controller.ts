@@ -2,8 +2,8 @@ import { Controller, UseInterceptors } from '@nestjs/common';
 import { Crud } from "@nestjsx/crud";
 import { Icd20Entity } from './icd-20.entity';
 import { Icd20Service } from './icd-20.service';
-import { SerializerInterceptor } from '../../serialization/serializer.interceptor';
 import { WriteIcd20DTO } from './icd-20.dto';
+import { SerializerInterceptor } from '../../../serialization/serializer.interceptor';
 
 @Crud({
   model: {

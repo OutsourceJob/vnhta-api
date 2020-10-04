@@ -4,7 +4,7 @@ import { ArticleService } from './article.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ArticleEntity } from './article.entity';
 import { AuthorModule } from '../author/author.module';
-import { JournalModule } from '../journal/journal.module';
+import { JournalModule } from '../catalog/journal/journal.module';
 
 @Module({
     imports: [
