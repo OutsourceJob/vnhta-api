@@ -1,4 +1,5 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable } from 'typeorm';
+import { CostBenefitEntity } from '../../article/cost-benefit/cost-benefit.entity';
 
 @Entity({ name: "study_location" })
 export class StudyLocationEntity extends BaseEntity {
@@ -13,4 +14,11 @@ export class StudyLocationEntity extends BaseEntity {
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date
+
+  // relation
+  @ManyToMany(
+    type => CostBenefitEntity
+  )
+  @JoinTable({ name: "cost_benefit_study_location" })
+  costBenefits: CostBenefitEntity[]
 }

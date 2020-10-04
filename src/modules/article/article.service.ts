@@ -26,12 +26,12 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
   }
 
   async createArticle(data: WriteArticleDTO): Promise<ArticleEntity> {
-    const newArticle = await this.repo
-      .create(_.pick(data, ["accountId", "title", "vol", "issue", "page", "year"]))
-      .save()
-
     const authorIdArray = _.get(data, "authorIdArray", [])
     const journalIdArray = _.get(data, "journalIdArray", [])
+
+    const newArticle = await this.repo
+      .create(data)
+      .save()
 
     /**
      * @todo  create article_author records
