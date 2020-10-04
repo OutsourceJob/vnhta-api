@@ -34,7 +34,7 @@ export class QualityOfLifeEntity extends BaseEntity {
     }
   )
   @JoinColumn({ name: 'pathology_id' })
-  pathologyId: string;
+  pathologyId: number;
 
   @ManyToOne(
     type => Icd20Entity,
@@ -47,10 +47,10 @@ export class QualityOfLifeEntity extends BaseEntity {
   icd20Id: number;
 
   @Column({ type: 'json' })
-  interventions: string[] = [];
+  interventionIdArray: number[] = [];
 
   @Column({ name: 'studied_location', type: 'json' })
-  studiedLocation: string[] = [];
+  studyLocationIdArray: number[] = [];
 
   @ManyToOne(type => StudyDesignEntity, s => s.qualityOfLives, {
     onDelete: "SET NULL"
@@ -85,11 +85,11 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: 'exclusion_criteria', type: 'json' })
   exclusionCriteria: string;
 
-  @Column({ name: 'sampling_start_time' })
-  samplingStartTime: Date;
+  @Column({ name: 'start_sampling_time' })
+  startSamplingTime: Date;
 
-  @Column({ name: 'sampling_end_time' })
-  samplingEndTime: Date;
+  @Column({ name: 'end_sampling_time' })
+  endSamplingTime: Date;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
