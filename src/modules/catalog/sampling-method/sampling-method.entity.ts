@@ -1,10 +1,11 @@
+import { QualityOfLifeEntity } from 'src/modules/article/quality-of-life/quality-of-life.entity';
 import {
   Entity,
   BaseEntity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
+  UpdateDateColumn, OneToMany
 } from 'typeorm';
 
 @Entity({ name: 'sampling_method' })
@@ -20,4 +21,9 @@ export class SamplingMethodEntity extends BaseEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToMany(type => QualityOfLifeEntity, q => q.samplingMethodId, {
+    cascade: true
+  })
+  qualityOfLives: QualityOfLifeEntity[];
 }

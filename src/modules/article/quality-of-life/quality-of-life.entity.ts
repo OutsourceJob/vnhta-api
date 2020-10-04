@@ -1,6 +1,8 @@
 import { DataCollectingMethodEntity } from 'src/modules/catalog/data-collecting-method/data-collecting-method.entity';
 import { Icd20Entity } from 'src/modules/catalog/icd-20/icd-20.entity';
 import { PathologyEntity } from 'src/modules/catalog/pathology/pathology.entity';
+import { SampleSizeEntity } from 'src/modules/catalog/sample-size/sample-size.entity';
+import { SamplingMethodEntity } from 'src/modules/catalog/sampling-method/sampling-method.entity';
 import { StudyDesignEntity } from 'src/modules/catalog/study-design/study-design.entity';
 import {
   BaseEntity,
@@ -65,17 +67,23 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: 'quality_of_life_toolkit' })
   qualityOfLifeToolkit: string;
 
-  @Column({ name: 'sample_size' })
-  sampleSize: string; // here
+  @ManyToOne(type => SampleSizeEntity, s => s.qualityOfLives, {
+    onDelete: "SET NULL"
+  })
+  @JoinColumn({ name: 'sample_size_id' })
+  sampleSizeId: number;
+
+  @ManyToOne(type => SamplingMethodEntity, s => s.qualityOfLives, {
+    onDelete: "SET NULL"
+  })
+  @JoinColumn({ name: 'sampling_method_id' })
+  samplingMethodId: number;
 
   @Column({ name: 'inclusion_criteria', type: 'json' })
   inclusionCriteria: string;
 
   @Column({ name: 'exclusion_criteria', type: 'json' })
   exclusionCriteria: string;
-
-  @Column({ name: 'sampling_method' })
-  samplingMethod: string; // here
 
   @Column({ name: 'sampling_start_time' })
   samplingStartTime: Date;
