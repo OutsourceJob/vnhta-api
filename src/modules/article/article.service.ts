@@ -9,6 +9,7 @@ import { AuthorService } from '../catalog/author/author.service';
 import { Connection } from "typeorm";
 import { JournalService } from '../catalog/journal/journal.service';
 import { CostBenefitService } from './cost-benefit/cost-benefit.service';
+import { QualityOfLifeService } from './quality-of-life/quality-of-life.service';
 
 @Injectable()
 export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
@@ -17,7 +18,8 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     private authorService: AuthorService,
     private journalService: JournalService,
     private connection: Connection,
-    private costBenefitService: CostBenefitService
+    private costBenefitService: CostBenefitService,
+    private qualityOfLifeService: QualityOfLifeService
   ) {
     super(repo);
   }
@@ -38,7 +40,12 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     /**
      * @todo Cost Benefit
      */
-    await this.costBenefitService.createCostBenefit({ articleId: newArticle.id })
+    await this.costBenefitService.createCostBenefit({ articleId: newArticle.id });
+
+    /**
+     * @todo Quality Of Life
+     */
+    await this.qualityOfLifeService.createQualityOfLife({ articleId: newArticle.id });
 
     return newArticle;
   }
