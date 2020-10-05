@@ -25,6 +25,10 @@ import { ModelTypeModule } from "./modules/catalog/model-type/model-type.module"
 import { EffectivenessDataCollectingMethodModule } from './modules/catalog/effectiveness-data-collecting-method/effectiveness-data-collecting-method.module';
 import { DiscountRateModule } from './modules/catalog/discount-rate/discount-rate.module';
 import { CurrencyUnitModule } from './modules/catalog/currency-unit/currency-unit.module';
+import { AnalysisMethodModule } from './modules/catalog/analysis-method/analysis-method.module';
+import { HeterogeneityAnalysisModule } from './modules/catalog/heterogeneity-analysis/heterogeneity-analysis.module';
+import { UncertaintyAnalysisModule } from './modules/catalog/uncertainty-analysis/uncertainty-analysis.module';
+import { UncertaintyAnalysisResultModule } from "./modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.module";
 
 @Module({
   imports: [
@@ -59,7 +63,11 @@ import { CurrencyUnitModule } from './modules/catalog/currency-unit/currency-uni
     ComparatorModule,
     EffectivenessDataCollectingMethodModule,
     DiscountRateModule,
-    CurrencyUnitModule
+    CurrencyUnitModule,
+    AnalysisMethodModule,
+    HeterogeneityAnalysisModule,
+    UncertaintyAnalysisModule,
+    UncertaintyAnalysisResultModule
   ],
   controllers: [AppController],
 })
