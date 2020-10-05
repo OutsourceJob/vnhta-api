@@ -26,18 +26,21 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "article_id" })
+  @Column({ name: "article_id", nullable: true })
   articleId: number
 
   @ManyToOne(
     type => PathologyEntity,
   )
   @JoinColumn({ name: "pathology_id" })
+  @Column({ name: "pathology_id", nullable: true })
   pathologyId: number;
 
   @ManyToOne(
     type => Icd20Entity
   )
   @JoinColumn({ name: "icd_20_id" })
+  @Column({ name: "icd_20_id", nullable: true })
   icd20Id: number;
 
   @ManyToMany(
@@ -71,6 +74,7 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "study_design_id" })
+  @Column({ name: "study_design_id", nullable: true })
   studyDesignId: number;
 
   @ManyToOne(
@@ -78,6 +82,7 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "data_collecting_method_id" })
+  @Column({ name: "data_collecting_method_id", nullable: true })
   dataCollectingMethodId: number;
 
   @ManyToOne(
@@ -85,6 +90,7 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "sample_size_id" })
+  @Column({ name: "sample_size_id", nullable: true })
   sampleSizeId: number;
 
   @Column({ name: "inclusion_criteria", nullable: true })
@@ -98,6 +104,7 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "sampling_method_id" })
+  @Column({ name: "sampling_method_id", nullable: true })
   samplingMethodId: number;
 
   @Column({ name: "start_sampling_time", nullable: true })
@@ -111,6 +118,7 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "cost_type_id" })
+  @Column({ name: "cost_type_id", nullable: true })
   costTypeId: number;
 
   @ManyToOne(
@@ -118,6 +126,7 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "cost_component_id" })
+  @Column({ name: "cost_component_id", nullable: true })
   costComponentId: string;
 
   @ManyToOne(
@@ -125,6 +134,7 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "study_perspective_id" })
+  @Column({ name: "study_perspective_id", nullable: true })
   studyPerspectiveId: number;
 
   @CreateDateColumn({
