@@ -1,4 +1,5 @@
 import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { CostEffectivenessEntity } from 'src/modules/article/cost-effectiveness/cost-effectiveness.entity';
 
 @Entity({ name: 'uncertainty_analysis_result' })
 export class UncertaintyAnalysisResultEntity extends BaseEntity {
@@ -12,5 +13,8 @@ export class UncertaintyAnalysisResultEntity extends BaseEntity {
    createdAt: Date;
 
    @UpdateDateColumn({ name: "updated_at" })
-   updatedAt: Date
+   updatedAt: Date;
+
+   // Relation
+   costEffectiveness: CostEffectivenessEntity[];
 }
