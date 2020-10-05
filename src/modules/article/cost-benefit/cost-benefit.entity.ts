@@ -22,6 +22,7 @@ export class CostBenefitEntity extends BaseEntity {
 
   @OneToOne(
     type => ArticleEntity,
+    e => e.costBenefit,
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "article_id" })

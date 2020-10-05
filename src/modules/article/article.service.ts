@@ -56,6 +56,8 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
       .createQueryBuilder("article")
       .leftJoinAndSelect("article.authors", "author")
       .leftJoinAndSelect("article.journals", "journal")
+      .leftJoinAndSelect("article.costBenefit", "cost_benefit")
+      .leftJoinAndSelect("article.qualityOfLife", "quality_of_life")
       .where("article.id = :id", { id })
       .getOne()
 

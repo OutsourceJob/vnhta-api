@@ -9,6 +9,8 @@ import { ArticleStatus } from "../../interfaces"
 import { AccountEntity } from '../account/account.entity';
 import { AuthorEntity } from '../catalog/author/author.entity';
 import { JournalEntity } from '../catalog/journal/journal.entity';
+import { CostBenefitEntity } from './cost-benefit/cost-benefit.entity';
+import { QualityOfLifeEntity } from './quality-of-life/quality-of-life.entity';
 
 @Entity({
   name: "article"
@@ -89,4 +91,18 @@ export class ArticleEntity extends BaseEntity {
       .join("-")
       .value()
   }
+
+  // relation
+  @OneToOne(
+    type => CostBenefitEntity,
+    e => e.articleId
+  )
+  costBenefit: CostBenefitEntity
+
+
+  @OneToOne(
+    type => QualityOfLifeEntity,
+    e => e.articleId
+  )
+  qualityOfLife: QualityOfLifeEntity
 }

@@ -6,6 +6,7 @@ import { SampleSizeEntity } from 'src/modules/catalog/sample-size/sample-size.en
 import { SamplingMethodEntity } from 'src/modules/catalog/sampling-method/sampling-method.entity';
 import { StudyDesignEntity } from 'src/modules/catalog/study-design/study-design.entity';
 import { StudyLocationEntity } from 'src/modules/catalog/study-location/study-location.entity';
+import { ArticleEntity } from '../article.entity';
 import {
   BaseEntity,
   Column,
@@ -15,6 +16,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToOne,
 } from 'typeorm';
 
 @Entity({ name: 'quality_of_life' })
@@ -25,7 +27,12 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: "is_active" })
   isActive: boolean = false;
 
-  @Column({ name: 'article_id' })
+  @OneToOne(
+    type => ArticleEntity,
+    e => e.qualityOfLife,
+    { onDelete: "CASCADE" }
+  )
+  @JoinColumn({ name: 'article_id' })
   articleId: number;
 
   @ManyToOne(
