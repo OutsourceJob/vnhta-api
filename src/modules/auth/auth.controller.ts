@@ -13,12 +13,12 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post("/login")
   async login(@Request() req: any) {
-    return this.authService.generateToken(req.user, config.ADMIN_SECRET_KEY, "1y")
+    return this.authService.generateToken(req.user, config.SECRET_KEY, "1y")
   }
 
   @Post("/generate-token")
   async generateToken(@Request() req: any) {
-    return this.authService.generateToken(null, config.USER_SECRET_KEY, "1h")
+    return this.authService.generateToken(null, config.SECRET_KEY, "1h")
   }
 
   @UseGuards(JwtAuthGuard)

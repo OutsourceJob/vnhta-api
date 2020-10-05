@@ -43,10 +43,7 @@ export class AuthService {
   }
 
   async verifyToken(token: string): Promise<any> {
-    const decoded: any = this.jwtService.decode(token);
-    const secret = decoded.userType === AccountType.Admin ? config.ADMIN_SECRET_KEY : config.USER_SECRET_KEY;
-
-    return this.jwtService.verifyAsync(token, { secret })
+    return this.jwtService.verifyAsync(token, { secret: config.SECRET_KEY })
       .then(res => {
         return {
           message: "Token is valid",
