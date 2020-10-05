@@ -22,6 +22,8 @@ import { StudyPerspectiveModule } from './modules/catalog/study-perspective/stud
 import { SampleSizeModule } from './modules/catalog/sample-size/sample-size.module';
 import { ComparatorModule } from "./modules/catalog/comparator/comparator.module";
 import { ModelTypeModule } from "./modules/catalog/model-type/model-type.module";
+import { EffectivenessDataCollectingMethodModule } from './modules/catalog/effectiveness-data-collecting-method/effectiveness-data-collecting-method.module';
+import { DiscountRateModule } from './modules/catalog/discount-rate/discount-rate.module';
 
 @Module({
   imports: [
@@ -53,7 +55,9 @@ import { ModelTypeModule } from "./modules/catalog/model-type/model-type.module"
     StudyPerspectiveModule,
     SampleSizeModule,
     ModelTypeModule,
-    ComparatorModule
+    ComparatorModule,
+    EffectivenessDataCollectingMethodModule,
+    DiscountRateModule
   ],
   controllers: [AppController],
 })
