@@ -13,25 +13,18 @@ export class PathologyEntity extends BaseEntity {
   @Column({ nullable: true })
   abbreviation: string;
 
-  @OneToMany(
-    type => CostBenefitEntity,
-    e => e.pathologyId,
-    { onDelete: "SET NULL" }
-  )
-  costBenefits: CostBenefitEntity[]
-
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(
-    type => QualityOfLifeEntity,
-    q => q.pathologyId,
-    {
-      cascade: true,
-    },
-  )
-  qualityOfLives: QualityOfLifeEntity[];
+  // @OneToMany(
+  //   type => QualityOfLifeEntity,
+  //   q => q.pathologyId,
+  //   {
+  //     cascade: true,
+  //   },
+  // )
+  // qualityOfLives: QualityOfLifeEntity[];
 }

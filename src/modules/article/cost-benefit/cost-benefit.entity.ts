@@ -32,15 +32,13 @@ export class CostBenefitEntity extends BaseEntity {
     type => PathologyEntity,
   )
   @JoinColumn({ name: "pathology_id" })
-  @Column({ nullable: true })
-  pathologyId: string;
+  pathologyId: number;
 
   @ManyToOne(
     type => Icd20Entity
   )
   @JoinColumn({ name: "icd_20_id" })
-  @Column({ nullable: true })
-  icd20Id: string;
+  icd20Id: number;
 
   @ManyToMany(
     type => InterventionEntity,
@@ -73,21 +71,20 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "study_design_id" })
-  @Column({ nullable: true })
   studyDesignId: number;
 
   @ManyToOne(
     type => DataCollectingMethodEntity,
     { onDelete: "SET NULL" }
   )
-  @Column({ name: "data_collecting_method_id", nullable: true })
+  @JoinColumn({ name: "data_collecting_method_id" })
   dataCollectingMethodId: number;
 
   @ManyToOne(
     type => SampleSizeEntity,
     { onDelete: "SET NULL" }
   )
-  @Column({ name: "sample_size_id", nullable: true })
+  @JoinColumn({ name: "sample_size_id" })
   sampleSizeId: number;
 
   @Column({ name: "inclusion_criteria", nullable: true })
@@ -101,7 +98,6 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "sampling_method_id" })
-  @Column({ nullable: true })
   samplingMethodId: number;
 
   @Column({ name: "start_sampling_time", nullable: true })
@@ -115,7 +111,6 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "cost_type_id" })
-  @Column({ nullable: true })
   costTypeId: number;
 
   @ManyToOne(
@@ -123,7 +118,6 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "cost_component_id" })
-  @Column({ nullable: true })
   costComponentId: string;
 
   @ManyToOne(
@@ -131,7 +125,6 @@ export class CostBenefitEntity extends BaseEntity {
     { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "study_perspective_id" })
-  @Column({ nullable: true })
   studyPerspectiveId: number;
 
   @CreateDateColumn({

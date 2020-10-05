@@ -8,7 +8,7 @@ import {
   UpdateDateColumn, OneToMany
 } from 'typeorm';
 
-@Entity({ name: 'sampling_method' })
+@Entity({ name: 'data_collecting_method' })
 export class DataCollectingMethodEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
