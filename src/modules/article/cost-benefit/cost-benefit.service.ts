@@ -62,7 +62,7 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
   }
 
   async getCostBenefitById(costBenefitId: number) {
-    const costBenefits = await this.connection
+    const costBenefit = await this.connection
       .getRepository(CostBenefitEntity)
       .createQueryBuilder("cost_benefit")
       .leftJoinAndSelect("cost_benefit.interventions", "intervention")
@@ -70,6 +70,7 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
       .where("cost_benefit.id = :id", { id: costBenefitId })
       .getOne()
 
-    return costBenefits;
+    if (!costBenefit) throw new NotFoundException("Cost Benefit Not Found")
+    return costBenefit;
   }
 }

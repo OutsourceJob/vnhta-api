@@ -51,43 +51,15 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
   }
 
   async getArticleById(id: number): Promise<ArticleEntity> {
-    const foundArticle = await this.repo.findOne(id)
+    const foundArticle = await this.connection
+      .getRepository(ArticleEntity)
+      .createQueryBuilder("article")
+      .leftJoinAndSelect("article.authors", "author")
+      .leftJoinAndSelect("article.journals", "journal")
+      .where("article.id = :id", { id })
+      .getOne()
+
     if (!foundArticle) throw new NotFoundException("Article Not Found")
-
-    /**
-     * @todo  include authors
-     */
-    const authors = await this.connection.query(
-      `
-        SELECT author.* 
-        FROM article
-        INNER JOIN article_author
-          ON article_author.article_id = article.id
-        INNER JOIN author
-          ON author.id = article_author.author_id
-        WHERE article.id = ${id}
-      `
-    )
-
-    _.set(foundArticle, "authors", authors);
-
-    /**
-     * @todo  include journals
-     */
-    const journals = await this.connection.query(
-      `
-        SELECT journal.* 
-        FROM article
-        INNER JOIN article_journal
-          ON article_journal.article_id = article.id
-        INNER JOIN journal
-          ON journal.id = article_journal.journal_id
-        WHERE article.id = ${id}
-      `
-    )
-
-    _.set(foundArticle, "journals", journals);
-
     return foundArticle;
   }
 
