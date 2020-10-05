@@ -1,12 +1,21 @@
+import { AnalysisMethodEntity } from "src/modules/catalog/analysis-method/analysis-method.entity";
 import { ComparatorEntity } from "src/modules/catalog/comparator/comparator.entity";
+import { CostComponentEntity } from "src/modules/catalog/cost-component/cost-component.entity";
+import { CurrencyUnitEntity } from "src/modules/catalog/currency-unit/currency-unit.entity";
+import { DiscountRateEntity } from "src/modules/catalog/discount-rate/discount-rate.entity";
+import { EffectivenessDataCollectingMethodEntity } from "src/modules/catalog/effectiveness-data-collecting-method/effectiveness-data-collecting-method.entity";
 import { HeterogeneityAnalysisEntity } from "src/modules/catalog/heterogeneity-analysis/heterogeneity-analysis.entity";
+import { Icd20Entity } from "src/modules/catalog/icd-20/icd-20.entity";
 import { InterventionEntity } from "src/modules/catalog/intervention/intervention.entity";
 import { ModelTypeEntity } from "src/modules/catalog/model-type/model-type.entity";
 import { OutcomeEntity } from "src/modules/catalog/outcome/outcome.entity";
+import { PathologyEntity } from "src/modules/catalog/pathology/pathology.entity";
+import { StudyDesignEntity } from "src/modules/catalog/study-design/study-design.entity";
 import { StudyLocationEntity } from "src/modules/catalog/study-location/study-location.entity";
+import { StudyPerspectiveEntity } from "src/modules/catalog/study-perspective/study-perspective.entity";
 import { UncertaintyAnalysisResultEntity } from "src/modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.entity";
 import { UncertaintyAnalysisEntity } from "src/modules/catalog/uncertainty-analysis/uncertainty-analysis.entity";
-import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ArticleEntity } from "../article.entity";
 
 @Entity({ name: 'cost_effectiveness' })
@@ -25,11 +34,22 @@ export class CostEffectivenessEntity extends BaseEntity {
   @JoinColumn({ name: 'article_id' })
   articleId: number;
 
-  @Column({ nullable: true })
-  pathologyId: string;
+  @ManyToOne(
+    type => PathologyEntity,
+    p => p.costEffectiveness,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: 'pathology_id' })
+  @Column({ name: "pathology_id", nullable: true })
+  pathologyId: number;
 
-  @Column({ nullable: true })
-  icd20Id: string;
+  @ManyToOne(
+    type => Icd20Entity,
+    i => i.costEffectiveness
+  )
+  @JoinColumn({ name: 'icd20_id' })
+  @Column({ name: 'icd20_id', nullable: true })
+  icd20Id: number;
 
   @ManyToMany(
     type => InterventionEntity,
@@ -72,7 +92,13 @@ export class CostEffectivenessEntity extends BaseEntity {
   })
   studyLocations: StudyLocationEntity[];
 
-  @Column({ nullable: true })
+  @ManyToOne(
+    type => StudyDesignEntity,
+    s => s.costEffectiveness,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: 'study_design_id' })
+  @Column({ name: 'study_design_id', nullable: true })
   studyDesignId: number;
 
   @ManyToMany(
@@ -95,32 +121,64 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ nullable: true })
   assumption: string;
 
-  @Column({ nullable: true })
+  @ManyToOne(
+    type => AnalysisMethodEntity,
+    a => a.costEffectiveness,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "analysis_method_id" })
+  @Column({ name: 'analysis_method_id', nullable: true })
   analysisMethodId: number;
 
-  @Column({ nullable: true })
+  @ManyToOne(
+    type => StudyPerspectiveEntity,
+    s => s.costEffectiveness,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "study_perspective_id" })
+  @Column({ name: 'study_perspective_id', nullable: true })
   studyPerspectiveId: number;
 
   @Column({ nullable: true })
   typeOfEffectiveness: string;
 
-  @Column({ nullable: true })
+  @ManyToOne(
+    type => EffectivenessDataCollectingMethodEntity,
+    e => e.costEffectiveness,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: 'effectiveness_data_collecting_method_id' })
+  @Column({ name: "effectiveness_data_collecting_method_id", nullable: true })
   effectivenessDataCollectingMethodId: number;
 
-  @Column({ nullable: true })
+  @ManyToOne(
+    type => DiscountRateEntity,
+    d => d.costEffectiveness
+  )
+  @JoinColumn({ name: 'discount_rate_id' })
+  @Column({ name: "discount_rate_id", nullable: true })
   discountRateId: number;
 
-  @Column({ nullable: true })
+  @ManyToOne(
+    type => CostComponentEntity,
+    c => c.costEffectiveness,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: 'cost_component_id' })
+  @Column({ name: 'cost_component_id', nullable: true })
   costComponentId: number;
 
   @Column({ nullable: true })
   costDataCollectingMethod: string;
 
-  @Column({ nullable: true })
+  @ManyToOne(
+    type => CurrencyUnitEntity,
+    c => c.costEffectiveness,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: 'currency_unit_id' })
+  @Column({ name: 'currency_unit_id', nullable: true })
   currencyUnitId: number;
-
-  @Column({ nullable: true })
-  discountRate: number;
 
   @ManyToMany(
     type => HeterogeneityAnalysisEntity,

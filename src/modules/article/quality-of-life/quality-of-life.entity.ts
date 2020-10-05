@@ -43,7 +43,7 @@ export class QualityOfLifeEntity extends BaseEntity {
     }
   )
   @JoinColumn({ name: 'pathology_id' })
-  @Column({ nullable: true })
+  @Column({ name: 'pathology_id', nullable: true })
   pathologyId: number;
 
   @ManyToOne(
@@ -54,7 +54,7 @@ export class QualityOfLifeEntity extends BaseEntity {
     },
   )
   @JoinColumn({ name: 'icd20_id' })
-  @Column({ nullable: true })
+  @Column({ name: 'icd20_id', nullable: true })
   icd20Id: number;
 
   @ManyToMany(
@@ -83,14 +83,14 @@ export class QualityOfLifeEntity extends BaseEntity {
     onDelete: "SET NULL"
   })
   @JoinColumn({ name: 'study_design_id' })
-  @Column({ nullable: true })
+  @Column({ name: 'study_design_id', nullable: true })
   studyDesignId: number;
 
   @ManyToOne(type => DataCollectingMethodEntity, d => d.qualityOfLives, {
     onDelete: "SET NULL"
   })
   @JoinColumn({ name: 'data_collecting_method_id' })
-  @Column({ nullable: true })
+  @Column({ name: 'data_collecting_method_id', nullable: true })
   dataCollectingMethodId: number;
 
   @Column({ name: 'quality_of_life_toolkit', nullable: true })
@@ -100,14 +100,14 @@ export class QualityOfLifeEntity extends BaseEntity {
     onDelete: "SET NULL"
   })
   @JoinColumn({ name: 'sample_size_id' })
-  @Column({ nullable: true })
+  @Column({ name: 'sample_size_id', nullable: true })
   sampleSizeId: number;
 
   @ManyToOne(type => SamplingMethodEntity, s => s.qualityOfLives, {
     onDelete: "SET NULL"
   })
   @JoinColumn({ name: 'sampling_method_id' })
-  @Column({ nullable: true })
+  @Column({ name: 'sampling_method_id', nullable: true })
   samplingMethodId: number;
 
   @Column({ name: 'inclusion_criteria', nullable: true })
