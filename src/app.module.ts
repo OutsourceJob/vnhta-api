@@ -20,6 +20,8 @@ import { CostTypeModule } from './modules/catalog/cost-type/cost-type.module';
 import { CostComponentModule } from './modules/catalog/cost-component/cost-component.module';
 import { StudyPerspectiveModule } from './modules/catalog/study-perspective/study-perspective.module';
 import { SampleSizeModule } from './modules/catalog/sample-size/sample-size.module';
+import { ComparatorModule } from "./modules/catalog/comparator/comparator.module";
+import { ModelTypeModule } from "./modules/catalog/model-type/model-type.module";
 
 @Module({
   imports: [
@@ -49,7 +51,9 @@ import { SampleSizeModule } from './modules/catalog/sample-size/sample-size.modu
     DataCollectingMethodModule,
     CostTypeModule, CostComponentModule,
     StudyPerspectiveModule,
-    SampleSizeModule
+    SampleSizeModule,
+    ModelTypeModule,
+    ComparatorModule
   ],
   controllers: [AppController],
 })
