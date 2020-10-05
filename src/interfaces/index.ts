@@ -6,7 +6,7 @@ export enum Language {
 export enum AccountType {
   Admin = "Admin",
   Member = "Member",
-  Author = "Author"
+  // Author = "Author"
 }
 
 export enum FileType {
