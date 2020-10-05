@@ -7,6 +7,7 @@ import { AuthorModule } from '../catalog/author/author.module';
 import { JournalModule } from '../catalog/journal/journal.module';
 import { CostBenefitModule } from './cost-benefit/cost-benefit.module';
 import { QualityOfLifeModule } from './quality-of-life/quality-of-life.module';
+import { CostEffectivenessModule } from './cost-effectiveness/cost-effectiveness.module';
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { QualityOfLifeModule } from './quality-of-life/quality-of-life.module';
 
         // sub-article
         CostBenefitModule, QualityOfLifeModule,
+        CostEffectivenessModule,
 
         // Catalog
         AuthorModule, JournalModule,

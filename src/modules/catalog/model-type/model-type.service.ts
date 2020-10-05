@@ -11,4 +11,8 @@ export class ModelTypeService extends TypeOrmCrudService<ModelTypeEntity>{
    ) {
       super(repo);
    }
+
+   async findModelTypeByIdArray(idArray: number[]): Promise<ModelTypeEntity[]> {
+      return await this.repo.findByIds(idArray);
+   }
 }

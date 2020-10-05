@@ -15,7 +15,7 @@ import { StudyLocationEntity } from "src/modules/catalog/study-location/study-lo
 import { StudyPerspectiveEntity } from "src/modules/catalog/study-perspective/study-perspective.entity";
 import { UncertaintyAnalysisResultEntity } from "src/modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.entity";
 import { UncertaintyAnalysisEntity } from "src/modules/catalog/uncertainty-analysis/uncertainty-analysis.entity";
-import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { ArticleEntity } from "../article.entity";
 
 @Entity({ name: 'cost_effectiveness' })
@@ -215,4 +215,14 @@ export class CostEffectivenessEntity extends BaseEntity {
 
   @Column({ nullable: true })
   sponsor: string;
+
+  @CreateDateColumn({
+    name: "created_at"
+  })
+  createdAt: Date
+
+  @UpdateDateColumn({
+    name: "updated_at"
+  })
+  updatedAt: Date;
 }

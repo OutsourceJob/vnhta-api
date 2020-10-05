@@ -11,4 +11,8 @@ export class UncertaintyAnalysisResultService extends TypeOrmCrudService<Uncerta
    ) {
       super(repo);
    }
+
+   async findUncertaintyAnalysisResultByIdArray(idArray: number[]): Promise<UncertaintyAnalysisResultEntity[]> {
+      return await this.repo.findByIds(idArray);
+   }
 }
