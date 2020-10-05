@@ -11,6 +11,7 @@ import { AuthorEntity } from '../catalog/author/author.entity';
 import { JournalEntity } from '../catalog/journal/journal.entity';
 import { CostBenefitEntity } from './cost-benefit/cost-benefit.entity';
 import { QualityOfLifeEntity } from './quality-of-life/quality-of-life.entity';
+import { CostEffectivenessEntity } from "./cost-effectiveness/cost-effectiveness.entity";
 
 @Entity({
   name: "article"
@@ -97,12 +98,18 @@ export class ArticleEntity extends BaseEntity {
     type => CostBenefitEntity,
     e => e.articleId
   )
-  costBenefit: CostBenefitEntity
+  costBenefit: CostBenefitEntity;
 
 
   @OneToOne(
     type => QualityOfLifeEntity,
     e => e.articleId
   )
-  qualityOfLife: QualityOfLifeEntity
+  qualityOfLife: QualityOfLifeEntity;
+
+  @OneToOne(
+    type => CostEffectivenessEntity,
+    c => c.articleId
+  )
+  costEffectiveness: CostBenefitEntity;
 }

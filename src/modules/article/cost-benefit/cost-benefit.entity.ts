@@ -33,14 +33,14 @@ export class CostBenefitEntity extends BaseEntity {
   )
   @JoinColumn({ name: "pathology_id" })
   @Column({ nullable: true })
-  pathologyId: string;
+  pathologyId: number;
 
   @ManyToOne(
     type => Icd20Entity
   )
   @JoinColumn({ name: "icd_20_id" })
   @Column({ nullable: true })
-  icd20Id: string;
+  icd20Id: number;
 
   @ManyToMany(
     type => InterventionEntity,

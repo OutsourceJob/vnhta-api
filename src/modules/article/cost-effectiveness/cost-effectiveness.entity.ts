@@ -6,14 +6,24 @@ import { OutcomeEntity } from "src/modules/catalog/outcome/outcome.entity";
 import { StudyLocationEntity } from "src/modules/catalog/study-location/study-location.entity";
 import { UncertaintyAnalysisResultEntity } from "src/modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.entity";
 import { UncertaintyAnalysisEntity } from "src/modules/catalog/uncertainty-analysis/uncertainty-analysis.entity";
-import { BaseEntity, Column, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { ArticleEntity } from "../article.entity";
 
+@Entity({ name: 'cost_effectiveness' })
 export class CostEffectivenessEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ name: "is_active" })
   isActive: boolean = false;
+
+  @OneToOne(
+    type => ArticleEntity,
+    a => a.costEffectiveness,
+    { onDelete: "CASCADE" }
+  )
+  @JoinColumn({ name: 'article_id' })
+  articleId: number;
 
   @Column({ nullable: true })
   pathologyId: string;
