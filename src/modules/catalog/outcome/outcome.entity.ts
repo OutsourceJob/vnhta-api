@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CostEffectivenessEntity } from 'src/modules/article/cost-effectiveness/cost-effectiveness.entity';
 
 @Entity({ name: 'outcome' })
 export class OutcomeEntity extends BaseEntity {
@@ -20,4 +21,7 @@ export class OutcomeEntity extends BaseEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  // Relation
+  costEffectiveness: CostEffectivenessEntity[];
 }
