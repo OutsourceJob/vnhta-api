@@ -24,6 +24,7 @@ import { ComparatorModule } from "./modules/catalog/comparator/comparator.module
 import { ModelTypeModule } from "./modules/catalog/model-type/model-type.module";
 import { EffectivenessDataCollectingMethodModule } from './modules/catalog/effectiveness-data-collecting-method/effectiveness-data-collecting-method.module';
 import { DiscountRateModule } from './modules/catalog/discount-rate/discount-rate.module';
+import { CurrencyUnitModule } from './modules/catalog/currency-unit/currency-unit.module';
 
 @Module({
   imports: [
@@ -57,7 +58,8 @@ import { DiscountRateModule } from './modules/catalog/discount-rate/discount-rat
     ModelTypeModule,
     ComparatorModule,
     EffectivenessDataCollectingMethodModule,
-    DiscountRateModule
+    DiscountRateModule,
+    CurrencyUnitModule
   ],
   controllers: [AppController],
 })
