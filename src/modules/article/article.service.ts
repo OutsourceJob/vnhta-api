@@ -69,13 +69,15 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     const foundArticle = await this.repo.findOne(id);
     if (!foundArticle) if (!foundArticle) throw new NotFoundException("Article Not Found")
 
-    const { accountId, title, vol, issue, page, year, authorIdArray, journalIdArray } = data;
+    const { accountId, title, vol, issue, number, startPage, endPage, year, authorIdArray, journalIdArray } = data;
 
     if (accountId) foundArticle.accountId = accountId;
     if (title) foundArticle.title = title;
     if (vol) foundArticle.vol = vol;
     if (issue) foundArticle.issue = issue;
-    if (page) foundArticle.page = page;
+    if (number) foundArticle.number = number;
+    if (startPage) foundArticle.startPage = startPage;
+    if (endPage) foundArticle.endPage = endPage;
     if (year) foundArticle.year = year;
 
     if (authorIdArray && _.isArray(authorIdArray)) foundArticle.authors = await this.authorService.findAuthorsByIdArray(authorIdArray)

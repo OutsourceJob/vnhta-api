@@ -64,7 +64,13 @@ export class ArticleEntity extends BaseEntity {
   issue: number;
 
   @Column({ nullable: true })
-  page: number;
+  number: number;
+
+  @Column({ nullable: true, name: "start_page" })
+  startPage: number;
+
+  @Column({ nullable: true, name: "end_page" })
+  endPage: number;
 
   @Column({ nullable: true })
   year: number;

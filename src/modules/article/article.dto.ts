@@ -5,6 +5,8 @@ export class WriteArticleDTO {
   journalIdArray: Array<number>;
   vol: number;
   issue: number;
-  page: number;
+  number: number;
+  startPage: number;
+  endPage: number;
   year: number;
 }
