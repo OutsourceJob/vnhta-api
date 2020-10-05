@@ -30,20 +30,20 @@ export class CostBenefitController {
     return this.service.createCostBenefit(data)
   }
 
-  // @Override()
-  // getOne(
-  //   @ParsedRequest() req: CrudRequest,
-  // ) {
-  //   let costBenefitId: number;
-  //   const fieldId = req.parsed.paramsFilter.find(item => item.field === "id")
-  //   if (!fieldId) throw new BadRequestException("CostBenefit Id is required")
+  @Override()
+  getOne(
+    @ParsedRequest() req: CrudRequest,
+  ) {
+    let costBenefitId: number;
+    const fieldId = req.parsed.paramsFilter.find(item => item.field === "id")
+    if (!fieldId) throw new BadRequestException("CostBenefit Id is required")
 
-  //   if (fieldId) costBenefitId = fieldId.value;
+    if (fieldId) costBenefitId = fieldId.value;
 
-  //   return this.service.getCostBenefitById(costBenefitId)
-  // }
+    return this.service.getCostBenefitById(costBenefitId)
+  }
 
-  // @Override()
+  @Override()
   updateOne(
     @ParsedRequest() req: CrudRequest,
     @ParsedBody() data: WriteCostBenefitDTO
