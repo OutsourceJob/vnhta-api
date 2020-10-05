@@ -51,6 +51,7 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     _.assign(data, { interventions, studyLocations })
 
     _.chain(data)
+      .omit(["interventionIdArray", "studyLocationIdArray"])
       .keys()
       .value()
       .forEach(key => {
@@ -65,6 +66,7 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
       .getRepository(CostBenefitEntity)
       .createQueryBuilder("cost_benefit")
       .leftJoinAndSelect("cost_benefit.interventions", "intervention")
+      .leftJoinAndSelect("cost_benefit.studyLocations", "study_location")
       .where("cost_benefit.id = :id", { id: costBenefitId })
       .getOne()
 
