@@ -1,4 +1,5 @@
 import { CostEffectivenessEntity } from 'src/modules/article/cost-effectiveness/cost-effectiveness.entity';
+import { QualityOfLifeEntity } from 'src/modules/article/quality-of-life/quality-of-life.entity';
 import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToMany, JoinTable } from 'typeorm';
 import { CostBenefitEntity } from '../../article/cost-benefit/cost-benefit.entity';
 
@@ -20,4 +21,6 @@ export class InterventionEntity extends BaseEntity {
   costBenefits: CostBenefitEntity[];
 
   costEffectiveness: CostEffectivenessEntity[];
+
+  qualityOfLives: QualityOfLifeEntity[];
 }

@@ -16,7 +16,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  OneToOne,
+  OneToOne, ManyToMany, JoinTable
 } from 'typeorm';
 
 @Entity({ name: 'quality_of_life' })
@@ -57,10 +57,26 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ nullable: true })
   icd20Id: number;
 
-  @Column({ type: 'json' })
+  @ManyToMany(
+    type => InterventionEntity,
+    i => i.qualityOfLives
+  )
+  @JoinTable({
+    name: "quality_of_life_intervention",
+    joinColumns: [{ name: 'quality_of_life_id' }],
+    inverseJoinColumns: [{ name: "intervention_id" }]
+  })
   interventions: InterventionEntity[];
 
-  @Column({ name: 'studied_location', type: 'json' })
+  @ManyToMany(
+    type => StudyLocationEntity,
+    s => s.qualityOfLives
+  )
+  @JoinTable({
+    name: "quality_of_life_study_location",
+    joinColumns: [{ name: 'quality_of_life_id' }],
+    inverseJoinColumns: [{ name: "study_location_id" }]
+  })
   studyLocations: StudyLocationEntity[];
 
   @ManyToOne(type => StudyDesignEntity, s => s.qualityOfLives, {
