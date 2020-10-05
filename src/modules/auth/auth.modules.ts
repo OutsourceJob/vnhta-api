@@ -11,7 +11,6 @@ import { AccountModule } from '../account/account.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([AccountRepository]),
     PassportModule,
     JwtModule.register({}),
     AccountModule,

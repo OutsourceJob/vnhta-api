@@ -6,17 +6,18 @@ import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 import { config } from '../../config/index';
 import { AccountType } from '../../interfaces/index';
+import { AccountService } from '../account/account.service';
 
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(AccountRepository) private userRepo: AccountRepository,
     private jwtService: JwtService,
+    private accountService: AccountService
   ) { }
 
   async validateCredentials(email: string, password: string) {
-    const foundAccount = await this.userRepo.findOne({ email });
+    const foundAccount = await this.accountService.getAccountByEmail(email);
     if (!foundAccount) throw new NotFoundException("Account Not Exist");
     const isMatched = await bcrypt.compare(password, foundAccount.password)
 
