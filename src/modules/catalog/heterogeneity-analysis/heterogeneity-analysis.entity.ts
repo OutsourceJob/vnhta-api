@@ -1,6 +1,6 @@
 import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 
-@Entity({ name: 'model_type' })
+@Entity({ name: 'heterogeneity_analysis' })
 export class HeterogeneityAnalysisEntity extends BaseEntity {
    @PrimaryGeneratedColumn()
    id: number;
