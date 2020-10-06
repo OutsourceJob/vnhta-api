@@ -1,12 +1,35 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { TableEntity } from '../table.entity';
+import { ParameterEntity } from '../parameter/parameter.entity';
+import { VarEntity } from '../var/var.entity';
 
 @Entity({ name: "feature" })
 export class FeatureEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @ManyToOne(
+    type => TableEntity,
+    { onDelete: "CASCADE" }
+  )
+  @JoinColumn({ name: "table_id" })
+  @Column({ name: "table_id" })
+  tableId: number;
+
+  @ManyToOne(
+    type => ParameterEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "parameter_id" })
+  @Column({ name: "parameter_id", nullable: true })
   parameterId: number;
 
+  @ManyToOne(
+    type => VarEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "var_id" })
+  @Column({ name: "var_id", nullable: true })
   varId: number;
 
   @Column({ nullable: true })
