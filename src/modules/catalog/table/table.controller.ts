@@ -14,7 +14,7 @@ import { WriteTableDTO } from './table.dto';
     update: WriteTableDTO
   }
 })
-@Controller("/features")
+@Controller("/tables")
 @UseInterceptors(SerializerInterceptor)
 export class TableController {
   constructor(public service: TableService) { }
