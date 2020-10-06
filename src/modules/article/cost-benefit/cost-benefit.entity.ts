@@ -11,6 +11,7 @@ import { SamplingMethodEntity } from '../../catalog/sampling-method/sampling-met
 import { CostTypeEntity } from 'src/modules/catalog/cost-type/cost-type.entity';
 import { CostComponentEntity } from '../../catalog/cost-component/cost-component.entity';
 import { StudyPerspectiveEntity } from '../../catalog/study-perspective/study-perspective.entity';
+import { TableEntity } from '../../catalog/table/table.entity';
 
 @Entity({ name: "cost_benefit" })
 export class CostBenefitEntity extends BaseEntity {
@@ -136,6 +137,29 @@ export class CostBenefitEntity extends BaseEntity {
   @JoinColumn({ name: "study_perspective_id" })
   @Column({ name: "study_perspective_id", nullable: true })
   studyPerspectiveId: number;
+
+
+  // tables
+  @ManyToOne(
+    type => TableEntity
+  )
+  @JoinColumn({ name: "characteristics_table_id", referencedColumnName: "id" })
+  @Column({ name: "characteristics_table_id", nullable: true })
+  characteristicsTableId: number;
+
+  @ManyToOne(
+    type => TableEntity
+  )
+  @JoinColumn({ name: "cost_table_id", referencedColumnName: "id" })
+  @Column({ name: "cost_table_id", nullable: true })
+  costTableId: number;
+
+  @ManyToOne(
+    type => TableEntity
+  )
+  @JoinColumn({ name: "factor_table_id", referencedColumnName: "id" })
+  @Column({ name: "factor_table_id", nullable: true })
+  factorTableId: number;
 
   @CreateDateColumn({
     name: "created_at"
