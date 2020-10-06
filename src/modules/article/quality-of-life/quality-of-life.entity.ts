@@ -37,7 +37,7 @@ export class QualityOfLifeEntity extends BaseEntity {
 
   @ManyToOne(
     type => PathologyEntity,
-    // p => p.qualityOfLives,
+    p => p.qualityOfLives,
     {
       onDelete: "SET NULL"
     }

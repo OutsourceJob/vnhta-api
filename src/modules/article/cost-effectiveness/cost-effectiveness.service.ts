@@ -5,7 +5,7 @@ import { CostEffectivenessEntity } from "./cost-effectiveness.entity";
 import { InterventionService } from '../../catalog/intervention/intervention.service';
 import { StudyLocationService } from '../../catalog/study-location/study-location.service';
 import { WriteCostEffectivenessDTO } from "./cost-effectiveness.dto";
-import _ from "lodash";
+import * as _ from "lodash";
 import { ComparatorService } from "src/modules/catalog/comparator/comparator.service";
 import { OutcomeService } from "src/modules/catalog/outcome/outcome.service";
 import { ModelTypeService } from "src/modules/catalog/model-type/model-type.service";
