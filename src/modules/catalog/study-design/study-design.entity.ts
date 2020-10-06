@@ -1,3 +1,4 @@
+import { CostEffectivenessEntity } from 'src/modules/article/cost-effectiveness/cost-effectiveness.entity';
 import { QualityOfLifeEntity } from 'src/modules/article/quality-of-life/quality-of-life.entity';
 import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
@@ -15,8 +16,17 @@ export class StudyDesignEntity extends BaseEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
+  // Relation
+
   @OneToMany(type => QualityOfLifeEntity, q => q.studyDesignId, {
-    cascade: true
+    onDelete: "SET NULL"
   })
   qualityOfLives: QualityOfLifeEntity[]
+
+  @OneToMany(
+    type => CostEffectivenessEntity,
+    e => e.studyDesignId,
+    { onDelete: "SET NULL" }
+  )
+  costEffectiveness: CostEffectivenessEntity[];
 }

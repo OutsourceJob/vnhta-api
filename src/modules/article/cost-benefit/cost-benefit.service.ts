@@ -2,13 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { CostBenefitEntity } from './cost-benefit.entity';
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from 'typeorm';
-import * as _ from "lodash";
+import { Repository, Connection } from 'typeorm';
+import _ from "lodash";
 import { StudyLocationService } from '../../catalog/study-location/study-location.service';
 import { WriteCostBenefitDTO } from './cost-benefit.dto';
 import { InterventionService } from '../../catalog/intervention/intervention.service';
-import { Connection } from "typeorm";
-import { PathologyEntity } from 'src/modules/catalog/pathology/pathology.entity';
 
 @Injectable()
 export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{

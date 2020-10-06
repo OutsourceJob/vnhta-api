@@ -11,4 +11,8 @@ export class OutcomeService extends TypeOrmCrudService<OutcomeEntity> {
   ) {
     super(repo);
   }
+
+  async findOutcomeByIdArray(idArray: number[]): Promise<OutcomeEntity[]> {
+    return await this.repo.findByIds(idArray);
+  }
 }

@@ -1,4 +1,5 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { CostEffectivenessEntity } from 'src/modules/article/cost-effectiveness/cost-effectiveness.entity';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: "cost_component" })
 export class CostComponentEntity extends BaseEntity {
@@ -9,8 +10,16 @@ export class CostComponentEntity extends BaseEntity {
   name: string;
 
   @CreateDateColumn({ name: "created_at" })
-  createdAt: Date
+  createdAt: Date;
 
   @UpdateDateColumn({ name: "updated_at" })
-  updatedAt: Date
+  updatedAt: Date;
+
+  // Relation
+  @OneToMany(
+    type => CostEffectivenessEntity,
+    c => c.costComponentId,
+    { onDelete: "SET NULL" }
+  )
+  costEffectiveness: CostEffectivenessEntity[];
 }

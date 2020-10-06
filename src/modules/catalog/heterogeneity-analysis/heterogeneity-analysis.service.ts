@@ -11,4 +11,8 @@ export class HeterogeneityAnalysisService extends TypeOrmCrudService<Heterogenei
    ) {
       super(repo);
    }
+
+   async findHeterogeneityAnalysisByIdArray(idArray: number[]): Promise<HeterogeneityAnalysisEntity[]> {
+      return await this.repo.findByIds(idArray);
+   }
 }
