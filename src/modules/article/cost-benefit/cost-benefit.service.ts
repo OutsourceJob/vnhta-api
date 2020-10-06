@@ -7,6 +7,7 @@ import * as _ from "lodash";
 import { StudyLocationService } from '../../catalog/study-location/study-location.service';
 import { WriteCostBenefitDTO } from './cost-benefit.dto';
 import { InterventionService } from '../../catalog/intervention/intervention.service';
+import { TableService } from '../../catalog/table/table.service';
 
 @Injectable()
 export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
@@ -14,7 +15,8 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     @InjectRepository(CostBenefitEntity) repo: Repository<CostBenefitEntity>,
     private studyLocationService: StudyLocationService,
     private interventionService: InterventionService,
-    private connection: Connection
+    private connection: Connection,
+    private tableService: TableService
   ) {
     super(repo)
   }
@@ -26,11 +28,18 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
     const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
 
+    const characteristicsTable = await this.tableService.createTable({ name: "Sample Characteristics" })
+    const costTable = await this.tableService.createTable({ name: "Cost" })
+    const factorTable = await this.tableService.createTable({ name: "Factor" })
+
     const newCostBenefit = await this.repo
       .create({
         articleId: data.articleId,
         interventions,
-        studyLocations
+        studyLocations,
+        characteristicsTableId: characteristicsTable.id,
+        costTableId: costTable.id,
+        factorTableId: factorTable.id
       })
       .save()
 
