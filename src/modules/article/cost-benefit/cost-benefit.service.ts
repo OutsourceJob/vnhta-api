@@ -54,10 +54,12 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     const interventionIdArray = _.get(data, "interventionIdArray", []);
     const studyLocationIdArray = _.get(data, "studyLocationIdArray", []);
 
-    const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
-    const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
+    const interventions = data.interventionIdArray && await this.interventionService.findInterventionByIdArray(interventionIdArray)
+    const studyLocations = data.studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
 
     _.assign(data, { interventions, studyLocations })
+
+    console.log(data)
 
     _.chain(data)
       .omit(["interventionIdArray", "studyLocationIdArray"])
