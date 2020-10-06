@@ -29,6 +29,7 @@ import { AnalysisMethodModule } from './modules/catalog/analysis-method/analysis
 import { HeterogeneityAnalysisModule } from './modules/catalog/heterogeneity-analysis/heterogeneity-analysis.module';
 import { UncertaintyAnalysisModule } from './modules/catalog/uncertainty-analysis/uncertainty-analysis.module';
 import { UncertaintyAnalysisResultModule } from "./modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.module";
+import { TableModule } from './modules/catalog/table/table.module';
 
 @Module({
   imports: [
@@ -67,7 +68,10 @@ import { UncertaintyAnalysisResultModule } from "./modules/catalog/uncertainty-a
     AnalysisMethodModule,
     HeterogeneityAnalysisModule,
     UncertaintyAnalysisModule,
-    UncertaintyAnalysisResultModule
+    UncertaintyAnalysisResultModule,
+
+    // table
+    TableModule
   ],
   controllers: [AppController],
 })

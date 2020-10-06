@@ -14,7 +14,7 @@ import { WriteVarDTO } from './var.dto';
     update: WriteVarDTO
   }
 })
-@Controller("/features")
+@Controller("/vars")
 @UseInterceptors(SerializerInterceptor)
 export class VarController {
   constructor(public service: VarService) { }
