@@ -18,3 +18,8 @@ export enum ArticleStatus {
   Unverified = "Unverified",
   Verified = "Verified"
 }
+
+export enum Vartype {
+  Qualitative = "Qualitative",
+  Quantitative = "Quantitative",
+}
