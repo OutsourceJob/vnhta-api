@@ -31,11 +31,6 @@ export class SerializerInterceptor implements NestInterceptor {
   }
 
   serializeCollection(response: Array<any>): JsonApiCollection {
-    // let relationships;
-    // if (!_.isEmpty(response)) {
-    //   console.log(response[0])
-    // }
-
     return {
       meta: {
         count: response.length,

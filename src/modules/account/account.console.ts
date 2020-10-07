@@ -13,6 +13,5 @@ export class AccountConsole {
   })
   async createAccount(email: string, password: string) {
     await this.accountService.createAccount({ email, password })
-    console.log("Success")
   }
 }
