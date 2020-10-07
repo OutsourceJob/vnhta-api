@@ -39,4 +39,12 @@ export class RowController {
 
     return this.service.findRowById(rowId)
   }
+
+  @Override()
+  getMany(
+    @ParsedRequest() req: CrudRequest
+  ) {
+    const tableId = req.parsed.filter.find(item => item.field === "tableId")
+    return this.service.findRowsByArticleId(tableId.value)
+  }
 }

@@ -42,9 +42,23 @@ export class RowService extends TypeOrmCrudService<RowEntity>{
   }
 
   async findRowById(rowId: number) {
-    const foundRound = await this.repo.findOne(rowId)
+    const foundRow = await this.repo.findOne(rowId)
     const features = await this.featureService.findFeaturesByRowId(rowId)
-    _.assign(foundRound, { features })
-    return foundRound;
+    _.assign(foundRow, { features })
+    return foundRow;
+  }
+
+  async findRowsByArticleId(tableId: number) {
+    const rows = await this.repo.find({ where: { tableId } })
+    console.log("RowService -> findRowsByArticleId -> rows", rows)
+
+    const _rows = []
+    for (const row of rows) {
+      const rowId = row.id;
+      const _row = await this.findRowById(rowId)
+      _rows.push(_row)
+    }
+
+    return _rows;
   }
 }
