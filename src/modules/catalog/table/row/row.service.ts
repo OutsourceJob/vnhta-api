@@ -64,12 +64,11 @@ export class RowService extends TypeOrmCrudService<RowEntity>{
 
   async updateRowById(id: number, data: WriteRowDTO) {
     const row = await this.findRowById(id);
-    console.log("RowService -> updateRowById -> row", row)
     if (data.name) row.name = data.name;
     if (data.varId) row.varId = data.varId;
     const features = _.get(data, "features", []);
     for (const feature of features) {
-      await this.featureService.updateFeatureById(feature.id, feature.value)
+      await this.featureService.updateFeatureByRowIdAndParameterId(id, feature.parameterId, feature.value)
     }
 
     return await this.findRowById(id)
