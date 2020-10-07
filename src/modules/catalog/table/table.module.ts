@@ -6,12 +6,12 @@ import { TableService } from './table.service';
 import { FeatureModule } from './feature/feature.module';
 import { ParameterModule } from './parameter/parameter.module';
 import { VarModule } from './var/var.module';
-import { RowEntity } from './row/row.entity';
+import { RowModule } from './row/row.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([TableEntity]),
-        FeatureModule, ParameterModule, VarModule, RowEntity
+        FeatureModule, ParameterModule, VarModule, RowModule
     ],
     controllers: [TableController],
     providers: [TableService],
