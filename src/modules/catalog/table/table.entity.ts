@@ -8,6 +8,9 @@ export class TableEntity extends BaseEntity {
   @Column()
   name: string;
 
+  @Column({ type: "json" })
+  parameterCodeArray: string[] = []
+
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date
 
