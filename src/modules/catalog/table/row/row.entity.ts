@@ -21,7 +21,7 @@ export class RowEntity extends BaseEntity {
   @Column({ name: "var_id", nullable: true })
   varId: number;
 
-  @Column()
+  @Column({ nullable: true })
   name: string;
 
   @CreateDateColumn({ name: "created_at" })

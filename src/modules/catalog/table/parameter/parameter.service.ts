@@ -16,4 +16,8 @@ export class ParameterService extends TypeOrmCrudService<ParameterEntity>{
   async findParametersByIdArray(idArray: Array<number>): Promise<ParameterEntity[]> {
     return await this.repo.findByIds(idArray)
   }
+
+  async findParameters(): Promise<ParameterEntity[]> {
+    return await this.repo.find()
+  }
 }
