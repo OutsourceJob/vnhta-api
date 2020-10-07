@@ -7,11 +7,13 @@ import { FeatureModule } from './feature/feature.module';
 import { ParameterModule } from './parameter/parameter.module';
 import { VarModule } from './var/var.module';
 import { RowModule } from './row/row.module';
+import { VarGroupEntity } from './var-group/var-group.entity';
+import { VarGroupModule } from './var-group/var-group.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([TableEntity]),
-        FeatureModule, ParameterModule, VarModule, RowModule
+        FeatureModule, ParameterModule, VarModule, RowModule, VarGroupModule
     ],
     controllers: [TableController],
     providers: [TableService],
