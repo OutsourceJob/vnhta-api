@@ -2,6 +2,7 @@ import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, U
 import { TableEntity } from '../table.entity';
 import { ParameterEntity } from '../parameter/parameter.entity';
 import { VarEntity } from '../var/var.entity';
+import { RowEntity } from '../row/row.entity';
 
 @Entity({ name: "feature" })
 export class FeatureEntity extends BaseEntity {
@@ -9,12 +10,12 @@ export class FeatureEntity extends BaseEntity {
   id: number;
 
   @ManyToOne(
-    type => TableEntity,
+    type => RowEntity,
     { onDelete: "CASCADE" }
   )
-  @JoinColumn({ name: "table_id" })
-  @Column({ name: "table_id" })
-  tableId: number;
+  @JoinColumn({ name: "row_id" })
+  @Column({ name: "row_id" })
+  rowId: number;
 
   @ManyToOne(
     type => ParameterEntity,
@@ -23,14 +24,6 @@ export class FeatureEntity extends BaseEntity {
   @JoinColumn({ name: "parameter_id" })
   @Column({ name: "parameter_id", nullable: true })
   parameterId: number;
-
-  @ManyToOne(
-    type => VarEntity,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "var_id" })
-  @Column({ name: "var_id", nullable: true })
-  varId: number;
 
   @Column({ nullable: true })
   value: string;

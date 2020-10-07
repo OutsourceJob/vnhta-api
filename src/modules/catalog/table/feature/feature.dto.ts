@@ -1,4 +1,5 @@
 export class WriteFeatureDTO {
-  fullName: string;
-  abbreviation: string;
+  rowId: number;
+  parameterId: number;
+  value: number;
 }
