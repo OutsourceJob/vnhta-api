@@ -23,3 +23,10 @@ export enum Vartype {
   Qualitative = "Qualitative",
   Quantitative = "Quantitative",
 }
+
+export enum ParameterType {
+  CostBenefit = "CostBenefit",
+  CostEffectiveness = "CostEffectiveness",
+  QualityOfLife = "QualityOfLife",
+  Epidemiology = "Epidemiology"
+}

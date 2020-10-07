@@ -5,6 +5,7 @@ export class TableEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
   name: string;
 
   @CreateDateColumn({ name: "created_at" })
