@@ -36,7 +36,7 @@ async function bootstrap() {
     secretAccessKey: config.awsSecretAccessKey,
   })
 
-  const port = process.env.PORT || 5004
+  const port = process.env.PORT || 5003
 
   await app.listen(port, () => {
     console.log(`App is running on:`)
