@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { RowEntity } from './row.entity';
 import { InjectRepository } from "@nestjs/typeorm";
@@ -43,6 +43,7 @@ export class RowService extends TypeOrmCrudService<RowEntity>{
 
   async findRowById(rowId: number) {
     const foundRow = await this.repo.findOne(rowId)
+    if (!foundRow) throw new NotFoundException("Row not found")
     const features = await this.featureService.findFeaturesByRowId(rowId)
     _.assign(foundRow, { features })
     return foundRow;
@@ -50,7 +51,6 @@ export class RowService extends TypeOrmCrudService<RowEntity>{
 
   async findRowsByArticleId(tableId: number) {
     const rows = await this.repo.find({ where: { tableId } })
-    console.log("RowService -> findRowsByArticleId -> rows", rows)
 
     const _rows = []
     for (const row of rows) {
@@ -60,5 +60,18 @@ export class RowService extends TypeOrmCrudService<RowEntity>{
     }
 
     return _rows;
+  }
+
+  async updateRowById(id: number, data: WriteRowDTO) {
+    const row = await this.findRowById(id);
+    console.log("RowService -> updateRowById -> row", row)
+    if (data.name) row.name = data.name;
+    if (data.varId) row.varId = data.varId;
+    const features = _.get(data, "features", []);
+    for (const feature of features) {
+      await this.featureService.updateFeatureById(feature.id, feature.value)
+    }
+
+    return await this.findRowById(id)
   }
 }

@@ -27,8 +27,10 @@ export class FeatureService extends TypeOrmCrudService<FeatureEntity>{
     )
   }
 
-  async updateFeatureById() {
-
+  async updateFeatureById(id: number, value: number) {
+    const feature = await this.repo.findOne(id)
+    feature.value = value;
+    return await feature.save()
   }
 
   async findFeaturesByRowId(rowId: number) {
