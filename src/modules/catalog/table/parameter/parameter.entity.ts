@@ -9,6 +9,9 @@ export class ParameterEntity extends BaseEntity {
   @Column()
   name: string;
 
+  @Column({ unique: true })
+  code: string;
+
   @Column({ nullable: true })
   type: ParameterType
 
