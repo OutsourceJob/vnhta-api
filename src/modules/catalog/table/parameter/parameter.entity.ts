@@ -9,7 +9,7 @@ export class ParameterEntity extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   type: ParameterType
 
 
