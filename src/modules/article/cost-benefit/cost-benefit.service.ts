@@ -28,18 +28,34 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
     const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
 
-    const characteristicsTable = await this.tableService.createTable({ name: "Sample Characteristics" })
-    const costTable = await this.tableService.createTable({ name: "Cost" })
-    const factorTable = await this.tableService.createTable({ name: "Factor" })
+    const qualitativeTable = await this.tableService.createTable({ name: "Qualitative Characteristics", parameterCodeArray: ["n", "percent"] })
+    const quantitativeTable = await this.tableService.createTable({
+      name: "Quantitative Characteristics",
+      parameterCodeArray: ["mean", "median", "sd", "se", "min", "max", "iqr_25", "iqr_75"]
+    })
+    const costTable = await this.tableService.createTable({
+      name: "Cost",
+      parameterCodeArray: ["mean", "median", "sd", "se", "min", "max", "iqr_25", "iqr_75"]
+    })
+    const qualitativeFactorTable = await this.tableService.createTable({
+      name: "Qualitative Factor",
+      parameterCodeArray: ["test", "mean_diff", "lower_95", "upper_95"]
+    })
+    const quantitativeFactorTable = await this.tableService.createTable({
+      name: "Quantitative Factor",
+      parameterCodeArray: ["p_value", "test_value"]
+    })
 
     const newCostBenefit = await this.repo
       .create({
         articleId: data.articleId,
         interventions,
         studyLocations,
-        characteristicsTableId: characteristicsTable.id,
+        qualitativeTableId: qualitativeTable.id,
+        quantitativeTableId: quantitativeTable.id,
         costTableId: costTable.id,
-        factorTableId: factorTable.id
+        qualitativeFactorTableId: qualitativeFactorTable.id,
+        quantitativeFactorTableId: quantitativeFactorTable.id
       })
       .save()
 
@@ -58,8 +74,6 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     const studyLocations = data.studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
 
     _.assign(data, { interventions, studyLocations })
-
-    console.log(data)
 
     _.chain(data)
       .omit(["interventionIdArray", "studyLocationIdArray"])
@@ -93,6 +107,5 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     })
 
     return costBenefit
-
   }
 }

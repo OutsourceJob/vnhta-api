@@ -143,9 +143,13 @@ export class CostBenefitEntity extends BaseEntity {
   @ManyToOne(
     type => TableEntity
   )
-  @JoinColumn({ name: "characteristics_table_id", referencedColumnName: "id" })
-  @Column({ name: "characteristics_table_id", nullable: true })
-  characteristicsTableId: number;
+  @JoinColumn({ name: "qualitative_table_id", referencedColumnName: "id" })
+  @Column({ name: "qualitative_table_id", nullable: true })
+  qualitativeTableId: number;
+
+  @JoinColumn({ name: "quantitative_table_id", referencedColumnName: "id" })
+  @Column({ name: "quantitative_table_id", nullable: true })
+  quantitativeTableId: number;
 
   @ManyToOne(
     type => TableEntity
@@ -157,9 +161,16 @@ export class CostBenefitEntity extends BaseEntity {
   @ManyToOne(
     type => TableEntity
   )
-  @JoinColumn({ name: "factor_table_id", referencedColumnName: "id" })
-  @Column({ name: "factor_table_id", nullable: true })
-  factorTableId: number;
+  @JoinColumn({ name: "qualitative_factor_table_id", referencedColumnName: "id" })
+  @Column({ name: "qualitative_factor_table_id", nullable: true })
+  qualitativeFactorTableId: number;
+
+  @ManyToOne(
+    type => TableEntity
+  )
+  @JoinColumn({ name: "quantitative_factor_table_id", referencedColumnName: "id" })
+  @Column({ name: "quantitative_factor_table_id", nullable: true })
+  quantitativeFactorTableId: number;
 
   @CreateDateColumn({
     name: "created_at"

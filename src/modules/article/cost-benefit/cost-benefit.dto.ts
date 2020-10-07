@@ -15,4 +15,9 @@ export class WriteCostBenefitDTO {
   costTypeId?: number
   costComponentId?: number;
   studyPerspectiveId?: number;
+  qualitativeTableId?: number
+  quantitativeTableId?: number
+  costTableId?: number
+  qualitativeFactorTableId?: number
+  quantitativeFactorTableId?: number
 }
