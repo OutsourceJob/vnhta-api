@@ -164,6 +164,9 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: 'type_of_effectiveness_id', nullable: true })
   typeOfEffectivenessId: number;
 
+  @Column({ name: 'clinical_criteria', nullable: true })
+  clinicalCriteria: string;
+
   // @ManyToOne(
   //   type => EffectivenessDataCollectingMethodEntity,
   //   e => e.costEffectiveness,
