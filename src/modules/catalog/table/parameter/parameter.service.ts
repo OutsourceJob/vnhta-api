@@ -2,13 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { ParameterEntity } from './parameter.entity';
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from 'typeorm';
+import { Repository, Connection } from 'typeorm';
 
 @Injectable()
 export class ParameterService extends TypeOrmCrudService<ParameterEntity>{
-  s
   constructor(
     @InjectRepository(ParameterEntity) repo: Repository<ParameterEntity>,
+    private connection: Connection
   ) {
     super(repo);
   }
@@ -20,4 +20,8 @@ export class ParameterService extends TypeOrmCrudService<ParameterEntity>{
   async findParameters(): Promise<ParameterEntity[]> {
     return await this.repo.find()
   }
+
+  // async findParametersByCodeArray(codeArray: Array<string>): Promise<ParameterEntity[]> {
+  //   // return await this.repo
+  // }
 }

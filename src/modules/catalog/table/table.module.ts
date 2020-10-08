@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TableEntity } from './table.entity';
 import { TableController } from './table.controller';
@@ -13,7 +13,10 @@ import { VarGroupModule } from './var-group/var-group.module';
 @Module({
     imports: [
         TypeOrmModule.forFeature([TableEntity]),
-        FeatureModule, ParameterModule, VarModule, RowModule, VarGroupModule
+        FeatureModule, ParameterModule, VarModule,
+        forwardRef(() => RowModule),
+        VarGroupModule,
+
     ],
     controllers: [TableController],
     providers: [TableService],
