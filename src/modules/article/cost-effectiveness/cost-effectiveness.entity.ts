@@ -163,8 +163,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: 'study_perspective_id', nullable: true })
   studyPerspectiveId: number;
 
-  @Column({ name: 'type_of_effectiveness', nullable: true })
-  typeOfEffectiveness: string;
+  @Column({ name: 'type_of_effectiveness_id', type: "json" })
+  typeOfEffectivenessIdArray: number[] = [];
 
   @Column({ name: 'clinical_criteria', nullable: true })
   clinicalCriteria: string;
