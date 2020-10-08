@@ -100,8 +100,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: 'study_design_id' })
-  @Column({ name: 'study_design_id', nullable: true })
-  studyDesignId: number;
+  @Column({ name: 'ce_study_design_id', nullable: true })
+  ceStudyDesignId: number;
 
   // @ManyToMany(
   //   type => ModelTypeEntity,
