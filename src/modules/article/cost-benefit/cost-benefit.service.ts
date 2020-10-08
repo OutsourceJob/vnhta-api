@@ -60,7 +60,6 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
       .save()
 
     return await this.getCostBenefitById(newCostBenefit.id)
-    // return newCostBenefit;
   }
 
   async updateCostBenefitById(costBenefitId: number, data: WriteCostBenefitDTO) {
