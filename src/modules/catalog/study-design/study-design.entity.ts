@@ -23,10 +23,10 @@ export class StudyDesignEntity extends BaseEntity {
   })
   qualityOfLives: QualityOfLifeEntity[]
 
-  @OneToMany(
-    type => CostEffectivenessEntity,
-    e => e.ceStudyDesignId,
-    { onDelete: "SET NULL" }
-  )
-  costEffectiveness: CostEffectivenessEntity[];
+  // @OneToMany(
+  //   type => CostEffectivenessEntity,
+  //   e => e.ceStudyDesignId,
+  //   { onDelete: "SET NULL" }
+  // )
+  // costEffectiveness: CostEffectivenessEntity[];
 }

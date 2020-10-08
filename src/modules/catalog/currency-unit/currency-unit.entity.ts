@@ -16,10 +16,10 @@ export class CurrencyUnitEntity extends BaseEntity {
    updatedAt: Date;
 
    // Relation
-   @OneToMany(
-      type => CostEffectivenessEntity,
-      c => c.currencyUnitId,
-      { onDelete: "SET NULL" }
-   )
-   costEffectiveness: CostEffectivenessEntity[];
+   // @OneToMany(
+   //    type => CostEffectivenessEntity,
+   //    c => c.currencyUnitId,
+   //    { onDelete: "SET NULL" }
+   // )
+   // costEffectiveness: CostEffectivenessEntity[];
 }

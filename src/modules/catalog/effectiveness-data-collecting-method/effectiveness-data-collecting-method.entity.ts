@@ -16,10 +16,10 @@ export class EffectivenessDataCollectingMethodEntity extends BaseEntity {
    updatedAt: Date;
 
    // Relation
-   @OneToMany(
-      type => CostEffectivenessEntity,
-      c => c.effectivenessDataCollectingMethodId,
-      { onDelete: "SET NULL" }
-   )
-   costEffectiveness: CostEffectivenessEntity[];
+   // @OneToMany(
+   //    type => CostEffectivenessEntity,
+   //    c => c.effectivenessDataCollectingMethodId,
+   //    { onDelete: "SET NULL" }
+   // )
+   // costEffectiveness: CostEffectivenessEntity[];
 }

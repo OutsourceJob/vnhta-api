@@ -101,8 +101,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: 'study_design_id' })
-  @Column({ name: 'ce_study_design_id', nullable: true })
-  ceStudyDesignId: number;
+  @Column({ name: 'ce_study_design_id_array', type: "json" })
+  ceStudyDesignIdArray: number[] = [];
 
   // @ManyToMany(
   //   type => ModelTypeEntity,
@@ -129,8 +129,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: 'model_cycle_quantity', nullable: true })
   modelCycleQuantity: number;
 
-  @Column({ name: 'model_cycle_unit_id', nullable: true })
-  modelCycleUnitId: number;
+  @Column({ name: 'model_cycle_unit_id_array', type: "json" })
+  modelCycleUnitIdArray: number[] = [];
 
   /**
   @todo Time horizon
@@ -139,8 +139,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: 'time_horizon_quantity', nullable: true })
   timeHorizonQuantity: number;
 
-  @Column({ name: 'time_horizon_unit_id', nullable: true })
-  timeHorizonUnitId: number;
+  @Column({ name: 'time_horizon_unit_id', type: "json" })
+  timeHorizonUnitIdArray: number[] = [];
 
   @Column({ nullable: true })
   assumption: string;
@@ -151,8 +151,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "analysis_method_id" })
-  @Column({ name: 'analysis_method_id', nullable: true })
-  analysisMethodId: number;
+  @Column({ name: 'analysis_method_id_array', type: "json" })
+  analysisMethodIdArray: number[] = [];
 
   // @ManyToOne(
   //   type => StudyPerspectiveEntity,
@@ -163,8 +163,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: 'study_perspective_id', nullable: true })
   studyPerspectiveId: number;
 
-  @Column({ name: 'type_of_effectiveness_id', nullable: true })
-  typeOfEffectivenessId: number;
+  @Column({ name: 'type_of_effectiveness_id', type: "json" })
+  typeOfEffectivenessIdArray: number[] = [];
 
   @Column({ name: 'clinical_criteria', nullable: true })
   clinicalCriteria: string;
@@ -175,8 +175,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: 'effectiveness_data_collecting_method_id' })
-  @Column({ name: "effectiveness_data_collecting_method_id", nullable: true })
-  effectivenessDataCollectingMethodId: number;
+  @Column({ name: "effectiveness_data_collecting_method_id_array", type: "json" })
+  effectivenessDataCollectingMethodIdArray: number[] = [];
 
   @ManyToOne(
     type => DiscountRateEntity,
@@ -204,8 +204,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: 'currency_unit_id' })
-  @Column({ name: 'currency_unit_id', nullable: true })
-  currencyUnitId: string;
+  @Column({ name: 'currency_unit_id_array', type: "json" })
+  currencyUnitIdArray: string;
 
   @Column({ name: 'year_of_cost', nullable: true })
   yearOfCost: number;
@@ -219,8 +219,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   joinColumns: [{ name: 'cost_effectiveness_id' }],
   //   inverseJoinColumns: [{ name: "heterogeneity_analysis_id" }]
   // })
-  @Column({ type: "json" })
-  heterogeneityAnalysis: HeterogeneityAnalysisEntity[] = [];
+  @Column({ type: "json", name: "heterogeneity_analysis_id_array" })
+  heterogeneityAnalysisIdArray: number[] = [];
 
   @ManyToMany(
     type => UncertaintyAnalysisMethodEntity,
@@ -242,8 +242,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   joinColumns: [{ name: 'cost_effectiveness_id' }],
   //   inverseJoinColumns: [{ name: "uncertainty_analysis_result_id" }]
   // })
-  @Column({ type: "json" })
-  uncertaintyAnalysisResults: UncertaintyAnalysisResultEntity[] = [];
+  @Column({ type: "json", name: "uncertainty_analysis_result_id_array" })
+  uncertaintyAnalysisResultIdArray: number[] = [];
 
   @ManyToOne(
     type => TableEntity,

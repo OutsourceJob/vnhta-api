@@ -240,13 +240,13 @@ export const modelTypes = [
   { id: 3, name: "Khác" }
 ];
 
-export const modelCycleUnit = [
+export const modelCycleUnits = [
   { id: 1, name: "Tuần" },
   { id: 2, name: "Tháng" },
   { id: 3, name: "Năm" },
 ];
 
-export const timeHorizonUnit = [
+export const timeHorizonUnits = [
   { id: 1, name: "Tuần" },
   { id: 2, name: "Tháng" },
   { id: 3, name: "Năm" },
