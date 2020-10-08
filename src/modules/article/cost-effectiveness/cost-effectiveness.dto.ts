@@ -17,12 +17,12 @@ export class WriteCostEffectivenessDTO {
    assumption?: string;
    analysisMethodId?: number;
    studyPerspectiveId?: number;
-   typeOfEffectivenessId?: number;
+   typeOfEffectiveness?: string;
    clinicalCriteria?: string;
    effectivenessDataCollectingMethodId?: number;
    discountRateId?: number;
    costComponentId?: number;
-   costDataCollectingMethodId?: number;
+   costDataCollectingMethod?: string;
    currencyUnitId?: number;
    yearOfCost?: number;
    heterogeneityAnalysisIdArray?: number[];

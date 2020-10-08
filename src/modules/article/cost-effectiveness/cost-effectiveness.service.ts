@@ -123,17 +123,17 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       // const outcomeIdArray = _.get(data, "outcomeIdArray");
       const studyLocationIdArray = _.get(data, "studyLocationIdArray");
       // const modelTypeIdArray = _.get(data, "modelTypeIdArray");
-      const heterogeneityAnalysisIdArray = _.get(data, "heterogeneityAnalysisIdArray");
+      // const heterogeneityAnalysisIdArray = _.get(data, "heterogeneityAnalysisIdArray");
       const uncertaintyAnalysisMethodIdArray = _.get(data, "uncertaintyAnalysisMethodIdArray");
-      const uncertaintyAnalysisResultIdArray = _.get(data, "uncertaintyAnalysisResultIdArray");
+      // const uncertaintyAnalysisResultIdArray = _.get(data, "uncertaintyAnalysisResultIdArray");
 
       const interventions = interventionIdArray && await this.interventionService.findInterventionByIdArray(interventionIdArray);
       const comparators = comparatorIdArray && await this.comparatorService.findComparatorByIdArray(comparatorIdArray);
       // const outcomes = outcomeIdArray && await this.outcomeService.findOutcomeByIdArray(outcomeIdArray);
       const studyLocations = studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
       // const modelTypes = modelTypeIdArray && await this.modelTypeService.findModelTypeByIdArray(modelTypeIdArray);
-      const heterogeneityAnalysis = heterogeneityAnalysisIdArray && await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
-      // const uncertaintyAnalysisMethods = uncertaintyAnalysisMethodIdArray && await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisMethodIdArray);
+      // const heterogeneityAnalysis = heterogeneityAnalysisIdArray && await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
+      const uncertaintyAnalysisMethods = uncertaintyAnalysisMethodIdArray && await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisMethodIdArray);
       // const uncertaintyAnalysisResults = uncertaintyAnalysisResultIdArray && await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
 
       _.assign(data, {
@@ -142,8 +142,8 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          // outcomes,
          studyLocations,
          // modelTypes,
-         heterogeneityAnalysis,
-         // uncertaintyAnalysisMethods,
+         // heterogeneityAnalysis,
+         uncertaintyAnalysisMethods,
          // uncertaintyAnalysisResults
       })
 
