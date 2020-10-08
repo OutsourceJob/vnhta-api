@@ -14,7 +14,7 @@ import { StudyDesignEntity } from "src/modules/catalog/study-design/study-design
 import { StudyLocationEntity } from "src/modules/catalog/study-location/study-location.entity";
 import { StudyPerspectiveEntity } from "src/modules/catalog/study-perspective/study-perspective.entity";
 import { UncertaintyAnalysisResultEntity } from "src/modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.entity";
-import { UncertaintyAnalysisEntity } from "src/modules/catalog/uncertainty-analysis/uncertainty-analysis.entity";
+import { UncertaintyAnalysisMethodEntity } from "src/modules/catalog/uncertainty-analysis-method/uncertainty-analysis-method.entity";
 import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { ArticleEntity } from "../article.entity";
 import { TableEntity } from '../../catalog/table/table.entity';
@@ -221,7 +221,7 @@ export class CostEffectivenessEntity extends BaseEntity {
   heterogeneityAnalysis: HeterogeneityAnalysisEntity[] = [];
 
   // @ManyToMany(
-  //   type => UncertaintyAnalysisEntity,
+  //   type => UncertaintyAnalysisMethodEntity,
   //   u => u.costEffectiveness
   // )
   // @JoinTable({
@@ -230,7 +230,7 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   inverseJoinColumns: [{ name: "uncertainty_analysis_id" }]
   // })
   @Column({ type: "json" })
-  uncertaintyAnalysis: UncertaintyAnalysisEntity[] = [];
+  uncertaintyAnalysisMethods: UncertaintyAnalysisMethodEntity[] = [];
 
   // @ManyToMany(
   //   type => UncertaintyAnalysisResultEntity,

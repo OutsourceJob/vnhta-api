@@ -23,5 +23,5 @@ export class OutcomeEntity extends BaseEntity {
   updatedAt: Date;
 
   // Relation
-  costEffectiveness: CostEffectivenessEntity[];
+  // costEffectiveness: CostEffectivenessEntity[];
 }

@@ -223,7 +223,7 @@ export const parameters = [
 ];
 
 export const outcomes = [
-  { id: 1, name: "LYG" },
+  { id: 1, name: "ICER/LYG" },
   { id: 2, name: "QALY" },
   { id: 3, name: "Tiêu chí lâm sàng" },
 ];
@@ -285,12 +285,13 @@ export const currencyUnits = [
 ];
 
 export const heterogeneityAnalysis = [
-  { id: 1, name: "" },
-  { id: 2, name: "" },
-  { id: 3, name: "" }
+  { id: 1, name: "Sự khác biệt của CP do sự khác biệt về đặc điểm bệnh nhân" },
+  { id: 2, name: "Sự khác biệt của HQ do sự khác biệt về đặc điểm bệnh nhân" },
+  { id: 3, name: "Sự khác biệt của CP-HQ do sự khác biệt về đặc điểm bệnh nhân" }
 ];
 
 export const uncertaintyAnalysisResults = [
-  { id: 1, name: "Tính bất định của tham số đầu vào lên kết quả" },
-  { id: 2, name: "Tính bất định của cấu trúc mô hình lên kết quả" },
+  { id: 1, name: "Tính bất định của tham số đầu vào lên KQ" },
+  { id: 2, name: "Tính bất định của cấu trúc mô hình lên KQ" },
+  { id: 3, name: "Tính bất định của các giả định lên KQ" },
 ]
