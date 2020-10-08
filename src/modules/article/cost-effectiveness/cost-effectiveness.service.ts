@@ -85,7 +85,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          .leftJoinAndSelect("cost_effectiveness.studyLocations", "study_location")
          // .leftJoinAndSelect("cost_effectiveness.modelTypes", "model_type")
          // .leftJoinAndSelect("cost_effectiveness.heterogeneityAnalysis", "heterogeneity_analysis")
-         .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysis", "uncertainty_analysis")
+         .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysisMethods", "uncertainty_analysis")
          // .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysisResults", "uncertainty_analysis_result")
          .where("cost_effectiveness.id = :id", { id: costEffectivenessId })
          .getOne()
@@ -133,7 +133,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const studyLocations = studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
       const modelTypes = modelTypeIdArray && await this.modelTypeService.findModelTypeByIdArray(modelTypeIdArray);
       const heterogeneityAnalysis = heterogeneityAnalysisIdArray && await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
-      const uncertaintyAnalysis = uncertaintyAnalysisMethodIdArray && await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisMethodIdArray);
+      const uncertaintyAnalysisMethods = uncertaintyAnalysisMethodIdArray && await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisMethodIdArray);
       const uncertaintyAnalysisResults = uncertaintyAnalysisResultIdArray && await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
 
       _.assign(data, {
@@ -143,7 +143,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          studyLocations,
          modelTypes,
          heterogeneityAnalysis,
-         uncertaintyAnalysis,
+         uncertaintyAnalysisMethods,
          uncertaintyAnalysisResults
       })
 
