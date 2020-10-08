@@ -151,8 +151,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "analysis_method_id" })
-  @Column({ name: 'analysis_method_id_array', type: "json" })
-  analysisMethodIdArray: number[] = [];
+  @Column({ name: 'analysis_method_id_array', nullable: true })
+  analysisMethodId: number;
 
   // @ManyToOne(
   //   type => StudyPerspectiveEntity,
