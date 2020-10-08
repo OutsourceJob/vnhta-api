@@ -70,28 +70,28 @@ export class CostBenefitEntity extends BaseEntity {
   })
   studyLocations: StudyLocationEntity[]
 
-  @ManyToOne(
-    type => StudyDesignEntity,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "study_design_id" })
+  // @ManyToOne(
+  //   type => StudyDesignEntity,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "study_design_id" })
   @Column({ name: "study_design_id", nullable: true })
   studyDesignId: number;
 
-  @ManyToOne(
-    type => DataCollectingMethodEntity,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "data_collecting_method_id" })
-  @Column({ name: "data_collecting_method_id", nullable: true })
+  // @ManyToOne(
+  //   type => DataCollectingMethodEntity,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "data_collecting_method_id" })
+  // @Column({ name: "data_collecting_method_id", nullable: true })
   dataCollectingMethodId: number;
 
-  @ManyToOne(
-    type => SampleSizeEntity,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "sample_size_id" })
-  @Column({ name: "sample_size_id", nullable: true })
+  // @ManyToOne(
+  //   type => SampleSizeEntity,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "sample_size_id" })
+  // @Column({ name: "sample_size_id", nullable: true })
   sampleSizeId: number;
 
   @Column({ name: "inclusion_criteria", nullable: true })
@@ -100,12 +100,12 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "exclusive_criteria", nullable: true })
   exclusiveCriteria: string;
 
-  @ManyToOne(
-    type => SamplingMethodEntity,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "sampling_method_id" })
-  @Column({ name: "sampling_method_id", nullable: true })
+  // @ManyToOne(
+  //   type => SamplingMethodEntity,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "sampling_method_id" })
+  // @Column({ name: "sampling_method_id", nullable: true })
   samplingMethodId: number;
 
   @Column({ name: "start_sampling_time", nullable: true })
@@ -114,28 +114,28 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "end_sampling_time", nullable: true })
   endSamplingTime: Date;
 
-  @ManyToOne(
-    type => CostTypeEntity,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "cost_type_id" })
-  @Column({ name: "cost_type_id", nullable: true })
+  // @ManyToOne(
+  //   type => CostTypeEntity,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "cost_type_id" })
+  // @Column({ name: "cost_type_id", nullable: true })
   costTypeId: number;
 
-  @ManyToOne(
-    type => CostComponentEntity,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "cost_component_id" })
-  @Column({ name: "cost_component_id", nullable: true })
+  // @ManyToOne(
+  //   type => CostComponentEntity,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "cost_component_id" })
+  // @Column({ name: "cost_component_id", nullable: true })
   costComponentId: string;
 
-  @ManyToOne(
-    type => StudyPerspectiveEntity,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "study_perspective_id" })
-  @Column({ name: "study_perspective_id", nullable: true })
+  // @ManyToOne(
+  //   type => StudyPerspectiveEntity,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "study_perspective_id" })
+  // @Column({ name: "study_perspective_id", nullable: true })
   studyPerspectiveId: number;
 
 
