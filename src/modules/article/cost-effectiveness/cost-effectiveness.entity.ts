@@ -80,8 +80,9 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   joinColumns: [{ name: 'cost_effectiveness_id' }],
   //   inverseJoinColumns: [{ name: "outcome_id" }]
   // })
-  @Column({ type: "json" })
-  outcomes: OutcomeEntity[] = [];
+  @Column({ type: "json", name: "outcome_id_array" })
+  // outcomes: OutcomeEntity[] = [];
+  outcomeIdArray: number[] = []
 
   @ManyToMany(
     type => StudyLocationEntity,
@@ -112,8 +113,9 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   joinColumns: [{ name: 'cost_effectiveness_id' }],
   //   inverseJoinColumns: [{ name: "model_type_id" }]
   // })
-  @Column({ type: "json" })
-  modelTypes: ModelTypeEntity[] = [];
+  @Column({ type: "json", name: "model_type_id_array" })
+  // modelTypes: ModelTypeEntity[] = [];
+  modelTypeIdArray: number[] = []
 
   /**
   @todo Model states
