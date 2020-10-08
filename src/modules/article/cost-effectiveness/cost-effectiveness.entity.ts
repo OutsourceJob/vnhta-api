@@ -71,16 +71,17 @@ export class CostEffectivenessEntity extends BaseEntity {
   })
   comparators: ComparatorEntity[];
 
-  @ManyToMany(
-    type => OutcomeEntity,
-    o => o.costEffectiveness
-  )
-  @JoinTable({
-    name: "cost_effectiveness_outcome",
-    joinColumns: [{ name: 'cost_effectiveness_id' }],
-    inverseJoinColumns: [{ name: "outcome_id" }]
-  })
-  outcomes: OutcomeEntity[];
+  // @ManyToMany(
+  //   type => OutcomeEntity,
+  //   o => o.costEffectiveness
+  // )
+  // @JoinTable({
+  //   name: "cost_effectiveness_outcome",
+  //   joinColumns: [{ name: 'cost_effectiveness_id' }],
+  //   inverseJoinColumns: [{ name: "outcome_id" }]
+  // })
+  @Column({ type: "json" })
+  outcomes: OutcomeEntity[] = [];
 
   @ManyToMany(
     type => StudyLocationEntity,
@@ -93,62 +94,82 @@ export class CostEffectivenessEntity extends BaseEntity {
   })
   studyLocations: StudyLocationEntity[];
 
-  @ManyToOne(
-    type => StudyDesignEntity,
-    s => s.costEffectiveness,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: 'study_design_id' })
+  // @ManyToOne(
+  //   type => StudyDesignEntity,
+  //   s => s.costEffectiveness,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: 'study_design_id' })
   @Column({ name: 'study_design_id', nullable: true })
   studyDesignId: number;
 
-  @ManyToMany(
-    type => ModelTypeEntity,
-    m => m.costEffectiveness
-  )
-  @JoinTable({
-    name: "cost_effectiveness_model_type",
-    joinColumns: [{ name: 'cost_effectiveness_id' }],
-    inverseJoinColumns: [{ name: "model_type_id" }]
-  })
-  modelTypes: ModelTypeEntity[];
+  // @ManyToMany(
+  //   type => ModelTypeEntity,
+  //   m => m.costEffectiveness
+  // )
+  // @JoinTable({
+  //   name: "cost_effectiveness_model_type",
+  //   joinColumns: [{ name: 'cost_effectiveness_id' }],
+  //   inverseJoinColumns: [{ name: "model_type_id" }]
+  // })
+  @Column({ type: "json" })
+  modelTypes: ModelTypeEntity[] = [];
 
   /**
-  * @todo Model states
-  * @todo Model cycle
-  * @todo Time horizon
+  @todo Model states
   */
+  @Column({ nullable: true })
+  modelStates: string;
+
+  /**
+  @todo Model cycle
+  */
+  @Column({ name: 'model_cycle_quantity', nullable: true })
+  modelCycleQuantity: number;
+
+  @Column({ name: 'model_cycle_unit_id', nullable: true })
+  modelCycleUnitId: number;
+
+  /**
+  @todo Time horizon
+  */
+
+  @Column({ name: 'time_horizon_quantity', nullable: true })
+  timeHorizonQuantity: number;
+
+  @Column({ name: 'time_horizon_unit_id', nullable: true })
+  timeHorizonUnitId: number;
 
   @Column({ nullable: true })
   assumption: string;
 
-  @ManyToOne(
-    type => AnalysisMethodEntity,
-    a => a.costEffectiveness,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "analysis_method_id" })
+  // @ManyToOne(
+  //   type => AnalysisMethodEntity,
+  //   a => a.costEffectiveness,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "analysis_method_id" })
   @Column({ name: 'analysis_method_id', nullable: true })
   analysisMethodId: number;
 
-  @ManyToOne(
-    type => StudyPerspectiveEntity,
-    s => s.costEffectiveness,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "study_perspective_id" })
+  // @ManyToOne(
+  //   type => StudyPerspectiveEntity,
+  //   s => s.costEffectiveness,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "study_perspective_id" })
   @Column({ name: 'study_perspective_id', nullable: true })
   studyPerspectiveId: number;
 
-  @Column({ nullable: true })
-  typeOfEffectiveness: string;
+  @Column({ name: 'type_of_effectiveness_id', nullable: true })
+  typeOfEffectivenessId: number;
 
-  @ManyToOne(
-    type => EffectivenessDataCollectingMethodEntity,
-    e => e.costEffectiveness,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: 'effectiveness_data_collecting_method_id' })
+  // @ManyToOne(
+  //   type => EffectivenessDataCollectingMethodEntity,
+  //   e => e.costEffectiveness,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: 'effectiveness_data_collecting_method_id' })
   @Column({ name: "effectiveness_data_collecting_method_id", nullable: true })
   effectivenessDataCollectingMethodId: number;
 
@@ -160,59 +181,65 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: "discount_rate_id", nullable: true })
   discountRateId: number;
 
-  @ManyToOne(
-    type => CostComponentEntity,
-    c => c.costEffectiveness,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: 'cost_component_id' })
+  // @ManyToOne(
+  //   type => CostComponentEntity,
+  //   c => c.costEffectiveness,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: 'cost_component_id' })
   @Column({ name: 'cost_component_id', nullable: true })
   costComponentId: number;
 
-  @Column({ nullable: true })
-  costDataCollectingMethod: string;
+  @Column({ name: 'cost_data_collecting_method_id', nullable: true })
+  costDataCollectingMethodId: number;
 
-  @ManyToOne(
-    type => CurrencyUnitEntity,
-    c => c.costEffectiveness,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: 'currency_unit_id' })
+  // @ManyToOne(
+  //   type => CurrencyUnitEntity,
+  //   c => c.costEffectiveness,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: 'currency_unit_id' })
   @Column({ name: 'currency_unit_id', nullable: true })
-  currencyUnitId: number;
+  currencyUnitId: string;
 
-  @ManyToMany(
-    type => HeterogeneityAnalysisEntity,
-    h => h.costEffectiveness
-  )
-  @JoinTable({
-    name: "cost_effectiveness_heterogeneity_analysis",
-    joinColumns: [{ name: 'cost_effectiveness_id' }],
-    inverseJoinColumns: [{ name: "heterogeneity_analysis_id" }]
-  })
-  heterogeneityAnalysis: HeterogeneityAnalysisEntity[];
+  @Column({ name: 'year_of_cost', nullable: true })
+  yearOfCost: number;
 
-  @ManyToMany(
-    type => UncertaintyAnalysisEntity,
-    u => u.costEffectiveness
-  )
-  @JoinTable({
-    name: "cost_effectiveness_uncertainty_analysis",
-    joinColumns: [{ name: 'cost_effectiveness_id' }],
-    inverseJoinColumns: [{ name: "uncertainty_analysis_id" }]
-  })
-  uncertaintyAnalysis: UncertaintyAnalysisEntity[];
+  // @ManyToMany(
+  //   type => HeterogeneityAnalysisEntity,
+  //   h => h.costEffectiveness
+  // )
+  // @JoinTable({
+  //   name: "cost_effectiveness_heterogeneity_analysis",
+  //   joinColumns: [{ name: 'cost_effectiveness_id' }],
+  //   inverseJoinColumns: [{ name: "heterogeneity_analysis_id" }]
+  // })
+  @Column({ type: "json" })
+  heterogeneityAnalysis: HeterogeneityAnalysisEntity[] = [];
 
-  @ManyToMany(
-    type => UncertaintyAnalysisResultEntity,
-    u => u.costEffectiveness
-  )
-  @JoinTable({
-    name: "cost_effectiveness_uncertainty_analysis_result",
-    joinColumns: [{ name: 'cost_effectiveness_id' }],
-    inverseJoinColumns: [{ name: "uncertainty_analysis_result_id" }]
-  })
-  uncertaintyAnalysisResults: UncertaintyAnalysisResultEntity[];
+  // @ManyToMany(
+  //   type => UncertaintyAnalysisEntity,
+  //   u => u.costEffectiveness
+  // )
+  // @JoinTable({
+  //   name: "cost_effectiveness_uncertainty_analysis",
+  //   joinColumns: [{ name: 'cost_effectiveness_id' }],
+  //   inverseJoinColumns: [{ name: "uncertainty_analysis_id" }]
+  // })
+  @Column({ type: "json" })
+  uncertaintyAnalysis: UncertaintyAnalysisEntity[] = [];
+
+  // @ManyToMany(
+  //   type => UncertaintyAnalysisResultEntity,
+  //   u => u.costEffectiveness
+  // )
+  // @JoinTable({
+  //   name: "cost_effectiveness_uncertainty_analysis_result",
+  //   joinColumns: [{ name: 'cost_effectiveness_id' }],
+  //   inverseJoinColumns: [{ name: "uncertainty_analysis_result_id" }]
+  // })
+  @Column({ type: "json" })
+  uncertaintyAnalysisResults: UncertaintyAnalysisResultEntity[] = [];
 
   @ManyToOne(
     type => TableEntity

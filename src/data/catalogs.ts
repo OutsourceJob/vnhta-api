@@ -220,4 +220,77 @@ export const parameters = [
     code: "icer_result",
     name: "Result"
   }
+];
+
+export const outcomes = [
+  { id: 1, name: "LYG" },
+  { id: 2, name: "QALY" },
+  { id: 3, name: "Tiêu chí lâm sàng" },
+];
+
+export const ceStudyDesigns = [
+  { id: 1, name: "Alongside clinical trial" },
+  { id: 2, name: "Modelling" },
+  { id: 3, name: "Kết hợp cả 2 phương pháp" }
+];
+
+export const modelTypes = [
+  { id: 1, name: "Markov" },
+  { id: 2, name: "Cây quyết định" },
+  { id: 3, name: "Khác" }
+];
+
+export const modelCycleUnit = [
+  { id: 1, name: "Tuần" },
+  { id: 2, name: "Tháng" },
+  { id: 3, name: "Năm" },
+];
+
+export const timeHorizonUnit = [
+  { id: 1, name: "Tuần" },
+  { id: 2, name: "Tháng" },
+  { id: 3, name: "Năm" },
+];
+
+export const analysisMethods = [
+  { id: 1, name: "CEA" },
+  { id: 2, name: "CMA" },
+  { id: 3, name: "CUA" },
+  { id: 4, name: "CBA" }
+];
+
+export const typeOfEffectiveness = [
+  { id: 1, name: "LYG" },
+  { id: 2, name: "QALY" },
+  { id: 3, name: "Tiêu chí lâm sàng" }
+];
+
+export const effectivenessDataCollectingMethods = [
+  { id: 1, name: "Dựa trên 1 nghiên cứu lâm sàng (trích dẫn nghiên cứu lâm sàng)" },
+  { id: 2, name: "Dựa trên tổng quan tài liệu (trích dẫn bài tổng quan)" },
+  { id: 3, name: "Dựa trên mức độ ưa chuộng" }
+];
+
+export const costDataCollectingMethods = [
+  { id: 1, name: "Tổng quan" },
+  { id: 2, name: "Hồi cứu dữ liệu" },
+  { id: 3, name: "Phóng vấn ý kiến chuyên gia" },
+]
+
+export const currencyUnits = [
+  { id: 1, name: "USD" },
+  { id: 2, name: "VND" },
+  { id: 3, name: "EUR" },
+  { id: 4, name: "GBP" }
+];
+
+export const heterogeneityAnalysis = [
+  { id: 1, name: "" },
+  { id: 2, name: "" },
+  { id: 3, name: "" }
+];
+
+export const uncertaintyAnalysisResults = [
+  { id: 1, name: "Tính bất định của tham số đầu vào lên kết quả" },
+  { id: 2, name: "Tính bất định của cấu trúc mô hình lên kết quả" },
 ]
