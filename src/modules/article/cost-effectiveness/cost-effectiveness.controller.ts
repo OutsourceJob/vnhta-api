@@ -1,10 +1,11 @@
-import { Controller, Body, UseInterceptors, BadRequestException } from '@nestjs/common';
+import { Controller, Body, UseInterceptors, BadRequestException, Post, Param } from '@nestjs/common';
 import { Crud, Override, ParsedRequest, CrudRequest, ParsedBody } from "@nestjsx/crud";
 import { SerializerInterceptor } from '../../../serialization/serializer.interceptor';
 import * as _ from "lodash";
 import { CostEffectivenessService } from './cost-effectiveness.service';
 import { WriteCostEffectivenessDTO } from './cost-effectiveness.dto';
 import { CostEffectivenessEntity } from './cost-effectiveness.entity';
+import { TableService } from '../../catalog/table/table.service';
 
 @UseInterceptors(SerializerInterceptor)
 @Crud({
@@ -19,7 +20,8 @@ import { CostEffectivenessEntity } from './cost-effectiveness.entity';
 @Controller("cost-effectiveness")
 export class CostEffectivenessController {
    constructor(
-      public service: CostEffectivenessService
+      public service: CostEffectivenessService,
+      private tableService: TableService
    ) { }
 
    @Override()
@@ -57,5 +59,14 @@ export class CostEffectivenessController {
       if (fieldId) costEffectivenessId = fieldId.value;
 
       return this.service.updateCostEffectivenessById(costEffectivenessId, data)
+   }
+
+   @Post("/:id/generate-base-case-table")
+   async generateBaseCaseTable(
+      @Param("id") id: number
+   ) {
+      return this.tableService.createBaseCaseTable({
+         costEffectivenessId: id
+      })
    }
 }

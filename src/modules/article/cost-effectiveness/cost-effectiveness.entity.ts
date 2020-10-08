@@ -215,7 +215,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   uncertaintyAnalysisResults: UncertaintyAnalysisResultEntity[];
 
   @ManyToOne(
-    type => TableEntity
+    type => TableEntity,
+    { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "base_case_table_id", referencedColumnName: "id" })
   @Column({ name: "base_case_table_id", nullable: true })

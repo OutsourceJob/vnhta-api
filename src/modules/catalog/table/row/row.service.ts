@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { RowEntity } from './row.entity';
 import { InjectRepository } from "@nestjs/typeorm";
@@ -17,7 +17,7 @@ export class RowService extends TypeOrmCrudService<RowEntity>{
     @InjectRepository(RowEntity) repo: Repository<RowEntity>,
     private featureService: FeatureService,
     // private parameterService: ParameterService,
-    private tableService: TableService
+    @Inject(forwardRef(() => TableService)) private tableService: TableService
   ) {
     super(repo);
   }
@@ -80,5 +80,11 @@ export class RowService extends TypeOrmCrudService<RowEntity>{
     await row.save()
 
     return await this.findRowById(id)
+  }
+
+  async createBaseCaseRows(rows: Array<any>) {
+    return await this.repo.save(
+      this.repo.create(rows)
+    )
   }
 }

@@ -1,6 +1,7 @@
 import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, JoinColumn, ManyToOne } from 'typeorm';
 import { VarEntity } from '../var/var.entity';
 import { TableEntity } from '../table.entity';
+import { PicoType } from '../../../../interfaces/index';
 
 @Entity({ name: "row" })
 export class RowEntity extends BaseEntity {
@@ -8,7 +9,8 @@ export class RowEntity extends BaseEntity {
   id: number;
 
   @ManyToOne(
-    type => TableEntity
+    type => TableEntity,
+    { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "table_id" })
   @Column({ name: "table_id", nullable: true })
@@ -20,6 +22,13 @@ export class RowEntity extends BaseEntity {
   @JoinColumn({ name: "var_id" })
   @Column({ name: "var_id", nullable: true })
   varId: number;
+
+  @Column({ name: "pico_type", nullable: true })
+  picoType: PicoType;
+
+  @Column({ name: "pico_id", nullable: true })
+  picoId: number;
+
 
   @Column({ nullable: true })
   name: string;

@@ -30,3 +30,8 @@ export enum ParameterType {
   QualityOfLife = "QualityOfLife",
   Epidemiology = "Epidemiology"
 }
+
+export enum PicoType {
+  Intervention = "Intervention",
+  Comparator = "Comparator"
+}

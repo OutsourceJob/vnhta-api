@@ -52,10 +52,10 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const uncertaintyAnalysis = await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisIdArray);
       const uncertaintyAnalysisResults = await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
 
-      const baseCaseTable = await this.tableService.createTable({
-         name: "Base case result",
-         parameterCodeArray: ["cost", "effectiveness", "icer", "icer_result"]
-      })
+      // const baseCaseTable = await this.tableService.createTable({
+      //    name: "Base case result",
+      //    parameterCodeArray: ["cost", "effectiveness", "icer", "icer_result"]
+      // })
 
       const newCostEffectiveness = await this.repo
          .create({
@@ -68,7 +68,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
             heterogeneityAnalysis,
             uncertaintyAnalysis,
             uncertaintyAnalysisResults,
-            baseCaseTableId: baseCaseTable.id
+            // baseCaseTableId: baseCaseTable.id
          })
          .save()
 

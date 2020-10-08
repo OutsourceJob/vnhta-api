@@ -141,32 +141,40 @@ export class CostBenefitEntity extends BaseEntity {
 
   // tables
   @ManyToOne(
-    type => TableEntity
+    type => TableEntity,
+    { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "qualitative_table_id", referencedColumnName: "id" })
   @Column({ name: "qualitative_table_id", nullable: true })
   qualitativeTableId: number;
 
+  @ManyToOne(
+    type => TableEntity,
+    { onDelete: "SET NULL" }
+  )
   @JoinColumn({ name: "quantitative_table_id", referencedColumnName: "id" })
   @Column({ name: "quantitative_table_id", nullable: true })
   quantitativeTableId: number;
 
   @ManyToOne(
-    type => TableEntity
+    type => TableEntity,
+    { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "cost_table_id", referencedColumnName: "id" })
   @Column({ name: "cost_table_id", nullable: true })
   costTableId: number;
 
   @ManyToOne(
-    type => TableEntity
+    type => TableEntity,
+    { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "qualitative_factor_table_id", referencedColumnName: "id" })
   @Column({ name: "qualitative_factor_table_id", nullable: true })
   qualitativeFactorTableId: number;
 
   @ManyToOne(
-    type => TableEntity
+    type => TableEntity,
+    { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "quantitative_factor_table_id", referencedColumnName: "id" })
   @Column({ name: "quantitative_factor_table_id", nullable: true })
