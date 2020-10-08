@@ -85,7 +85,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          .leftJoinAndSelect("cost_effectiveness.studyLocations", "study_location")
          // .leftJoinAndSelect("cost_effectiveness.modelTypes", "model_type")
          // .leftJoinAndSelect("cost_effectiveness.heterogeneityAnalysis", "heterogeneity_analysis")
-         // .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysis", "uncertainty_analysis")
+         .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysis", "uncertainty_analysis")
          // .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysisResults", "uncertainty_analysis_result")
          .where("cost_effectiveness.id = :id", { id: costEffectivenessId })
          .getOne()
@@ -99,7 +99,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          studyLocationIdArray: _.map(costEffectiveness.studyLocations, "id"),
          // modelTypeIdArray: _.map(costEffectiveness.modelTypes, "id"),
          // heterogeneityAnalysisIdArray: _.map(costEffectiveness.heterogeneityAnalysis, "id"),
-         // uncertaintyAnalysisMethodIdArray: _.map(costEffectiveness.uncertaintyAnalysisMethods, "id"),
+         uncertaintyAnalysisMethodIdArray: _.map(costEffectiveness.uncertaintyAnalysisMethods, "id"),
          // uncertaintyAnalysisResultIdArray: _.map(costEffectiveness.uncertaintyAnalysisResults, "id"),
          interventions: undefined,
          comparators: undefined,
@@ -107,7 +107,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          studyLocations: undefined,
          // modelTypes: undefined,
          // heterogeneityAnalysis: undefined,
-         // uncertaintyAnalysis: undefined,
+         uncertaintyAnalysisMethods: undefined,
          // uncertaintyAnalysisResults: undefined
       })
 

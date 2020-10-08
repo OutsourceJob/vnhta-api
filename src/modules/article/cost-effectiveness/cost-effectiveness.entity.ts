@@ -220,17 +220,16 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ type: "json" })
   heterogeneityAnalysis: HeterogeneityAnalysisEntity[] = [];
 
-  // @ManyToMany(
-  //   type => UncertaintyAnalysisMethodEntity,
-  //   u => u.costEffectiveness
-  // )
-  // @JoinTable({
-  //   name: "cost_effectiveness_uncertainty_analysis",
-  //   joinColumns: [{ name: 'cost_effectiveness_id' }],
-  //   inverseJoinColumns: [{ name: "uncertainty_analysis_id" }]
-  // })
-  @Column({ type: "json" })
-  uncertaintyAnalysisMethods: UncertaintyAnalysisMethodEntity[] = [];
+  @ManyToMany(
+    type => UncertaintyAnalysisMethodEntity,
+    u => u.costEffectiveness
+  )
+  @JoinTable({
+    name: "cost_effectiveness_uncertainty_analysis",
+    joinColumns: [{ name: 'cost_effectiveness_id' }],
+    inverseJoinColumns: [{ name: "uncertainty_analysis_id" }]
+  })
+  uncertaintyAnalysisMethods: UncertaintyAnalysisMethodEntity[];
 
   // @ManyToMany(
   //   type => UncertaintyAnalysisResultEntity,
