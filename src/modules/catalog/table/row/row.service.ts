@@ -28,7 +28,7 @@ export class RowService extends TypeOrmCrudService<RowEntity>{
   async createRow(data: WriteRowDTO): Promise<RowEntity> {
     const newRow = await this.repo.create(data).save()
     const table = await this.tableService.findTableById(newRow.tableId)
-    const parameters = await this.parameterService.findParameters()
+    const parameters = await this.parameterService.findParametersByCodeArray(table.parameterCodeArray)
     const features = _.map(parameters, parameter => {
       return {
         rowId: newRow.id,
