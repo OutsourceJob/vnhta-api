@@ -67,8 +67,8 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     const costBenefit = await this.repo.findOne(costBenefitId);
     if (!costBenefit) throw new NotFoundException("Cost Benefit Not Found")
 
-    const interventionIdArray = _.get(data, "interventionIdArray", []);
-    const studyLocationIdArray = _.get(data, "studyLocationIdArray", []);
+    const interventionIdArray = _.get(data, "interventionIdArray");
+    const studyLocationIdArray = _.get(data, "studyLocationIdArray");
 
     const interventions = data.interventionIdArray && await this.interventionService.findInterventionByIdArray(interventionIdArray)
     const studyLocations = data.studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)

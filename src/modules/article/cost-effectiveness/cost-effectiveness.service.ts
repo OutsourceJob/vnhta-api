@@ -118,23 +118,23 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const costEffectiveness = await this.repo.findOne(costEffectivenessId);
       if (!costEffectiveness) throw new NotFoundException("Cost Effectiveness Not Found")
 
-      const interventionIdArray = _.get(data, "interventionIdArray", []);
-      const comparatorIdArray = _.get(data, "comparatorIdArray", []);
-      const outcomeIdArray = _.get(data, "outcomeIdArray", []);
-      const studyLocationIdArray = _.get(data, "studyLocationIdArray", []);
-      const modelTypeIdArray = _.get(data, "modelTypeIdArray", []);
-      const heterogeneityAnalysisIdArray = _.get(data, "heterogeneityAnalysisIdArray", []);
-      const uncertaintyAnalysisIdArray = _.get(data, "uncertaintyAnalysisIdArray", []);
-      const uncertaintyAnalysisResultIdArray = _.get(data, "uncertaintyAnalysisResultIdArray", []);
+      const interventionIdArray = _.get(data, "interventionIdArray");
+      const comparatorIdArray = _.get(data, "comparatorIdArray");
+      const outcomeIdArray = _.get(data, "outcomeIdArray");
+      const studyLocationIdArray = _.get(data, "studyLocationIdArray");
+      const modelTypeIdArray = _.get(data, "modelTypeIdArray");
+      const heterogeneityAnalysisIdArray = _.get(data, "heterogeneityAnalysisIdArray");
+      const uncertaintyAnalysisIdArray = _.get(data, "uncertaintyAnalysisIdArray");
+      const uncertaintyAnalysisResultIdArray = _.get(data, "uncertaintyAnalysisResultIdArray");
 
-      const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
-      const comparators = await this.comparatorService.findComparatorByIdArray(comparatorIdArray);
-      const outcomes = await this.outcomeService.findOutcomeByIdArray(outcomeIdArray);
-      const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
-      const modelTypes = await this.modelTypeService.findModelTypeByIdArray(modelTypeIdArray);
-      const heterogeneityAnalysis = await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
-      const uncertaintyAnalysis = await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisIdArray);
-      const uncertaintyAnalysisResults = await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
+      const interventions = interventionIdArray && await this.interventionService.findInterventionByIdArray(interventionIdArray);
+      const comparators = comparatorIdArray && await this.comparatorService.findComparatorByIdArray(comparatorIdArray);
+      const outcomes = outcomeIdArray && await this.outcomeService.findOutcomeByIdArray(outcomeIdArray);
+      const studyLocations = studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
+      const modelTypes = modelTypeIdArray && await this.modelTypeService.findModelTypeByIdArray(modelTypeIdArray);
+      const heterogeneityAnalysis = heterogeneityAnalysisIdArray && await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
+      const uncertaintyAnalysis = uncertaintyAnalysisIdArray && await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisIdArray);
+      const uncertaintyAnalysisResults = uncertaintyAnalysisResultIdArray && await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
 
       _.assign(data, {
          interventions,
