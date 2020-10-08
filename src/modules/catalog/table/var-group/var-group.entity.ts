@@ -6,7 +6,7 @@ export class VarGroupEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ name: "var" })
+  @Column()
   name: string;
 
   @CreateDateColumn({ name: "created_at" })
