@@ -1,8 +1,8 @@
 import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { CostEffectivenessEntity } from 'src/modules/article/cost-effectiveness/cost-effectiveness.entity';
 
-@Entity({ name: 'uncertainty_analysis' })
-export class UncertaintyAnalysisEntity extends BaseEntity {
+@Entity({ name: 'uncertainty_analysis_method' })
+export class UncertaintyAnalysisMethodEntity extends BaseEntity {
    @PrimaryGeneratedColumn()
    id: number;
 

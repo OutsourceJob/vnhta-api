@@ -27,7 +27,7 @@ import { DiscountRateModule } from './modules/catalog/discount-rate/discount-rat
 import { CurrencyUnitModule } from './modules/catalog/currency-unit/currency-unit.module';
 import { AnalysisMethodModule } from './modules/catalog/analysis-method/analysis-method.module';
 import { HeterogeneityAnalysisModule } from './modules/catalog/heterogeneity-analysis/heterogeneity-analysis.module';
-import { UncertaintyAnalysisModule } from './modules/catalog/uncertainty-analysis/uncertainty-analysis.module';
+import { UncertaintyAnalysisMethodModule } from './modules/catalog/uncertainty-analysis-method/uncertainty-analysis-method.module';
 import { UncertaintyAnalysisResultModule } from "./modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.module";
 import { TableModule } from './modules/catalog/table/table.module';
 
@@ -67,7 +67,7 @@ import { TableModule } from './modules/catalog/table/table.module';
     CurrencyUnitModule,
     AnalysisMethodModule,
     HeterogeneityAnalysisModule,
-    UncertaintyAnalysisModule,
+    UncertaintyAnalysisMethodModule,
     UncertaintyAnalysisResultModule,
 
     // table

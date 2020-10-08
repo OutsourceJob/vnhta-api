@@ -10,7 +10,7 @@ import { ComparatorService } from "src/modules/catalog/comparator/comparator.ser
 import { OutcomeService } from "src/modules/catalog/outcome/outcome.service";
 import { ModelTypeService } from "src/modules/catalog/model-type/model-type.service";
 import { HeterogeneityAnalysisService } from "src/modules/catalog/heterogeneity-analysis/heterogeneity-analysis.service";
-import { UncertaintyAnalysisService } from "src/modules/catalog/uncertainty-analysis/uncertainty-analysis.service";
+import { UncertaintyAnalysisService } from "src/modules/catalog/uncertainty-analysis-method/uncertainty-analysis-method.service";
 import { UncertaintyAnalysisResultService } from "src/modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.service";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { TableService } from '../../catalog/table/table.service';
@@ -40,7 +40,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const studyLocationIdArray = _.get(data, "studyLocationIdArray", []);
       const modelTypeIdArray = _.get(data, "modelTypeIdArray", []);
       const heterogeneityAnalysisIdArray = _.get(data, "heterogeneityAnalysisIdArray", []);
-      const uncertaintyAnalysisIdArray = _.get(data, "uncertaintyAnalysisIdArray", []);
+      const uncertaintyAnalysisMethodIdArray = _.get(data, "uncertaintyAnalysisMethodIdArray", []);
       const uncertaintyAnalysisResultIdArray = _.get(data, "uncertaintyAnalysisResultIdArray", []);
 
       const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
@@ -49,7 +49,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
       const modelTypes = await this.modelTypeService.findModelTypeByIdArray(modelTypeIdArray);
       const heterogeneityAnalysis = await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
-      const uncertaintyAnalysis = await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisIdArray);
+      const uncertaintyAnalysisMethods = await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisMethodIdArray);
       const uncertaintyAnalysisResults = await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
 
       // const baseCaseTable = await this.tableService.createTable({
@@ -66,7 +66,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
             studyLocations,
             modelTypes,
             heterogeneityAnalysis,
-            uncertaintyAnalysis,
+            uncertaintyAnalysisMethods,
             uncertaintyAnalysisResults,
             // baseCaseTableId: baseCaseTable.id
          })
@@ -81,12 +81,12 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          .createQueryBuilder("cost_effectiveness")
          .leftJoinAndSelect("cost_effectiveness.interventions", "intervention")
          .leftJoinAndSelect("cost_effectiveness.comparators", "comparator")
-         .leftJoinAndSelect("cost_effectiveness.outcomes", "outcome")
+         // .leftJoinAndSelect("cost_effectiveness.outcomes", "outcome")
          .leftJoinAndSelect("cost_effectiveness.studyLocations", "study_location")
-         .leftJoinAndSelect("cost_effectiveness.modelTypes", "model_type")
-         .leftJoinAndSelect("cost_effectiveness.heterogeneityAnalysis", "heterogeneity_analysis")
+         // .leftJoinAndSelect("cost_effectiveness.modelTypes", "model_type")
+         // .leftJoinAndSelect("cost_effectiveness.heterogeneityAnalysis", "heterogeneity_analysis")
          .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysis", "uncertainty_analysis")
-         .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysisResults", "uncertainty_analysis_result")
+         // .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysisResults", "uncertainty_analysis_result")
          .where("cost_effectiveness.id = :id", { id: costEffectivenessId })
          .getOne()
 
@@ -95,20 +95,20 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       _.assign(costEffectiveness, {
          interventionIdArray: _.map(costEffectiveness.interventions, "id"),
          comparatorIdArray: _.map(costEffectiveness.comparators, "id"),
-         outcomeIdArray: _.map(costEffectiveness.outcomes, "id"),
+         // outcomeIdArray: _.map(costEffectiveness.outcomes, "id"),
          studyLocationIdArray: _.map(costEffectiveness.studyLocations, "id"),
-         modelTypeIdArray: _.map(costEffectiveness.modelTypes, "id"),
-         heterogeneityAnalysisIdArray: _.map(costEffectiveness.heterogeneityAnalysis, "id"),
-         uncertaintyAnalysisIdArray: _.map(costEffectiveness.uncertaintyAnalysis, "id"),
-         uncertaintyAnalysisResultIdArray: _.map(costEffectiveness.uncertaintyAnalysisResults, "id"),
+         // modelTypeIdArray: _.map(costEffectiveness.modelTypes, "id"),
+         // heterogeneityAnalysisIdArray: _.map(costEffectiveness.heterogeneityAnalysis, "id"),
+         uncertaintyAnalysisMethodIdArray: _.map(costEffectiveness.uncertaintyAnalysisMethods, "id"),
+         // uncertaintyAnalysisResultIdArray: _.map(costEffectiveness.uncertaintyAnalysisResults, "id"),
          interventions: undefined,
          comparators: undefined,
-         outcomes: undefined,
+         // outcomes: undefined,
          studyLocations: undefined,
-         modelTypes: undefined,
-         heterogeneityAnalysis: undefined,
-         uncertaintyAnalysis: undefined,
-         uncertaintyAnalysisResults: undefined
+         // modelTypes: undefined,
+         // heterogeneityAnalysis: undefined,
+         uncertaintyAnalysisMethods: undefined,
+         // uncertaintyAnalysisResults: undefined
       })
 
       return costEffectiveness;
@@ -124,7 +124,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const studyLocationIdArray = _.get(data, "studyLocationIdArray");
       const modelTypeIdArray = _.get(data, "modelTypeIdArray");
       const heterogeneityAnalysisIdArray = _.get(data, "heterogeneityAnalysisIdArray");
-      const uncertaintyAnalysisIdArray = _.get(data, "uncertaintyAnalysisIdArray");
+      const uncertaintyAnalysisMethodIdArray = _.get(data, "uncertaintyAnalysisMethodIdArray");
       const uncertaintyAnalysisResultIdArray = _.get(data, "uncertaintyAnalysisResultIdArray");
 
       const interventions = interventionIdArray && await this.interventionService.findInterventionByIdArray(interventionIdArray);
@@ -133,7 +133,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const studyLocations = studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
       const modelTypes = modelTypeIdArray && await this.modelTypeService.findModelTypeByIdArray(modelTypeIdArray);
       const heterogeneityAnalysis = heterogeneityAnalysisIdArray && await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
-      const uncertaintyAnalysis = uncertaintyAnalysisIdArray && await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisIdArray);
+      const uncertaintyAnalysis = uncertaintyAnalysisMethodIdArray && await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisMethodIdArray);
       const uncertaintyAnalysisResults = uncertaintyAnalysisResultIdArray && await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
 
       _.assign(data, {
@@ -148,7 +148,16 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       })
 
       _.chain(data)
-         .omit(["interventionIdArray", "comparatorIdArray", "outcomeIdArray", "studyLocationIdArray", "modelTypeIdArray", "heterogeneityAnalysisIdArray", "uncertaintyAnalysisIdArray", "uncertaintyAnalysisResultIdArray"])
+         .omit([
+            "interventionIdArray",
+            "comparatorIdArray",
+            "outcomeIdArray",
+            "studyLocationIdArray",
+            "modelTypeIdArray",
+            "heterogeneityAnalysisIdArray",
+            "uncertaintyAnalysisMethodIdArray",
+            "uncertaintyAnalysisResultIdArray"
+         ])
          .keys()
          .value()
          .forEach(key => {

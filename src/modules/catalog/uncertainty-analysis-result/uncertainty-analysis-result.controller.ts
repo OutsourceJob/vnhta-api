@@ -14,7 +14,7 @@ import { SerializerInterceptor } from '../../../serialization/serializer.interce
       update: WriteUncertaintyAnalysisResultDTO
    }
 })
-@Controller("uncertainty-analysis-results")
+@Controller("uncertainty-analysis-method-results")
 @UseInterceptors(SerializerInterceptor)
 export class UncertaintyAnalysisResultController {
    constructor(public service: UncertaintyAnalysisResultService) { }

@@ -9,7 +9,7 @@ import { ComparatorModule } from "src/modules/catalog/comparator/comparator.modu
 import { OutcomeModule } from "src/modules/catalog/outcome/outcome.module";
 import { HeterogeneityAnalysisModule } from "src/modules/catalog/heterogeneity-analysis/heterogeneity-analysis.module";
 import { UncertaintyAnalysisResultModule } from "src/modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.module";
-import { UncertaintyAnalysisModule } from "src/modules/catalog/uncertainty-analysis/uncertainty-analysis.module";
+import { UncertaintyAnalysisMethodModule } from "src/modules/catalog/uncertainty-analysis-method/uncertainty-analysis-method.module";
 import { ModelTypeModule } from "src/modules/catalog/model-type/model-type.module";
 import { TableModule } from '../../catalog/table/table.module';
 
@@ -20,7 +20,7 @@ import { TableModule } from '../../catalog/table/table.module';
       ComparatorModule, OutcomeModule,
       ModelTypeModule, HeterogeneityAnalysisModule,
       UncertaintyAnalysisResultModule,
-      UncertaintyAnalysisModule,
+      UncertaintyAnalysisMethodModule,
       TableModule
    ],
    controllers: [CostEffectivenessController],

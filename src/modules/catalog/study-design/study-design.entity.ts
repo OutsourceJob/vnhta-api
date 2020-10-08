@@ -25,7 +25,7 @@ export class StudyDesignEntity extends BaseEntity {
 
   @OneToMany(
     type => CostEffectivenessEntity,
-    e => e.studyDesignId,
+    e => e.ceStudyDesignId,
     { onDelete: "SET NULL" }
   )
   costEffectiveness: CostEffectivenessEntity[];
