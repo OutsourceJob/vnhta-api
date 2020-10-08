@@ -10,7 +10,8 @@ import { TableModule } from '../table.module';
 @Module({
     imports: [
         TypeOrmModule.forFeature([RowEntity]),
-        FeatureModule, ParameterModule,
+        FeatureModule,
+        // ParameterModule,
         forwardRef(() => TableModule)
     ],
     controllers: [RowController],

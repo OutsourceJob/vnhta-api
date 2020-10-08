@@ -13,10 +13,11 @@ import { VarGroupModule } from './var-group/var-group.module';
 @Module({
     imports: [
         TypeOrmModule.forFeature([TableEntity]),
-        FeatureModule, ParameterModule, VarModule,
+        FeatureModule,
+        // ParameterModule,
+        VarModule,
         forwardRef(() => RowModule),
         VarGroupModule,
-
     ],
     controllers: [TableController],
     providers: [TableService],

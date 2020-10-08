@@ -9,13 +9,14 @@ import { ParameterService } from "../parameter/parameter.service";
 import * as _ from "lodash";
 import { WriteFeatureDTO } from '../feature/feature.dto';
 import { TableService } from '../table.service';
+import { parameters as parameterData } from "src/data/catalogs"
 
 @Injectable()
 export class RowService extends TypeOrmCrudService<RowEntity>{
   constructor(
     @InjectRepository(RowEntity) repo: Repository<RowEntity>,
     private featureService: FeatureService,
-    private parameterService: ParameterService,
+    // private parameterService: ParameterService,
     private tableService: TableService
   ) {
     super(repo);
@@ -28,7 +29,10 @@ export class RowService extends TypeOrmCrudService<RowEntity>{
   async createRow(data: WriteRowDTO): Promise<RowEntity> {
     const newRow = await this.repo.create(data).save()
     const table = await this.tableService.findTableById(newRow.tableId)
-    const parameters = await this.parameterService.findParametersByCodeArray(table.parameterCodeArray)
+    // const parameters = await this.parameterService.findParametersByCodeArray(table.parameterCodeArray)
+    const parameters = _.filter(parameterData, parameter => {
+      return _.indexOf(table.parameterCodeArray, parameter.code) > -1
+    })
     const features = _.map(parameters, parameter => {
       return {
         rowId: newRow.id,

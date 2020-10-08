@@ -28,7 +28,10 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
     const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
 
-    const qualitativeTable = await this.tableService.createTable({ name: "Qualitative Characteristics", parameterCodeArray: ["n", "percent"] })
+    const qualitativeTable = await this.tableService.createTable({
+      name: "Qualitative Characteristics",
+      parameterCodeArray: ["n", "percent"]
+    })
     const quantitativeTable = await this.tableService.createTable({
       name: "Quantitative Characteristics",
       parameterCodeArray: ["mean", "median", "sd", "se", "min", "max", "iqr_25", "iqr_75"]

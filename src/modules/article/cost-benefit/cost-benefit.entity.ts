@@ -91,7 +91,7 @@ export class CostBenefitEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "sample_size_id" })
-  // @Column({ name: "sample_size_id", nullable: true })
+  @Column({ name: "sample_size_id", nullable: true })
   sampleSizeId: number;
 
   @Column({ name: "inclusion_criteria", nullable: true })
@@ -105,7 +105,7 @@ export class CostBenefitEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "sampling_method_id" })
-  // @Column({ name: "sampling_method_id", nullable: true })
+  @Column({ name: "sampling_method_id", nullable: true })
   samplingMethodId: number;
 
   @Column({ name: "start_sampling_time", nullable: true })
@@ -119,7 +119,7 @@ export class CostBenefitEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "cost_type_id" })
-  // @Column({ name: "cost_type_id", nullable: true })
+  @Column({ name: "cost_type_id", nullable: true })
   costTypeId: number;
 
   // @ManyToOne(
@@ -127,7 +127,7 @@ export class CostBenefitEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "cost_component_id" })
-  // @Column({ name: "cost_component_id", nullable: true })
+  @Column({ name: "cost_component_id", nullable: true })
   costComponentId: string;
 
   // @ManyToOne(
@@ -135,7 +135,7 @@ export class CostBenefitEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "study_perspective_id" })
-  // @Column({ name: "study_perspective_id", nullable: true })
+  @Column({ name: "study_perspective_id", nullable: true })
   studyPerspectiveId: number;
 
 
