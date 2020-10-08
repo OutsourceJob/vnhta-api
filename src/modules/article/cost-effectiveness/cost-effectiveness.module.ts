@@ -11,6 +11,7 @@ import { HeterogeneityAnalysisModule } from "src/modules/catalog/heterogeneity-a
 import { UncertaintyAnalysisResultModule } from "src/modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.module";
 import { UncertaintyAnalysisModule } from "src/modules/catalog/uncertainty-analysis/uncertainty-analysis.module";
 import { ModelTypeModule } from "src/modules/catalog/model-type/model-type.module";
+import { TableModule } from '../../catalog/table/table.module';
 
 @Module({
    imports: [
@@ -19,7 +20,8 @@ import { ModelTypeModule } from "src/modules/catalog/model-type/model-type.modul
       ComparatorModule, OutcomeModule,
       ModelTypeModule, HeterogeneityAnalysisModule,
       UncertaintyAnalysisResultModule,
-      UncertaintyAnalysisModule
+      UncertaintyAnalysisModule,
+      TableModule
    ],
    controllers: [CostEffectivenessController],
    providers: [CostEffectivenessService],

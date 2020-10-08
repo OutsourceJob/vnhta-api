@@ -21,5 +21,6 @@ export class WriteCostEffectivenessDTO {
    heterogeneityAnalysisIdArray?: number[];
    uncertaintyAnalysisIdArray?: number[];
    uncertaintyAnalysisResultIdArray?: number[];
+   baseCaseTableId?: number;
    sponsor?: string;
 }

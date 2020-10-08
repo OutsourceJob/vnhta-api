@@ -17,6 +17,7 @@ import { UncertaintyAnalysisResultEntity } from "src/modules/catalog/uncertainty
 import { UncertaintyAnalysisEntity } from "src/modules/catalog/uncertainty-analysis/uncertainty-analysis.entity";
 import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { ArticleEntity } from "../article.entity";
+import { TableEntity } from '../../catalog/table/table.entity';
 
 @Entity({ name: 'cost_effectiveness' })
 export class CostEffectivenessEntity extends BaseEntity {
@@ -212,6 +213,13 @@ export class CostEffectivenessEntity extends BaseEntity {
     inverseJoinColumns: [{ name: "uncertainty_analysis_result_id" }]
   })
   uncertaintyAnalysisResults: UncertaintyAnalysisResultEntity[];
+
+  @ManyToOne(
+    type => TableEntity
+  )
+  @JoinColumn({ name: "base_case_table_id", referencedColumnName: "id" })
+  @Column({ name: "base_case_table_id", nullable: true })
+  baseCaseTableId: number;
 
   @Column({ nullable: true })
   sponsor: string;

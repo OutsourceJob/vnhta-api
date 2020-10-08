@@ -13,6 +13,7 @@ import { HeterogeneityAnalysisService } from "src/modules/catalog/heterogeneity-
 import { UncertaintyAnalysisService } from "src/modules/catalog/uncertainty-analysis/uncertainty-analysis.service";
 import { UncertaintyAnalysisResultService } from "src/modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.service";
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { TableService } from '../../catalog/table/table.service';
 
 @Injectable()
 export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivenessEntity> {
@@ -26,7 +27,8 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       private heterogeneityAnalysisService: HeterogeneityAnalysisService,
       private uncertaintyAnalysisService: UncertaintyAnalysisService,
       private uncertaintyAnalysisResultService: UncertaintyAnalysisResultService,
-      private connection: Connection
+      private connection: Connection,
+      private tableService: TableService
    ) {
       super(repo);
    }
@@ -50,6 +52,11 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const uncertaintyAnalysis = await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisIdArray);
       const uncertaintyAnalysisResults = await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
 
+      const baseCaseTable = await this.tableService.createTable({
+         name: "Base case result",
+         parameterCodeArray: ["cost", "effectiveness", "icer", "icer_result"]
+      })
+
       const newCostEffectiveness = await this.repo
          .create({
             articleId: data.articleId,
@@ -60,7 +67,8 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
             modelTypes,
             heterogeneityAnalysis,
             uncertaintyAnalysis,
-            uncertaintyAnalysisResults
+            uncertaintyAnalysisResults,
+            baseCaseTableId: baseCaseTable.id
          })
          .save()
 

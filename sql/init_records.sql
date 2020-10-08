@@ -66,3 +66,20 @@ WHERE NOT EXISTS (SELECT code FROM parameter WHERE code = tmp.code) LIMIT 1;
 INSERT INTO parameter (`code`, name) 
 SELECT * FROM (SELECT "test_value" AS code, "Test value" AS name) tmp
 WHERE NOT EXISTS (SELECT code FROM parameter WHERE code = tmp.code) LIMIT 1;
+
+-- cost effectivenss
+INSERT INTO parameter (`code`, name) 
+SELECT * FROM (SELECT "cost" AS code, "Cost" AS name) tmp
+WHERE NOT EXISTS (SELECT code FROM parameter WHERE code = tmp.code) LIMIT 1;
+
+INSERT INTO parameter (`code`, name) 
+SELECT * FROM (SELECT "effectivenss" AS code, "Effectivenss" AS name) tmp
+WHERE NOT EXISTS (SELECT code FROM parameter WHERE code = tmp.code) LIMIT 1;
+
+INSERT INTO parameter (`code`, name) 
+SELECT * FROM (SELECT "icer" AS code, "ICER" AS name) tmp
+WHERE NOT EXISTS (SELECT code FROM parameter WHERE code = tmp.code) LIMIT 1;
+
+INSERT INTO parameter (`code`, name) 
+SELECT * FROM (SELECT "icer_result" AS code, "Result" AS name) tmp
+WHERE NOT EXISTS (SELECT code FROM parameter WHERE code = tmp.code) LIMIT 1;
