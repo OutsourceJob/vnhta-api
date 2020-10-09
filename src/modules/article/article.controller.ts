@@ -14,6 +14,13 @@ import * as _ from "lodash";
   dto: {
     create: WriteArticleDTO,
     update: WriteArticleDTO
+  },
+  query: {
+    join: {
+      authors: {
+        eager: true
+      }
+    }
   }
 })
 @Controller("/articles")
