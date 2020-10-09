@@ -16,10 +16,10 @@ export class StudyPerspectiveEntity extends BaseEntity {
   updatedAt: Date;
 
   // Relation
-  @OneToMany(
-    type => CostEffectivenessEntity,
-    c => c.studyPerspectiveId,
-    { onDelete: "SET NULL" }
-  )
-  costEffectiveness: CostEffectivenessEntity[];
+  // @OneToMany(
+  //   type => CostEffectivenessEntity,
+  //   c => c.studyPerspectiveId,
+  //   { onDelete: "SET NULL" }
+  // )
+  // costEffectiveness: CostEffectivenessEntity[];
 }

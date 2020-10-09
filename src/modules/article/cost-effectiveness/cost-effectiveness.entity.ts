@@ -160,10 +160,10 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "study_perspective_id" })
-  @Column({ name: 'study_perspective_id', nullable: true })
-  studyPerspectiveId: number;
+  @Column({ name: 'study_perspective_id_array', type: "json" })
+  studyPerspectiveIdArray: number[] = [];
 
-  @Column({ name: 'type_of_effectiveness_id', type: "json" })
+  @Column({ name: 'type_of_effectiveness_id_array', type: "json" })
   typeOfEffectivenessIdArray: number[] = [];
 
   @Column({ name: 'clinical_criteria', nullable: true })
