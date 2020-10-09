@@ -17,7 +17,8 @@ export class RowEntity extends BaseEntity {
   tableId: number;
 
   @ManyToOne(
-    type => VarEntity
+    type => VarEntity,
+    { onDelete: "SET NULL" }
   )
   @JoinColumn({ name: "var_id" })
   @Column({ name: "var_id", nullable: true })
