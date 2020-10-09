@@ -130,13 +130,19 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "cost_component_id", nullable: true })
   costComponentId: string;
 
+  @Column({ name: 'currency_unit_id', nullable: true })
+  currencyUnitId: number;
+
+  @Column({ name: 'year_of_cost', nullable: true })
+  yearOfCost: number;
+
   // @ManyToOne(
   //   type => StudyPerspectiveEntity,
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "study_perspective_id" })
-  @Column({ name: "study_perspective_id", nullable: true })
-  studyPerspectiveId: number;
+  @Column({ name: "study_perspective_id_array", type: "json" })
+  studyPerspectiveIdArray: number[] = [];
 
 
   // tables
