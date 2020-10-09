@@ -88,7 +88,7 @@ export class CostBenefitEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: "data_collecting_method_id" })
-  // @Column({ name: "data_collecting_method_id", nullable: true })
+  @Column({ name: "data_collecting_method_id", nullable: true })
   dataCollectingMethodId: number;
 
   // @ManyToOne(
