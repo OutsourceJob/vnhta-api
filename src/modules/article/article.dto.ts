@@ -2,7 +2,8 @@ export class WriteArticleDTO {
   accountId: number;
   title: string;
   authorIdArray: Array<number>;
-  journalIdArray: Array<number>;
+  journalId: number;
+  // journalIdArray: Array<number>;
   vol: number;
   issue: number;
   number: number;

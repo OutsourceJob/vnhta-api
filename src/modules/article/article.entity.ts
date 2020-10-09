@@ -36,15 +36,22 @@ export class ArticleEntity extends BaseEntity {
   })
   authors: AuthorEntity[]
 
-  @ManyToMany(
-    type => JournalEntity
-  )
-  @JoinTable({
-    name: "article_journal",
-    joinColumns: [{ name: "article_id" }],
-    inverseJoinColumns: [{ name: "journal_id" }]
+  // @ManyToMany(
+  //   type => JournalEntity
+  // )
+  // @JoinTable({
+  //   name: "article_journal",
+  //   joinColumns: [{ name: "article_id" }],
+  //   inverseJoinColumns: [{ name: "journal_id" }]
+  // })
+  // journals: JournalEntity[]
+
+  @ManyToOne(type => JournalEntity, e => e.articles, {
+    onDelete: "SET NULL"
   })
-  journals: JournalEntity[]
+  @JoinColumn({ name: 'journal_id' })
+  @Column({ name: 'journal_id', nullable: true })
+  journalId: number;
 
   @Column({ nullable: true })
   title: string;

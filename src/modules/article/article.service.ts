@@ -17,7 +17,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
   constructor(
     @InjectRepository(ArticleEntity) repo: Repository<ArticleEntity>,
     private authorService: AuthorService,
-    private journalService: JournalService,
+    // private journalService: JournalService,
     private connection: Connection,
     private costBenefitService: CostBenefitService,
     private qualityOfLifeService: QualityOfLifeService,
@@ -28,12 +28,12 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
 
   async createArticle(data: WriteArticleDTO): Promise<ArticleEntity> {
     const authorIdArray = _.get(data, "authorIdArray", [])
-    const journalIdArray = _.get(data, "journalIdArray", [])
+    // const journalIdArray = _.get(data, "journalIdArray", [])
 
     const authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
-    const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
+    // const journals = await this.journalService.findJournalsByIdArray(journalIdArray)
 
-    _.assign(data, { authors, journals })
+    _.assign(data, { authors })
 
     const newArticle = await this.repo
       .create(data)
@@ -62,7 +62,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
       .getRepository(ArticleEntity)
       .createQueryBuilder("article")
       .leftJoinAndSelect("article.authors", "author")
-      .leftJoinAndSelect("article.journals", "journal")
+      // .leftJoinAndSelect("article.journals", "journal")
       .leftJoinAndSelect("article.costBenefit", "cost_benefit")
       .leftJoinAndSelect("article.qualityOfLife", "quality_of_life")
       .leftJoinAndSelect("article.costEffectiveness", "cost_effectiveness")
@@ -77,7 +77,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     const foundArticle = await this.repo.findOne(id);
     if (!foundArticle) if (!foundArticle) throw new NotFoundException("Article Not Found")
 
-    const { accountId, title, vol, issue, number, startPage, endPage, year, authorIdArray, journalIdArray } = data;
+    const { accountId, title, vol, issue, number, startPage, endPage, year, authorIdArray } = data;
 
     if (accountId) foundArticle.accountId = accountId;
     if (title) foundArticle.title = title;
@@ -89,7 +89,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     if (year) foundArticle.year = year;
 
     if (authorIdArray && _.isArray(authorIdArray)) foundArticle.authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
-    if (journalIdArray && _.isArray(journalIdArray)) foundArticle.journals = await this.journalService.findJournalsByIdArray(journalIdArray)
+    // if (journalIdArray && _.isArray(journalIdArray)) foundArticle.journals = await this.journalService.findJournalsByIdArray(journalIdArray)
 
     return foundArticle.save();
   }

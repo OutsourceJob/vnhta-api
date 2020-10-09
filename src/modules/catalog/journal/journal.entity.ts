@@ -1,4 +1,5 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { ArticleEntity } from 'src/modules/article/article.entity';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: "journal" })
 export class JournalEntity extends BaseEntity {
@@ -12,8 +13,13 @@ export class JournalEntity extends BaseEntity {
   abbreviation: string;
 
   @CreateDateColumn({ name: "created_at" })
-  createdAt: Date
+  createdAt: Date;
 
   @UpdateDateColumn({ name: "updated_at" })
-  updatedAt: Date
+  updatedAt: Date;
+
+  @OneToMany(type => ArticleEntity, a => a.journalId, {
+    onDelete: "SET NULL"
+  })
+  articles: ArticleEntity[];
 }
