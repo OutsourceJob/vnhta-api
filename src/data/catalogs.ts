@@ -207,19 +207,29 @@ export const parameters = [
   },
   {
     id: 18,
-    code: "effectiveness",
-    name: "Effectiveness"
+    code: "effectiveness_lyg",
+    name: "Eff LYG"
   },
   {
     id: 19,
+    code: "effectiveness_qaly",
+    name: "Eff QALY"
+  },
+  {
+    id: 20,
+    code: "effectiveness_clinical",
+    name: "Eff Clinical"
+  },
+  {
+    id: 21,
     code: "icer",
     name: "ICER"
   },
   {
-    id: 20,
+    id: 22,
     code: "icer_result",
     name: "Result"
-  }
+  },
 ];
 
 export const outcomes = [
