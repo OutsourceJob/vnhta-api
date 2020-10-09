@@ -17,11 +17,11 @@ export class FeatureEntity extends BaseEntity {
   @Column({ name: "row_id" })
   rowId: number;
 
-  @ManyToOne(
-    type => ParameterEntity,
-    { onDelete: "SET NULL" }
-  )
-  @JoinColumn({ name: "parameter_id" })
+  // @ManyToOne(
+  //   type => ParameterEntity,
+  //   { onDelete: "SET NULL" }
+  // )
+  // @JoinColumn({ name: "parameter_id" })
   @Column({ name: "parameter_id", nullable: true })
   parameterId: number;
 
