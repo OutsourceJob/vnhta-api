@@ -250,6 +250,7 @@ export const timeHorizonUnits = [
   { id: 1, name: "Tuần" },
   { id: 2, name: "Tháng" },
   { id: 3, name: "Năm" },
+  { id: 4, name: "Trọn đời" }
 ];
 
 export const analysisMethods = [
@@ -281,13 +282,15 @@ export const currencyUnits = [
   { id: 1, name: "USD" },
   { id: 2, name: "VND" },
   { id: 3, name: "EUR" },
-  { id: 4, name: "GBP" }
+  { id: 4, name: "GBP" },
+  { id: 5, name: "Int$" },
 ];
 
 export const heterogeneityAnalysis = [
   { id: 1, name: "Sự khác biệt của CP do sự khác biệt về đặc điểm bệnh nhân" },
   { id: 2, name: "Sự khác biệt của HQ do sự khác biệt về đặc điểm bệnh nhân" },
-  { id: 3, name: "Sự khác biệt của CP-HQ do sự khác biệt về đặc điểm bệnh nhân" }
+  { id: 3, name: "Sự khác biệt của CP-HQ do sự khác biệt về đặc điểm bệnh nhân" },
+  { id: 4, name: "Không đề cập" }
 ];
 
 export const uncertaintyAnalysisResults = [
