@@ -25,7 +25,7 @@ export class FeatureEntity extends BaseEntity {
   @Column({ name: "parameter_id", nullable: true })
   parameterId: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "float" })
   value: number;
 
   @CreateDateColumn({ name: "created_at" })
