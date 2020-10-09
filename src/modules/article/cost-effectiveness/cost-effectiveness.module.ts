@@ -13,6 +13,7 @@ import { UncertaintyAnalysisMethodModule } from "src/modules/catalog/uncertainty
 import { ModelTypeModule } from "src/modules/catalog/model-type/model-type.module";
 import { TableModule } from '../../catalog/table/table.module';
 import { AnalysisMethodModule } from "src/modules/catalog/analysis-method/analysis-method.module";
+import { Icd20Module } from '../../catalog/icd-20/icd-20.module';
 
 @Module({
    imports: [
@@ -22,7 +23,8 @@ import { AnalysisMethodModule } from "src/modules/catalog/analysis-method/analys
       ModelTypeModule, HeterogeneityAnalysisModule,
       UncertaintyAnalysisResultModule,
       UncertaintyAnalysisMethodModule,
-      TableModule, AnalysisMethodModule
+      TableModule, AnalysisMethodModule,
+      Icd20Module
    ],
    controllers: [CostEffectivenessController],
    providers: [CostEffectivenessService],

@@ -46,16 +46,16 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: 'pathology_id', nullable: true })
   pathologyId: number;
 
-  @ManyToOne(
-    type => Icd20Entity,
-    i => i.qualityOfLives,
-    {
-      onDelete: 'SET NULL',
-    },
-  )
-  @JoinColumn({ name: 'icd20_id' })
-  @Column({ name: 'icd20_id', nullable: true })
-  icd20Id: number;
+  // @ManyToOne(
+  //   type => Icd20Entity,
+  //   i => i.qualityOfLives,
+  //   {
+  //     onDelete: 'SET NULL',
+  //   },
+  // )
+  // @JoinColumn({ name: 'icd20_id' })
+  // @Column({ name: 'icd20_id', nullable: true })
+  // icd20Id: number;
 
   @ManyToMany(
     type => InterventionEntity,

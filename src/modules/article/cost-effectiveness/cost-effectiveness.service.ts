@@ -14,6 +14,7 @@ import { UncertaintyAnalysisService } from "src/modules/catalog/uncertainty-anal
 import { UncertaintyAnalysisResultService } from "src/modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.service";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { TableService } from '../../catalog/table/table.service';
+import { Icd20Service } from '../../catalog/icd-20/icd-20.service';
 
 @Injectable()
 export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivenessEntity> {
@@ -28,7 +29,8 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       private uncertaintyAnalysisService: UncertaintyAnalysisService,
       private uncertaintyAnalysisResultService: UncertaintyAnalysisResultService,
       private connection: Connection,
-      private tableService: TableService
+      private tableService: TableService,
+      private icd20Service: Icd20Service
    ) {
       super(repo);
    }
@@ -36,6 +38,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
    async createCostEffectiveness(data: WriteCostEffectivenessDTO): Promise<CostEffectivenessEntity> {
       const interventionIdArray = _.get(data, "interventionIdArray", []);
       const comparatorIdArray = _.get(data, "comparatorIdArray", []);
+      const icd20IdArray = _.get(data, "icd20IdArray", []);
       const outcomeIdArray = _.get(data, "outcomeIdArray", []);
       const studyLocationIdArray = _.get(data, "studyLocationIdArray", []);
       const modelTypeIdArray = _.get(data, "modelTypeIdArray", []);
@@ -81,6 +84,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          .createQueryBuilder("cost_effectiveness")
          .leftJoinAndSelect("cost_effectiveness.interventions", "intervention")
          .leftJoinAndSelect("cost_effectiveness.comparators", "comparator")
+         .leftJoinAndSelect("cost_effectiveness.icd20s", "icd_20")
          // .leftJoinAndSelect("cost_effectiveness.outcomes", "outcome")
          .leftJoinAndSelect("cost_effectiveness.studyLocations", "study_location")
          // .leftJoinAndSelect("cost_effectiveness.modelTypes", "model_type")
@@ -95,6 +99,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       _.assign(costEffectiveness, {
          interventionIdArray: _.map(costEffectiveness.interventions, "id"),
          comparatorIdArray: _.map(costEffectiveness.comparators, "id"),
+         icd20IdArray: _.map(costEffectiveness.icd20s, "id"),
          // outcomeIdArray: _.map(costEffectiveness.outcomes, "id"),
          studyLocationIdArray: _.map(costEffectiveness.studyLocations, "id"),
          // modelTypeIdArray: _.map(costEffectiveness.modelTypes, "id"),
@@ -103,6 +108,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          // uncertaintyAnalysisResultIdArray: _.map(costEffectiveness.uncertaintyAnalysisResults, "id"),
          interventions: undefined,
          comparators: undefined,
+         icd20s: undefined,
          // outcomes: undefined,
          studyLocations: undefined,
          // modelTypes: undefined,
@@ -120,6 +126,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
 
       const interventionIdArray = _.get(data, "interventionIdArray");
       const comparatorIdArray = _.get(data, "comparatorIdArray");
+      const icd20IdArray = _.get(data, "icd20IdArray");
       // const outcomeIdArray = _.get(data, "outcomeIdArray");
       const studyLocationIdArray = _.get(data, "studyLocationIdArray");
       // const modelTypeIdArray = _.get(data, "modelTypeIdArray");
@@ -129,6 +136,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
 
       const interventions = interventionIdArray && await this.interventionService.findInterventionByIdArray(interventionIdArray);
       const comparators = comparatorIdArray && await this.comparatorService.findComparatorByIdArray(comparatorIdArray);
+      const icd20s = icd20IdArray && await this.icd20Service.findIcd20ByIdArray(icd20IdArray);
       // const outcomes = outcomeIdArray && await this.outcomeService.findOutcomeByIdArray(outcomeIdArray);
       const studyLocations = studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
       // const modelTypes = modelTypeIdArray && await this.modelTypeService.findModelTypeByIdArray(modelTypeIdArray);
@@ -139,6 +147,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       _.assign(data, {
          interventions,
          comparators,
+         icd20s,
          // outcomes,
          studyLocations,
          // modelTypes,
@@ -151,6 +160,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          .omit([
             "interventionIdArray",
             "comparatorIdArray",
+            "icd20IdArray",
             // "outcomeIdArray",
             "studyLocationIdArray",
             // "modelTypeIdArray",
