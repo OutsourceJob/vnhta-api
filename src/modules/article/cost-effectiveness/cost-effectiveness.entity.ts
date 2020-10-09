@@ -201,8 +201,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: 'cost_component_id' })
-  @Column({ name: 'cost_component_id', nullable: true })
-  costComponentId: number;
+  @Column({ name: 'cost_component_id_array', type: "json" })
+  costComponentIdArray: number[] = [];
 
   @Column({ name: 'cost_data_collecting_method', nullable: true })
   costDataCollectingMethod: string;
