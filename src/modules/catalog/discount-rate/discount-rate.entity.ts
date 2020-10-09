@@ -9,7 +9,7 @@ export class DiscountRateEntity extends BaseEntity {
    @Column()
    name: string;
 
-   @Column()
+   @Column({ nullable: true, type: "float" })
    value: number;
 
    @CreateDateColumn({ name: 'created_at' })
