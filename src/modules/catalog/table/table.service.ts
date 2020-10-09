@@ -48,7 +48,7 @@ export class TableService extends TypeOrmCrudService<TableEntity>{
     // create new table
     const table = await this.repo.create({
       name: "Base case",
-      parameterCodeArray: ["cost", "effectiveness", "icer", "icer_result"]
+      parameterCodeArray: ["cost", "effectiveness_lyg", "effectiveness_qaly", "effectiveness_clinical", "icer", "icer_result"]
     }).save()
 
     // create new row
