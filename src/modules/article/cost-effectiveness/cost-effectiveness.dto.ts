@@ -21,7 +21,7 @@ export class WriteCostEffectivenessDTO {
    clinicalCriteria?: string;
    effectivenessDataCollectingMethodId?: number;
    discountRateId?: number;
-   costComponentId?: number;
+   costComponentIdArray?: number[];
    costDataCollectingMethod?: string;
    currencyUnitId?: number;
    yearOfCost?: number;

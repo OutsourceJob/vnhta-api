@@ -13,7 +13,7 @@ export class WriteCostBenefitDTO {
   startSamplingTime?: Date;
   endSamplingTime?: Date;
   costTypeId?: number
-  costComponentId?: number;
+  costComponentIdArray?: number[];
   studyPerspectiveId?: number;
   qualitativeTableId?: number
   quantitativeTableId?: number
