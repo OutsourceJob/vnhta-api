@@ -8,6 +8,7 @@ import { StudyLocationService } from '../../catalog/study-location/study-locatio
 import { WriteCostBenefitDTO } from './cost-benefit.dto';
 import { InterventionService } from '../../catalog/intervention/intervention.service';
 import { TableService } from '../../catalog/table/table.service';
+import { Icd20Service } from '../../catalog/icd-20/icd-20.service';
 
 @Injectable()
 export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
@@ -16,7 +17,8 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     private studyLocationService: StudyLocationService,
     private interventionService: InterventionService,
     private connection: Connection,
-    private tableService: TableService
+    private tableService: TableService,
+    private icd20Service: Icd20Service
   ) {
     super(repo)
   }
@@ -24,9 +26,12 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
   async createCostBenefit(data: WriteCostBenefitDTO) {
     const interventionIdArray = _.get(data, "interventionIdArray", []);
     const studyLocationIdArray = _.get(data, "studyLocationIdArray", []);
+    const icd20IdArray = _.get(data, "icd20IdArray", []);
 
     const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
     const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
+    const icd20s = await this.icd20Service.findIcd20ByIdArray(icd20IdArray)
+    console.log("CostBenefitService -> createCostBenefit -> icd20s", icd20s)
 
     const qualitativeTable = await this.tableService.createTable({
       name: "Qualitative Characteristics",
@@ -54,6 +59,7 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
         articleId: data.articleId,
         interventions,
         studyLocations,
+        icd20s,
         qualitativeTableId: qualitativeTable.id,
         quantitativeTableId: quantitativeTable.id,
         costTableId: costTable.id,
@@ -71,11 +77,13 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
 
     const interventionIdArray = _.get(data, "interventionIdArray");
     const studyLocationIdArray = _.get(data, "studyLocationIdArray");
+    const icd20IdArray = _.get(data, "icd20IdArray");
 
     const interventions = data.interventionIdArray && await this.interventionService.findInterventionByIdArray(interventionIdArray)
     const studyLocations = data.studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
+    const icd20s = data.icd20IdArray && await this.icd20Service.findIcd20ByIdArray(icd20IdArray)
 
-    _.assign(data, { interventions, studyLocations })
+    _.assign(data, { interventions, studyLocations, icd20s })
 
     _.chain(data)
       .omit(["interventionIdArray", "studyLocationIdArray"])
@@ -96,6 +104,7 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
       .createQueryBuilder("cost_benefit")
       .leftJoinAndSelect("cost_benefit.interventions", "intervention")
       .leftJoinAndSelect("cost_benefit.studyLocations", "study_location")
+      .leftJoinAndSelect("cost_benefit.icd20s", "icd_20")
       .where("cost_benefit.id = :id", { id: costBenefitId })
       .getOne()
 
@@ -104,8 +113,10 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     _.assign(costBenefit, {
       interventionIdArray: _.map(costBenefit.interventions, "id"),
       studyLocationIdArray: _.map(costBenefit.studyLocations, "id"),
+      icd20IdArray: _.map(costBenefit.icd20s, "id"),
       interventions: undefined,
-      studyLocations: undefined
+      studyLocations: undefined,
+      icd20s: undefined
     })
 
     return costBenefit

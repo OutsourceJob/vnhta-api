@@ -11,4 +11,8 @@ export class Icd20Service extends TypeOrmCrudService<Icd20Entity>{
   ) {
     super(repo);
   }
+
+  async findIcd20ByIdArray(idArray: number[]): Promise<Icd20Entity[]> {
+    return await this.repo.findByIds(idArray);
+  }
 }

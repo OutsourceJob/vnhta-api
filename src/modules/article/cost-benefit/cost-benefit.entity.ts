@@ -37,12 +37,17 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "pathology_id", nullable: true })
   pathologyId: number;
 
-  @ManyToOne(
+  @ManyToMany(
     type => Icd20Entity
   )
-  @JoinColumn({ name: "icd_20_id" })
-  @Column({ name: "icd_20_id", nullable: true })
-  icd20Id: number;
+  // @JoinColumn({ name: "icd_20_id" })
+  // @Column({ name: "icd_20_id", nullable: true })
+  @JoinTable({
+    name: "cost_benefit_icd_20",
+    joinColumns: [{ name: "cost_benefit_id" }],
+    inverseJoinColumns: [{ name: "icd_20_id" }]
+  })
+  icd20s: Icd20Entity[];
 
   @ManyToMany(
     type => InterventionEntity,

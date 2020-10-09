@@ -18,12 +18,12 @@ export class Icd20Entity extends BaseEntity {
   updatedAt: Date
 
   // relations
-  @OneToMany(
-    type => CostBenefitEntity,
-    e => e.icd20Id,
-    { onDelete: "SET NULL" }
-  )
-  costBenefits: CostBenefitEntity[]
+  // @OneToMany(
+  //   type => CostBenefitEntity,
+  //   e => e.icd20Id,
+  //   { onDelete: "SET NULL" }
+  // )
+  // costBenefits: CostBenefitEntity[]
 
   @OneToMany(
     type => QualityOfLifeEntity,
