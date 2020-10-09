@@ -44,13 +44,22 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: "pathology_id", nullable: true })
   pathologyId: number;
 
-  @ManyToOne(
-    type => Icd20Entity,
-    i => i.costEffectiveness
+  // @ManyToOne(
+  //   type => Icd20Entity,
+  //   i => i.costEffectiveness
+  // )
+  // @JoinColumn({ name: 'icd20_id' })
+  // @Column({ name: 'icd20_id', nullable: true })
+  // icd20Id: number;
+  @ManyToMany(
+    type => Icd20Entity
   )
-  @JoinColumn({ name: 'icd20_id' })
-  @Column({ name: 'icd20_id', nullable: true })
-  icd20Id: number;
+  @JoinTable({
+    name: "cost_effectiveness_icd_20",
+    joinColumns: [{ name: "cost_effectiveness_id" }],
+    inverseJoinColumns: [{ name: "icd_20_id" }]
+  })
+  icd20s: Icd20Entity[];
 
   @ManyToMany(
     type => InterventionEntity,
