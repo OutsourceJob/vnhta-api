@@ -19,10 +19,10 @@ export class DiscountRateEntity extends BaseEntity {
    updatedAt: Date;
 
    // Relation
-   @OneToMany(
-      type => CostEffectivenessEntity,
-      c => c.discountRateId,
-      { onDelete: "SET NULL" }
-   )
-   costEffectiveness: CostEffectivenessEntity[];
+   // @OneToMany(
+   //    type => CostEffectivenessEntity,
+   //    c => c.discountRateId,
+   //    { onDelete: "SET NULL" }
+   // )
+   // costEffectiveness: CostEffectivenessEntity[];
 }

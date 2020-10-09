@@ -189,7 +189,17 @@ export class CostEffectivenessEntity extends BaseEntity {
 
   @ManyToOne(
     type => DiscountRateEntity,
-    d => d.costEffectiveness
+    { onDelete: "SET NULL" }
+    // d => d.costEffectiveness
+  )
+  @JoinColumn({ name: 'eff_discount_rate_id' })
+  @Column({ name: "eff_discount_rate_id", nullable: true })
+  effDiscountRateId: number;
+
+  @ManyToOne(
+    type => DiscountRateEntity,
+    { onDelete: "SET NULL" }
+    // d => d.costEffectiveness
   )
   @JoinColumn({ name: 'discount_rate_id' })
   @Column({ name: "discount_rate_id", nullable: true })
