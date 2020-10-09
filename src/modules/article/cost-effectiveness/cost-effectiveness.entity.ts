@@ -205,7 +205,7 @@ export class CostEffectivenessEntity extends BaseEntity {
   // )
   // @JoinColumn({ name: 'currency_unit_id' })
   @Column({ name: 'currency_unit_id_array', type: "json" })
-  currencyUnitIdArray: string;
+  currencyUnitIdArray: number[] = [];
 
   @Column({ name: 'year_of_cost', nullable: true })
   yearOfCost: number;
