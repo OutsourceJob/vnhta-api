@@ -12,6 +12,7 @@ import { UncertaintyAnalysisResultModule } from "src/modules/catalog/uncertainty
 import { UncertaintyAnalysisMethodModule } from "src/modules/catalog/uncertainty-analysis-method/uncertainty-analysis-method.module";
 import { ModelTypeModule } from "src/modules/catalog/model-type/model-type.module";
 import { TableModule } from '../../catalog/table/table.module';
+import { AnalysisMethodModule } from "src/modules/catalog/analysis-method/analysis-method.module";
 
 @Module({
    imports: [
@@ -21,7 +22,7 @@ import { TableModule } from '../../catalog/table/table.module';
       ModelTypeModule, HeterogeneityAnalysisModule,
       UncertaintyAnalysisResultModule,
       UncertaintyAnalysisMethodModule,
-      TableModule
+      TableModule, AnalysisMethodModule
    ],
    controllers: [CostEffectivenessController],
    providers: [CostEffectivenessService],

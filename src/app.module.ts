@@ -30,6 +30,7 @@ import { HeterogeneityAnalysisModule } from './modules/catalog/heterogeneity-ana
 import { UncertaintyAnalysisMethodModule } from './modules/catalog/uncertainty-analysis-method/uncertainty-analysis-method.module';
 import { UncertaintyAnalysisResultModule } from "./modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.module";
 import { TableModule } from './modules/catalog/table/table.module';
+import { CEStudyDesignModule } from './modules/catalog/ce-study-design/ce-study-design.module';
 
 @Module({
   imports: [
@@ -69,6 +70,7 @@ import { TableModule } from './modules/catalog/table/table.module';
     HeterogeneityAnalysisModule,
     UncertaintyAnalysisMethodModule,
     UncertaintyAnalysisResultModule,
+    CEStudyDesignModule,
 
     // table
     TableModule
