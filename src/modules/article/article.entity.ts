@@ -86,7 +86,7 @@ export class ArticleEntity extends BaseEntity {
   @Column({ nullable: true })
   year: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "longtext" })
   abstract: string;
 
   @Column({ nullable: true })
