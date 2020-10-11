@@ -31,7 +31,6 @@ export class CostBenefitService extends TypeOrmCrudService<CostBenefitEntity>{
     const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
     const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray)
     const icd20s = await this.icd20Service.findIcd20ByIdArray(icd20IdArray)
-    console.log("CostBenefitService -> createCostBenefit -> icd20s", icd20s)
 
     const qualitativeTable = await this.tableService.createTable({
       name: "Qualitative Characteristics",

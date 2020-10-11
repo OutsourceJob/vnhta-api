@@ -1,3 +1,4 @@
+import { Language } from '../../interfaces/index';
 export class WriteArticleDTO {
   accountId: number;
   title: string;
@@ -10,4 +11,6 @@ export class WriteArticleDTO {
   startPage: number;
   endPage: number;
   year: number;
+  abstract: string;
+  language: Language
 }

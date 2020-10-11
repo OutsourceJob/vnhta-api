@@ -12,6 +12,7 @@ import { JournalEntity } from '../catalog/journal/journal.entity';
 import { CostBenefitEntity } from './cost-benefit/cost-benefit.entity';
 import { QualityOfLifeEntity } from './quality-of-life/quality-of-life.entity';
 import { CostEffectivenessEntity } from "./cost-effectiveness/cost-effectiveness.entity";
+import { Language } from '../../interfaces/index';
 
 @Entity({
   name: "article"
@@ -81,6 +82,12 @@ export class ArticleEntity extends BaseEntity {
 
   @Column({ nullable: true })
   year: number;
+
+  @Column({ nullable: true })
+  abstract: string;
+
+  @Column({ nullable: true })
+  language: Language;
 
   @CreateDateColumn({
     name: "created_at"
