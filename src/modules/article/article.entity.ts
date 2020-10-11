@@ -27,6 +27,9 @@ export class ArticleEntity extends BaseEntity {
   @JoinColumn({ name: "account_id" })
   accountId: number;
 
+  @Column({ name: "full_text_url", nullable: true })
+  fullTextUrl: string
+
   @ManyToMany(
     type => AuthorEntity
   )

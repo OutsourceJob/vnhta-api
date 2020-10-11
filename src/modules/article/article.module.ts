@@ -8,10 +8,12 @@ import { JournalModule } from '../catalog/journal/journal.module';
 import { CostBenefitModule } from './cost-benefit/cost-benefit.module';
 import { QualityOfLifeModule } from './quality-of-life/quality-of-life.module';
 import { CostEffectivenessModule } from './cost-effectiveness/cost-effectiveness.module';
+import { UploadModule } from '../upload/upload.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([ArticleEntity]),
+        UploadModule,
 
         // sub-article
         CostBenefitModule, QualityOfLifeModule,

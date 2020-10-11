@@ -1,10 +1,12 @@
-import { Controller, Body, UseInterceptors, BadRequestException } from '@nestjs/common';
+import { Controller, Body, UseInterceptors, BadRequestException, Post, Param, UploadedFile } from '@nestjs/common';
 import { Crud, Override, ParsedRequest, CrudRequest, ParsedBody } from "@nestjsx/crud";
 import { ArticleEntity } from './article.entity';
 import { WriteArticleDTO } from './article.dto';
 import { ArticleService } from './article.service';
 import { SerializerInterceptor } from '../../serialization/serializer.interceptor';
 import * as _ from "lodash";
+import { UploadService } from '../upload/upload.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @UseInterceptors(SerializerInterceptor)
 @Crud({
@@ -26,7 +28,8 @@ import * as _ from "lodash";
 @Controller("/articles")
 export class ArticleController {
   constructor(
-    public service: ArticleService
+    public service: ArticleService,
+    private uploadService: UploadService
   ) { }
 
   @Override()
@@ -62,5 +65,15 @@ export class ArticleController {
     if (fieldId) articleId = fieldId.value;
 
     return this.service.updateArticleById(articleId, data)
+  }
+
+  @Post("/:articleId/upload-full-text")
+  @UseInterceptors(FileInterceptor("full-text"))
+  async uploadFullText(
+    @Param("articleId") articleId: number,
+    @UploadedFile() file: any
+  ) {
+    const res = await this.uploadService.uploadFile(file.buffer, file.originalname)
+    return await this.service.updateFulltext(articleId, res.PDFUrl)
   }
 }
