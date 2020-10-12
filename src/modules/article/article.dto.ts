@@ -2,6 +2,7 @@ import { Language } from '../../interfaces/index';
 export class WriteArticleDTO {
   accountId: number;
   title: string;
+  title2: string;
   authorIdArray: Array<number>;
   journalId: number;
   // journalIdArray: Array<number>;

@@ -60,6 +60,9 @@ export class ArticleEntity extends BaseEntity {
   @Column({ nullable: true })
   title: string;
 
+  @Column({ nullable: true })
+  title2: string;
+
   @Column({
     name: "status"
   })
