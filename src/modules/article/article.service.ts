@@ -130,6 +130,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
         WHERE 
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí")) OR
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost"))
+        ORDER BY year DESC
       `)
     return this.formatRawArticles(articles);
   }
@@ -152,6 +153,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - hiệu quả")) OR
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost - effectiveness")) OR
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost effectiveness"))
+        ORDER BY year DESC
       `)
     return this.formatRawArticles(articles);
   }
@@ -197,6 +199,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí minimization")) OR
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - minimization")) OR
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-minimization"))
+        ORDER BY year DESC
       `)
     return this.formatRawArticles(articles);
   }
@@ -230,9 +233,6 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
       }
       formattedArticles.push(formattedArticle)
     }
-
-    console.log(formattedArticles.length)
-
     return formattedArticles;
   }
 }
