@@ -173,6 +173,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
         issue: foundArticle.issue,
         startPage: foundArticle.start_page,
         endPage: foundArticle.end_page,
+        year: foundArticle.year,
         accountId: foundArticle.account_id,
         fullTextUrl: foundArticle.full_text_url,
         abstract: foundArticle.abstract,
@@ -187,4 +188,6 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
 
     return formattedArticles;
   }
+
+
 }
