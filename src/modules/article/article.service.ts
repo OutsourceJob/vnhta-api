@@ -115,30 +115,76 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
   }
 
   async searchCost(text: string) {
-    const articles = this.repo.create(
-      await this.connection.query(`
-        SELECT * 
+    const articles = await this.connection.query(`
+        SELECT
+          article.*,
+          author.fullName AS author_name,
+          journal.fullName AS journal_name 
         FROM article 
+        LEFT JOIN article_author
+          ON article_author.article_id = article.id
+        LEFT JOIN author
+          ON author.id = article_author.author_id
+        LEFT JOIN journal
+          ON journal.id = article.journal_id
         WHERE 
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí")) OR
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost"))
       `)
-    )
-    return articles;
+    return this.formatRawArticles(articles);
   }
 
   async searchCostEffectiveness(text: string) {
-    const articles = this.repo.create(
-      await this.connection.query(`
-        SELECT * 
+    const articles = await this.connection.query(`
+        SELECT 
+            article.*,
+            author.fullName AS author_name,
+            journal.fullName AS journal_name 
         FROM article 
+        LEFT JOIN article_author
+          ON article_author.article_id = article.id
+        LEFT JOIN author
+          ON author.id = article_author.author_id
+        LEFT JOIN journal
+          ON journal.id = article.journal_id
         WHERE 
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí hiệu quả")) OR
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - hiệu quả")) OR
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost - effectiveness")) OR
           TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost effectiveness"))
       `)
-    )
-    return articles;
+    return this.formatRawArticles(articles);
+  }
+
+  formatRawArticles(articles: Array<any>) {
+    const articleIdArray = _.chain(articles).uniqBy(article => article.id).map("id").value();
+    const formattedArticles = []
+    for (const articleId of articleIdArray) {
+      const foundArticle = _.find(articles, { id: articleId })
+
+      const formattedArticle = {
+        id: articleId,
+        journalName: foundArticle.journal_name,
+        title: foundArticle.title,
+        status: foundArticle.status,
+        slug: foundArticle.slug,
+        vol: foundArticle.vol,
+        number: foundArticle.number,
+        issue: foundArticle.issue,
+        startPage: foundArticle.start_page,
+        endPage: foundArticle.end_page,
+        accountId: foundArticle.account_id,
+        fullTextUrl: foundArticle.full_text_url,
+        abstract: foundArticle.abstract,
+        title2: foundArticle.title2,
+        authorNameArray: _.chain(articles)
+          .filter({ id: articleId })
+          .map(article => article.author_name)
+          .value()
+      }
+      formattedArticles.push(formattedArticle)
+    }
+
+    return formattedArticles;
   }
 }
