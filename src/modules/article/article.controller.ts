@@ -91,6 +91,9 @@ export class ArticleController {
     @Query() query
   ) {
     const text = query.text
+
+    if (!text) return this.service.getMany(req);
+
     if (text === "cost" || text === "chi phí") return await this.service.searchCost(text)
     if (
       text === "chi phí hiệu quả" || text === "chi phí - hiệu quả" ||

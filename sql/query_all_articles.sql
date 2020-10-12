@@ -1,3 +1,5 @@
+USE vnhta;
+
 SELECT
 	-- ARTICLE
 	article.id, article.title, article.`status`, article.slug,
@@ -7,8 +9,7 @@ SELECT
 	author_id, author.fullName AS author_name,
 
 	-- COST BENEFIT
-	cost_benefit.pathology_id AS cost_benefit_pathology_id, 
-	pathology.name AS cost_benefit_name,
+	cost_benefit.pathology_id AS cost_benefit_pathology_id, pathology.name AS cost_benefit_name,
 	icd_20.code AS icd_20_code,
 	intervention.name AS intervention_name,
 	study_location.id AS study_location_id, study_location.name AS study_location_name,
@@ -31,9 +32,10 @@ SELECT
 	cost_benefit.qualitative_factor_table_id AS cost_benefit_qualitative_factor_table_id,
 	cost_benefit.quantitative_factor_table_id AS cost_benefit_quantitative_factor_table_id,
 	
-	-- ARTICLE
-	cost_effectiveness.pathology_id AS cost_effectiveness_pathology_id,
+	-- COST EFFECTIVENESS
+	cost_effectiveness.pathology_id AS cost_effectiveness_pathology_id, cea_pathology.name AS cost_effectiveness_name,
 	cea_icd_20.code AS cea_icd_20_code,
+	cea_intervention.name AS cea_intervention_name,
 	cost_effectiveness.outcome_id_array AS cost_effectiveness_outcome_id_array,
 	cost_effectiveness.ce_study_design_id AS cost_effectiveness_ce_study_design_id,
 	cost_effectiveness.model_type_id_array AS cost_effectiveness_model_type_id_array,
@@ -63,7 +65,10 @@ LEFT JOIN article_author ON article_author.article_id = article.id
 LEFT JOIN author ON author.id = article_author.author_id
 LEFT JOIN cost_benefit ON cost_benefit.article_id = article.id
 LEFT JOIN cost_effectiveness ON cost_effectiveness.article_id = article.id
+
+-- Cost - pathology
 LEFT JOIN pathology ON pathology.id = cost_benefit.pathology_id
+
 -- Cost - ICD20
 LEFT JOIN cost_benefit_icd_20 ON cost_benefit_icd_20.cost_benefit_id = cost_benefit.id
 LEFT JOIN icd_20 ON icd_20.id = cost_benefit_icd_20.icd_20_id
@@ -73,6 +78,9 @@ LEFT JOIN intervention ON intervention.id = cost_benefit_intervention.interventi
 -- Cost - Study Location
 LEFT JOIN cost_benefit_study_location ON cost_benefit_study_location.cost_benefit_id = cost_benefit.id
 LEFT JOIN study_location ON study_location.id = cost_benefit_study_location.study_location_id
+
+-- CEA - pathology
+LEFT JOIN pathology cea_pathology ON cea_pathology.id = cost_benefit.pathology_id
 
 -- CEA - ICD20
 LEFT JOIN cost_effectiveness_icd_20 ON cost_effectiveness_icd_20.cost_effectiveness_id = cost_effectiveness.id
@@ -85,3 +93,4 @@ LEFT JOIN intervention AS cea_intervention ON cea_intervention.id = cost_effecti
 -- CEA - comparators
 LEFT JOIN cost_effectiveness_comparator ON cost_effectiveness_comparator.cost_effectiveness_id = cost_effectiveness.id
 LEFT JOIN comparator AS cea_comparator ON cea_comparator.id = cost_effectiveness_comparator.comparator_id
+
