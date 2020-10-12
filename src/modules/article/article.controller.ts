@@ -102,5 +102,7 @@ export class ArticleController {
       text === "chi phí hiệu quả" || text === "chi phí - hiệu quả" ||
       text === "cost - effectiveness" || text === "cost effectiveness"
     ) return await this.service.searchCostEffectiveness(text)
+
+    return [];
   }
 }
