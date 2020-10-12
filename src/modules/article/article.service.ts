@@ -156,6 +156,51 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     return this.formatRawArticles(articles);
   }
 
+  async searchAdvance(text: string) {
+    const articles = await this.connection.query(`
+        SELECT 
+          article.*,
+          author.fullName AS author_name,
+          journal.fullName AS journal_name
+        FROM article 
+        LEFT JOIN article_author
+          ON article_author.article_id = article.id
+        LEFT JOIN author
+          ON author.id = article_author.author_id
+        LEFT JOIN journal
+          ON journal.id = article.journal_id
+        WHERE 
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí lợi ích")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - lợi ích")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-lợi ích")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí benefit")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - benefit")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-benefit")) OR
+          
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí hiệu quả")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - hiệu quả")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-hiệu quả")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost - effectiveness")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost-effectiveness")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost effectiveness")) OR
+          
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí thỏa dụng")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - thỏa dụng")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-thỏa dụng")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí utility")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - utility")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-utility")) OR
+          
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí tối thiểu hóa")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí minimization")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - minimization")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-minimization"))
+      `)
+    return this.formatRawArticles(articles);
+  }
+
   formatRawArticles(articles: Array<any>) {
     const articleIdArray = _.chain(articles).uniqBy(article => article.id).map("id").value();
     const formattedArticles = []
@@ -186,8 +231,8 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
       formattedArticles.push(formattedArticle)
     }
 
+    console.log(formattedArticles.length)
+
     return formattedArticles;
   }
-
-
 }

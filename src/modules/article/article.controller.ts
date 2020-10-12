@@ -91,6 +91,9 @@ export class ArticleController {
     @Query() query
   ) {
     const text = query.text
+    const advanced = query.advanced
+
+    if (advanced) return this.service.searchAdvance(text)
 
     if (!text) return this.service.getMany(req);
 
