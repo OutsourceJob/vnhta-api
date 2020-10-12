@@ -104,4 +104,12 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     article.fullTextUrl = fullTextUrl
     return await article.save()
   }
+
+  async removeFullText(articleId: number) {
+    const article = await this.repo.findOne(articleId)
+    if (!article) throw new NotFoundException("Article Not found")
+
+    article.fullTextUrl = null;
+    return await article.save()
+  }
 }

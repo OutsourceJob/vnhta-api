@@ -76,4 +76,11 @@ export class ArticleController {
     const res = await this.uploadService.uploadFile(file.buffer, file.originalname)
     return await this.service.updateFulltext(articleId, res.PDFUrl)
   }
+
+  @Post("/:articleId/remove-full-text")
+  async removeFullText(
+    @Param("articleId") articleId: number,
+  ) {
+    return await this.service.removeFullText(articleId)
+  }
 }
