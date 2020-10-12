@@ -1,4 +1,4 @@
-import { Controller, Body, UseInterceptors, BadRequestException, Post, Param, UploadedFile } from '@nestjs/common';
+import { Controller, Body, UseInterceptors, BadRequestException, Post, Param, UploadedFile, Get, Query } from '@nestjs/common';
 import { Crud, Override, ParsedRequest, CrudRequest, ParsedBody } from "@nestjsx/crud";
 import { ArticleEntity } from './article.entity';
 import { WriteArticleDTO } from './article.dto';
@@ -82,5 +82,19 @@ export class ArticleController {
     @Param("articleId") articleId: number,
   ) {
     return await this.service.removeFullText(articleId)
+  }
+
+  @Get("/articles")
+  @Override()
+  async getMany(
+    @ParsedRequest() req: CrudRequest,
+    @Query() query
+  ) {
+    const text = query.text
+    if (text === "cost" || text === "chi phí") return await this.service.searchCost(text)
+    if (
+      text === "chi phí hiệu quả" || text === "chi phí - hiệu quả" ||
+      text === "cost - effectiveness" || text === "cost effectiveness"
+    ) return await this.service.searchCostEffectiveness(text)
   }
 }

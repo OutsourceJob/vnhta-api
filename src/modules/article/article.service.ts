@@ -113,4 +113,32 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     article.fullTextUrl = null;
     return await article.save()
   }
+
+  async searchCost(text: string) {
+    const articles = this.repo.create(
+      await this.connection.query(`
+        SELECT * 
+        FROM article 
+        WHERE 
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost"))
+      `)
+    )
+    return articles;
+  }
+
+  async searchCostEffectiveness(text: string) {
+    const articles = this.repo.create(
+      await this.connection.query(`
+        SELECT * 
+        FROM article 
+        WHERE 
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí hiệu quả")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - hiệu quả")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost - effectiveness")) OR
+          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost effectiveness"))
+      `)
+    )
+    return articles;
+  }
 }
