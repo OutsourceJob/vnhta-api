@@ -38,9 +38,9 @@ export class AccountController {
     @ParsedRequest() req: CrudRequest,
     @ParsedBody() account: AccountEntity
   ) {
-    sendEmail(account);
+    // sendEmail(account);
 
-    // return this.base.createOneBase(req, dto);
+    return this.base.createOneBase(req, account);
   }
 
   @Override()
