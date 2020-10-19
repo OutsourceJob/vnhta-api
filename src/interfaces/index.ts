@@ -9,6 +9,12 @@ export enum AccountType {
   // Author = "Author"
 }
 
+export enum Gender {
+  Male = "Male",
+  Female = "Female",
+  Other = "Other"
+}
+
 export enum FileType {
   PDF = "PDF",
   Image = "Image"

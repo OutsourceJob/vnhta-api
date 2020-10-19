@@ -1,7 +1,7 @@
-import { AccountType } from '../../interfaces/index';
+import { AccountType, Gender } from '../../interfaces/index';
 import {
   BaseEntity, Entity,
-  PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, BeforeInsert
+  PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, BeforeInsert, BeforeUpdate
 } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { ArticleEntity } from '../article/article.entity';
@@ -19,6 +19,30 @@ export class AccountEntity extends BaseEntity {
 
   @Column({ name: "account_type" })
   accountType: string = AccountType.Admin;
+
+  @Column({ name: "full_name" })
+  fullName: string;
+
+  @Column()
+  gender: Gender;
+
+  @Column({ nullable: true })
+  birthday: Date;
+
+  @Column()
+  job: string;
+
+  @Column()
+  academic_rank: string;
+
+  @Column()
+  degree: string;
+
+  @Column()
+  company: string;
+
+  @Column()
+  position: string;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
