@@ -6,6 +6,7 @@ import { AuthorEntity } from "../catalog/author/author.entity";
 import { CreateAccountDTO, WriteAccountDTO } from './account.dto';
 import { SerializerInterceptor } from '../../serialization/serializer.interceptor';
 import * as _ from "lodash";
+import { sendEmail } from "../../utils/sendEmail";
 
 @Crud({
   model: {
@@ -33,9 +34,20 @@ export class AccountController {
   // }
 
   @Override()
+  createOne(
+    @ParsedRequest() req: CrudRequest,
+    @ParsedBody() account: AccountEntity
+  ) {
+    sendEmail(account);
+
+    // return this.base.createOneBase(req, dto);
+  }
+
+  @Override()
   async updateOne(
     @ParsedRequest() req: CrudRequest,
-    @ParsedBody() dto: any) {
+    @ParsedBody() dto: any
+  ) {
     if (_.isEmpty(dto)) throw new NotFoundException({}, "Not found updated data!");
 
     let newDto = { ...dto };
