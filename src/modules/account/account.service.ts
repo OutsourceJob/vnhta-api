@@ -24,6 +24,7 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
   }
 
   async createAccount(data: CreateAccountDTO) {
+
     return await this.repo.create(data).save()
   }
 

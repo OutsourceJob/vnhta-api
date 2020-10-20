@@ -18,7 +18,7 @@ export class AccountEntity extends BaseEntity {
   password: String;
 
   @Column({ name: "account_type" })
-  accountType: string = AccountType.Admin;
+  accountType: string = AccountType.Member;
 
   @Column({ name: "full_name" })
   fullName: string;
@@ -43,6 +43,15 @@ export class AccountEntity extends BaseEntity {
 
   @Column()
   position: string;
+
+  @Column()
+  isActive: boolean = false;
+
+  @Column()
+  pin: number;
+
+  @Column({ name: "pin_created_at" })
+  pinCreatedAt: Date;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

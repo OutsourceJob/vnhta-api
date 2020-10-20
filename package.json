@@ -27,6 +27,7 @@
     "start:production": "NODE_ENV=production pm2 start node dist/main.js --exp-backoff-restart-delay=100"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.5.1",
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/jwt": "^7.1.0",
