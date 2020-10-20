@@ -6,6 +6,7 @@ import { CreateAccountDTO } from './account.dto';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from "bcrypt";
+import * as gpc from "generate-pincode";
 
 @Injectable()
 export class AccountService extends TypeOrmCrudService<AccountEntity> {
@@ -24,7 +25,12 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
   }
 
   async createAccount(data: CreateAccountDTO) {
+    const pin = gpc(4);
 
+    _.assign(data, {
+      pin,
+      pinCreatedAt: new Date()
+    })
     return await this.repo.create(data).save()
   }
 
