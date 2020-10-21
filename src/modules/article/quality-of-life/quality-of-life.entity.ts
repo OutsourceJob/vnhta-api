@@ -33,6 +33,7 @@ export class QualityOfLifeEntity extends BaseEntity {
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: 'article_id' })
+  @Column({ name: "article_id", nullable: true })
   articleId: number;
 
   @ManyToOne(
@@ -48,11 +49,12 @@ export class QualityOfLifeEntity extends BaseEntity {
 
   @ManyToMany(
     type => Icd20Entity,
+    i => i.qualityOfLives
   )
   @JoinTable({
     name: 'quality_of_life_icd_20',
     joinColumns: [{ name: 'quality_of_life_id' }],
-    inverseJoinColumns: [{ name: 'icd_20_id' }]
+    inverseJoinColumns: [{ name: "icd_20_id" }]
   })
   icd20s: Icd20Entity[];
 

@@ -23,7 +23,7 @@ export class Icd20Entity extends BaseEntity {
   //   e => e.icd20Id,
   //   { onDelete: "SET NULL" }
   // )
-  // costBenefits: CostBenefitEntity[]
+  costBenefits: CostBenefitEntity[]
 
   // @OneToMany(
   //   type => QualityOfLifeEntity,
@@ -32,12 +32,12 @@ export class Icd20Entity extends BaseEntity {
   //     onDelete: "SET NULL"
   //   },
   // )
-  // qualityOfLives: QualityOfLifeEntity[];
+  qualityOfLives: QualityOfLifeEntity[];
 
   // @OneToMany(
   //   type => CostEffectivenessEntity,
   //   c => c.icd20Id,
   //   { onDelete: "SET NULL" }
   // )
-  // costEffectiveness: CostEffectivenessEntity[];
+  costEffectiveness: CostEffectivenessEntity[];
 }
