@@ -2,7 +2,7 @@ export class WriteQualityOfLifeDTO {
    isActive?: boolean;
    articleId: number;
    pathologyId?: number;
-   icd20Id?: number;
+   icd20IdArray?: number[];
    interventionIdArray?: number[];
    studyLocationIdArray?: number[];
    studyDesignId?: number;
