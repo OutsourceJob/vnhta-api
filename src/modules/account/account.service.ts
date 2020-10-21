@@ -52,7 +52,9 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
         return account.save()
       })
       .then(account => {
-        return account;
+        return {
+          message: "Activate successfully"
+        }
       })
       .catch(err => {
         throw new InternalServerErrorException(err)
@@ -70,7 +72,9 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
         return account.save()
       })
       .then(account => {
-        return account;
+        return {
+          message: "New pin has been sent to email"
+        }
       })
       .catch(err => {
         throw new InternalServerErrorException(err)

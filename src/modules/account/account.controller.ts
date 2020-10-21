@@ -1,9 +1,6 @@
-import { Controller, Post, Patch, UseInterceptors, NotFoundException, Body, Param } from '@nestjs/common';
+import { Controller, Post, Patch, Get, UseInterceptors, NotFoundException, Body, Param } from '@nestjs/common';
 import { AccountService } from './account.service';
-import { AccountEntity } from './account.entity';
-import { Crud, Override, ParsedBody, ParsedRequest, CrudRequest, CrudController } from "@nestjsx/crud";
-import { AuthorEntity } from "../catalog/author/author.entity";
-import { CreateAccountDTO, WriteAccountDTO, VerifyRegisterEmailDTO } from './account.dto';
+import { CreateAccountDTO, WriteAccountDTO, VerifyRegisterEmailDTO, SendPinDTO } from './account.dto';
 import { SerializerInterceptor } from '../../serialization/serializer.interceptor';
 import * as _ from "lodash";
 import { sendEmail } from "../../utils/sendEmail";
@@ -34,6 +31,13 @@ export class AccountController {
     @Body() data: VerifyRegisterEmailDTO
   ) {
     return this.service.verifyRegisterEmail(data)
+  }
+
+  @Patch("/send-pin")
+  sendPin(
+    @Body() data: SendPinDTO
+  ) {
+    return this.service.sendPinViaEmail(data);
   }
 
   // get base(): CrudController<AccountEntity> {
