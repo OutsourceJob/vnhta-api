@@ -51,7 +51,7 @@ export class AccountEntity extends BaseEntity {
   isActive: boolean = false;
 
   @Column()
-  pin: number;
+  pin: string;
 
   @Column({ name: "pin_created_at", nullable: true })
   pinCreatedAt: Date;

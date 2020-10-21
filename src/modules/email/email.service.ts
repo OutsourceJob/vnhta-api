@@ -25,7 +25,7 @@ export class EmailService {
     return transporter
   }
 
-  public sendConfirmRegisterEmail(email: string, pin: number): void {
+  public sendConfirmRegisterEmail(email: string, pin: string): void {
     const transporter = this.createTransporter();
     const templatePath = path.join(__dirname, "../../../templates/register.template.hjs")
     const template = fs.readFileSync(templatePath, "utf-8")
@@ -45,7 +45,7 @@ export class EmailService {
     })
   }
 
-  public sendPinViaEmail(email: string, pin: number): void {
+  public sendPinViaEmail(email: string, pin: string): void {
     const transporter = this.createTransporter();
     const templatePath = path.join(__dirname, "../../../templates/send-pin.template.hjs")
     const template = fs.readFileSync(templatePath, "utf-8")

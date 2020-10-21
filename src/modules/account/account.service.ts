@@ -28,7 +28,7 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
   }
 
   async createAccount(data: CreateAccountDTO) {
-    const pin = gpc(4);
+    const pin = _.toString(gpc(4));
 
     _.assign(data, {
       pin,
@@ -82,7 +82,7 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
       .then(account => {
         if (!account) throw new NotFoundException("Email Not Found")
 
-        account.pin = gpc(4)
+        account.pin = _.toString(gpc(4))
         account.pinCreatedAt = new Date()
         return account.save()
       })

@@ -31,7 +31,7 @@ export class CreateAccountDTO {
   position: string;
 
   @IsEmpty()
-  pin: number;
+  pin: string;
 }
 
 export class WriteAccountDTO {
@@ -51,7 +51,7 @@ export class VerifyRegisterEmailDTO {
   email: string;
 
   @IsNotEmpty()
-  pin: number;
+  pin: string;
 }
 
 export class SendPinDTO {
