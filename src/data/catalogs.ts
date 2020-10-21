@@ -92,15 +92,15 @@ export const costTypes = [
 export const costComponents = [
   {
     id: 1,
-    name: "TTYT"
+    name: "Chi phí trực tiếp y tế"
   },
   {
     id: 2,
-    name: "TTNYT"
+    name: "Chi phí trực tiếp ngoài y tế"
   },
   {
     id: 3,
-    name: "GT"
+    name: "Chi phí gián tiếp"
   }
 ]
 
@@ -124,6 +124,10 @@ export const studyPerspectives = [
   {
     id: 5,
     name: "Hệ thống y tế"
+  },
+  {
+    id: 6,
+    name: "Cơ quan chi trả Bảo hiểm y tế"
   }
 ]
 
