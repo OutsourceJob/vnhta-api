@@ -91,8 +91,8 @@ export class QualityOfLifeEntity extends BaseEntity {
   //   onDelete: "SET NULL"
   // })
   // @JoinColumn({ name: 'data_collecting_method_id' })
-  @Column({ name: 'data_collecting_method_id', nullable: true })
-  dataCollectingMethodId: number;
+  @Column({ name: 'data_collecting_method_id_array', type: "json" })
+  dataCollectingMethodIdArray: number[] = [];
 
   @Column({ name: 'quality_of_life_toolkit', nullable: true })
   qualityOfLifeToolkit: string;

@@ -25,6 +25,14 @@ export const dataCollectingMethods = [
   {
     id: 3,
     name: "Cắt ngang",
+  },
+  {
+    id: 4,
+    name: "Tổng quan y văn",
+  },
+  {
+    id: 5,
+    name: "Tham vấn ý kiến chuyên gia",
   }
 ]
 
@@ -279,7 +287,9 @@ export const typeOfEffectiveness = [
 export const effectivenessDataCollectingMethods = [
   { id: 1, name: "Dựa trên 1 nghiên cứu lâm sàng (trích dẫn nghiên cứu lâm sàng)" },
   { id: 2, name: "Dựa trên tổng quan tài liệu (trích dẫn bài tổng quan)" },
-  { id: 3, name: "Dựa trên mức độ ưa chuộng" }
+  { id: 3, name: "Dựa trên mức độ ưa chuộng" },
+  { id: 4, name: "Tổng quan y văn" },
+  { id: 5, name: "Tham vấn ý kiến chuyên gia" }
 ];
 
 export const costDataCollectingMethods = [

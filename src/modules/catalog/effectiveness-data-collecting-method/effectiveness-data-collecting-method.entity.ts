@@ -21,5 +21,5 @@ export class EffectivenessDataCollectingMethodEntity extends BaseEntity {
    //    c => c.effectivenessDataCollectingMethodId,
    //    { onDelete: "SET NULL" }
    // )
-   // costEffectiveness: CostEffectivenessEntity[];
+   costEffectiveness: CostEffectivenessEntity[];
 }

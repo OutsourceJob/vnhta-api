@@ -5,7 +5,7 @@ export class WriteCostBenefitDTO {
   interventionIdArray?: number[];
   studyLocationIdArray?: number[];
   studyDesignId?: number;
-  dataCollectingMethodId?: number;
+  dataCollectingMethodIdArray?: number[];
   sampleSizeId?: number;
   inclusionCriteria?: string;
   exclusiveCriteria?: string;
