@@ -46,10 +46,15 @@ export class WriteAccountDTO {
   position: string;
 }
 
-export class VerifyRegisterEmail {
+export class VerifyRegisterEmailDTO {
   @IsNotEmpty()
   email: string;
 
   @IsNotEmpty()
   pin: number;
+}
+
+export class SendPinDTO {
+  @IsNotEmpty()
+  email: string;
 }

@@ -2,7 +2,7 @@ import { Injectable, OnModuleInit, NotFoundException, BadRequestException, Inter
 import { InjectRepository } from "@nestjs/typeorm";
 import * as _ from 'lodash';
 import { AccountEntity } from './account.entity';
-import { CreateAccountDTO, VerifyRegisterEmail } from './account.dto';
+import { CreateAccountDTO, VerifyRegisterEmailDTO, SendPinDTO } from './account.dto';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from "bcrypt";
@@ -36,7 +36,7 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
     return await this.repo.create(data).save()
   }
 
-  async verifyRegisterEmail(data: VerifyRegisterEmail) {
+  async verifyRegisterEmail(data: VerifyRegisterEmailDTO) {
     const { email, pin } = data;
 
     return this.repo.findOne({ where: { email } })
@@ -49,6 +49,24 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
         ) throw new BadRequestException("Pin code is invalid or expired")
 
         account.isActive = true
+        return account.save()
+      })
+      .then(account => {
+        return account;
+      })
+      .catch(err => {
+        throw new InternalServerErrorException(err)
+      })
+  }
+
+  async sendPinViaEmail(data: SendPinDTO) {
+    const { email } = data;
+    return this.repo.findOne({ where: { email } })
+      .then(account => {
+        if (!account) throw new NotFoundException("Email Not Found")
+
+        account.pin = gpc(4)
+        account.pinCreatedAt = new Date()
         return account.save()
       })
       .then(account => {

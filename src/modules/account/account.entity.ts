@@ -1,10 +1,12 @@
 import { AccountType, Gender } from '../../interfaces/index';
 import {
   BaseEntity, Entity,
-  PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, BeforeInsert, BeforeUpdate
+  PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, BeforeInsert, BeforeUpdate, Exclusion
 } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { ArticleEntity } from '../article/article.entity';
+import { Exclude } from "class-transformer";
+import { ExclusionMetadata } from 'typeorm/metadata/ExclusionMetadata';
 
 @Entity({ name: "account" })
 export class AccountEntity extends BaseEntity {
@@ -14,6 +16,7 @@ export class AccountEntity extends BaseEntity {
   @Column({ unique: true })
   email: string;
 
+  @Exclude()
   @Column()
   password: String;
 
