@@ -3,12 +3,14 @@ import { config } from '../../config/index';
 import * as nodemailer from "nodemailer";
 import * as fs from "fs";
 import * as hogan from "hogan.js";
+import * as path from "path";
 
 @Injectable()
 export class EmailService {
   constructor() { }
 
   createTransporter() {
+    console.log(config.EMAIL, config.EMAIL_PASSWORD)
     const transport = {
       host: "smtp.gmail.com",
       port: 587,
@@ -26,7 +28,8 @@ export class EmailService {
 
   public sendConfirmRegisterEmail(email: string, pin: number): void {
     const transporter = this.createTransporter();
-    const template = fs.readFileSync(`${__dirname}/sendBookTicketEmail.hjs`, "utf-8")
+    const templatePath = path.join(__dirname, "../../../templates/register.template.hjs")
+    const template = fs.readFileSync(templatePath, "utf-8")
     const compiledTemplate = hogan.compile(template);
     const mailOptions = {
       from: config.EMAIL,
