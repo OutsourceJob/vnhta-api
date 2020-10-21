@@ -1,23 +1,45 @@
 import { Injectable } from '@nestjs/common';
-import { MailerService } from '@nestjs-modules/mailer';
 import { config } from '../../config/index';
+import * as nodemailer from "nodemailer";
+import * as fs from "fs";
+import * as hogan from "hogan.js";
 
 @Injectable()
 export class EmailService {
-  constructor(
-    private readonly mailerService: MailerService
-  ) { }
+  constructor() { }
 
-  public sendConfirmRegisterEmail(email: string): void {
-    this
-      .mailerService
-      .sendMail({
-        to: email,
-        from: config.EMAIL,
-        subject: 'Testing Nest MailerModule ✔',
-        html: '<b>welcome</b>',
+  createTransporter() {
+    const transport = {
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false,
+      requireTLS: true,
+      requireSSL: true,
+      auth: {
+        user: config.EMAIL,
+        pass: config.EMAIL_PASSWORD
+      }
+    }
+    const transporter = nodemailer.createTransport(transport)
+    return transporter
+  }
+
+  public sendConfirmRegisterEmail(email: string, pin: number): void {
+    const transporter = this.createTransporter();
+    const template = fs.readFileSync(`${__dirname}/sendBookTicketEmail.hjs`, "utf-8")
+    const compiledTemplate = hogan.compile(template);
+    const mailOptions = {
+      from: config.EMAIL,
+      to: email,
+      subject: "VNHTA - Activate your account",
+      html: compiledTemplate.render({
+        pin
       })
-      .then(() => { })
-      .catch(() => { });
+    }
+
+    transporter.sendMail(mailOptions, err => {
+      if (err) return console.log(err)
+      console.log("Success")
+    })
   }
 }

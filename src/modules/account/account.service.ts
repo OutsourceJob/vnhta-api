@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import * as _ from 'lodash';
 import { AccountEntity } from './account.entity';
@@ -8,11 +8,13 @@ import { Repository } from 'typeorm';
 import * as bcrypt from "bcrypt";
 import * as gpc from "generate-pincode";
 import * as moment from "moment";
+import { EmailService } from "../email/email.service";
 
 @Injectable()
 export class AccountService extends TypeOrmCrudService<AccountEntity> {
   constructor(
-    @InjectRepository(AccountEntity) repo: Repository<AccountEntity>
+    @InjectRepository(AccountEntity) repo: Repository<AccountEntity>,
+    private emailService: EmailService
   ) {
     super(repo)
   }
@@ -33,7 +35,20 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
       pinCreatedAt: new Date()
     })
 
-    return await this.repo.create(data).save()
+    return this.repo.create(data).save()
+      .then(account => {
+        return [
+          account,
+          this.emailService.sendConfirmRegisterEmail(account.email, account.pin)
+        ]
+      })
+      .then(res => {
+        const [account] = res;
+        return account
+      })
+      .catch(err => {
+        throw new InternalServerErrorException(err)
+      })
   }
 
   async verifyRegisterEmail(data: VerifyRegisterEmailDTO) {

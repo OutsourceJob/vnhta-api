@@ -5,15 +5,6 @@ import { SerializerInterceptor } from '../../serialization/serializer.intercepto
 import * as _ from "lodash";
 import { sendEmail } from "../../utils/sendEmail";
 
-// @Crud({
-//   model: {
-//     type: AccountEntity
-//   },
-//   dto: {
-//     create: CreateAccountDTO,
-//     update: WriteAccountDTO
-//   }
-// })
 @Controller("/accounts")
 @UseInterceptors(SerializerInterceptor)
 export class AccountController {
@@ -39,42 +30,4 @@ export class AccountController {
   ) {
     return this.service.sendPinViaEmail(data);
   }
-
-  // get base(): CrudController<AccountEntity> {
-  //   return this;
-  // }
-
-  // @Get("/:id")
-  // async getAccountById(@Param("id") id: number): Promise<AccountEntity> {
-  //   return this.accountService.getAccountById(id);
-  // }
-
-  // @Override()
-  // createOne(
-  //   @ParsedRequest() req: CrudRequest,
-  //   @ParsedBody() account: AccountEntity
-  // ) {
-  //   // sendEmail(account);
-
-  //   return this.base.createOneBase(req, account);
-  // }
-
-  // @Override()
-  // async updateOne(
-  //   @ParsedRequest() req: CrudRequest,
-  //   @ParsedBody() dto: any
-  // ) {
-  //   if (_.isEmpty(dto)) throw new NotFoundException({}, "Not found updated data!");
-
-  //   let newDto = { ...dto };
-  //   const password = _.get(newDto, "password", "");
-
-  //   if (password) {
-  //     const newPassword = await this.service.updatePassword(password);
-
-  //     if (newPassword) newDto = { ...newDto, password: newPassword };
-  //   };
-
-  //   return this.base.updateOneBase(req, newDto);
-  // }
 }

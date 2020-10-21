@@ -50,6 +50,7 @@
     "commander": "^6.1.0",
     "dotenv": "^8.2.0",
     "generate-pincode": "^5.0.3",
+    "hogan.js": "^3.0.2",
     "lodash": "^4.17.20",
     "mysql": "^2.18.1",
     "nestjs-console": "^3.1.1",
