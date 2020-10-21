@@ -87,6 +87,7 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
         return account.save()
       })
       .then(account => {
+        this.emailService.sendPinViaEmail(account.email, account.pin)
         return {
           message: "New pin has been sent to email"
         }

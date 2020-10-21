@@ -10,7 +10,6 @@ export class EmailService {
   constructor() { }
 
   createTransporter() {
-    console.log(config.EMAIL, config.EMAIL_PASSWORD)
     const transport = {
       host: "smtp.gmail.com",
       port: 587,
@@ -35,6 +34,26 @@ export class EmailService {
       from: config.EMAIL,
       to: email,
       subject: "VNHTA - Activate your account",
+      html: compiledTemplate.render({
+        pin
+      })
+    }
+
+    transporter.sendMail(mailOptions, err => {
+      if (err) return console.log(err)
+      console.log("Success")
+    })
+  }
+
+  public sendPinViaEmail(email: string, pin: number): void {
+    const transporter = this.createTransporter();
+    const templatePath = path.join(__dirname, "../../../templates/send-pin.template.hjs")
+    const template = fs.readFileSync(templatePath, "utf-8")
+    const compiledTemplate = hogan.compile(template);
+    const mailOptions = {
+      from: config.EMAIL,
+      to: email,
+      subject: "VNHTA - New pin",
       html: compiledTemplate.render({
         pin
       })
