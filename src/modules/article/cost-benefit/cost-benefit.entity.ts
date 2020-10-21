@@ -184,10 +184,13 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "quantitative_factor_table_id", nullable: true })
   quantitativeFactorTableId: number;
 
+  @Column({ name: 'real_world_sample_size', nullable: true })
+  realWorldSampleSize: number;
+
   @CreateDateColumn({
     name: "created_at"
   })
-  createdAt: Date
+  createdAt: Date;
 
   @UpdateDateColumn({
     name: "updated_at"

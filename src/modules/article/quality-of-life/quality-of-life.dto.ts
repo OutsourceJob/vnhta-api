@@ -14,4 +14,5 @@ export class WriteQualityOfLifeDTO {
    exclusionCriteria?: string;
    startSamplingTime?: Date;
    endSamplingTime?: Date;
+   realWorldSampleSize?: number;
 }

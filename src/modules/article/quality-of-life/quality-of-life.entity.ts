@@ -123,6 +123,9 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: 'end_sampling_time', nullable: true })
   endSamplingTime: Date;
 
+  @Column({ name: 'real_world_sample_size', nullable: true })
+  realWorldSampleSize: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 
