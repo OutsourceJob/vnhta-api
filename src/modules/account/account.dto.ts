@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, IsEmpty } from "class-validator";
 import { Gender } from "../../interfaces/index";
 
 export class CreateAccountDTO {
@@ -29,6 +29,9 @@ export class CreateAccountDTO {
 
   @IsNotEmpty()
   position: string;
+
+  @IsEmpty()
+  pin: number;
 }
 
 export class WriteAccountDTO {
@@ -41,4 +44,9 @@ export class WriteAccountDTO {
   degree: string;
   company: string;
   position: string;
+}
+
+export class VerifyRegisterEmail {
+  email: string;
+  pin: number;
 }

@@ -50,7 +50,7 @@ export class AccountEntity extends BaseEntity {
   @Column()
   pin: number;
 
-  @Column({ name: "pin_created_at" })
+  @Column({ name: "pin_created_at", nullable: true })
   pinCreatedAt: Date;
 
   @CreateDateColumn({ name: "created_at" })

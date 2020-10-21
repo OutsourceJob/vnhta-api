@@ -4,13 +4,6 @@ import { Icd20Entity } from '../../catalog/icd-20/icd-20.entity';
 import { StudyLocationEntity } from '../../catalog/study-location/study-location.entity';
 import { InterventionEntity } from '../../catalog/intervention/intervention.entity';
 import { ArticleEntity } from '../article.entity';
-import { StudyDesignEntity } from '../../catalog/study-design/study-design.entity';
-import { DataCollectingMethodEntity } from '../../catalog/data-collecting-method/data-collecting-method.entity';
-import { SampleSizeEntity } from '../../catalog/sample-size/sample-size.entity';
-import { SamplingMethodEntity } from '../../catalog/sampling-method/sampling-method.entity';
-import { CostTypeEntity } from 'src/modules/catalog/cost-type/cost-type.entity';
-import { CostComponentEntity } from '../../catalog/cost-component/cost-component.entity';
-import { StudyPerspectiveEntity } from '../../catalog/study-perspective/study-perspective.entity';
 import { TableEntity } from '../../catalog/table/table.entity';
 
 @Entity({ name: "cost_benefit" })

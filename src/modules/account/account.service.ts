@@ -1,8 +1,8 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import * as _ from 'lodash';
 import { AccountEntity } from './account.entity';
-import { CreateAccountDTO } from './account.dto';
+import { CreateAccountDTO, VerifyRegisterEmail } from './account.dto';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from "bcrypt";
@@ -31,7 +31,30 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
       pin,
       pinCreatedAt: new Date()
     })
+
+    // send email
+
     return await this.repo.create(data).save()
+  }
+
+  async verifyRegisterEmail(data: VerifyRegisterEmail) {
+    const { email, pin } = data;
+
+    this.repo.findOne({ where: { email } })
+      .then(account => {
+        if (!account) throw new NotFoundException("Email Not Found")
+
+        if (account.pin !== pin) throw new BadRequestException("Pin code is invalid")
+
+        account.isActive = true
+        return account.save()
+      })
+      .then(account => {
+        return account;
+      })
+      .catch(err => {
+        throw new InternalServerErrorException(err)
+      })
   }
 
   async updatePassword(password: String): Promise<String> {
