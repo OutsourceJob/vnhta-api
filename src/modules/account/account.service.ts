@@ -7,6 +7,7 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from "bcrypt";
 import * as gpc from "generate-pincode";
+import * as moment from "moment";
 
 @Injectable()
 export class AccountService extends TypeOrmCrudService<AccountEntity> {
@@ -32,19 +33,20 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
       pinCreatedAt: new Date()
     })
 
-    // send email
-
     return await this.repo.create(data).save()
   }
 
   async verifyRegisterEmail(data: VerifyRegisterEmail) {
     const { email, pin } = data;
 
-    this.repo.findOne({ where: { email } })
+    return this.repo.findOne({ where: { email } })
       .then(account => {
         if (!account) throw new NotFoundException("Email Not Found")
 
-        if (account.pin !== pin) throw new BadRequestException("Pin code is invalid")
+        if (
+          account.pin !== pin ||
+          moment(account.pinCreatedAt).valueOf() + 30 * 60 * 1000 < moment().valueOf()
+        ) throw new BadRequestException("Pin code is invalid or expired")
 
         account.isActive = true
         return account.save()

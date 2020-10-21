@@ -32,8 +32,8 @@ export class AccountEntity extends BaseEntity {
   @Column()
   job: string;
 
-  @Column()
-  academic_rank: string;
+  @Column({ name: "academic_rank" })
+  academicRank: string;
 
   @Column()
   degree: string;

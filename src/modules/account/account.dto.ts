@@ -19,7 +19,7 @@ export class CreateAccountDTO {
   job: string;
 
   @IsNotEmpty()
-  academic_rank: string;
+  academicRank: string;
 
   @IsNotEmpty()
   degree: string;
@@ -47,6 +47,9 @@ export class WriteAccountDTO {
 }
 
 export class VerifyRegisterEmail {
+  @IsNotEmpty()
   email: string;
+
+  @IsNotEmpty()
   pin: number;
 }
