@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, BadRequestException, InternalServerError
 import { InjectRepository } from "@nestjs/typeorm";
 import * as _ from 'lodash';
 import { AccountEntity } from './account.entity';
-import { CreateAccountDTO, VerifyRegisterEmailDTO, SendPinDTO } from './account.dto';
+import { CreateAccountDTO, VerifyRegisterEmailDTO, SendPinDTO, UpdateAccountDTO } from './account.dto';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from "bcrypt";
@@ -92,6 +92,22 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
           message: "New pin has been sent to email"
         }
       })
+      .catch(err => {
+        throw new InternalServerErrorException(err)
+      })
+  }
+
+  async updateAccount(accountId: number, data: UpdateAccountDTO) {
+    return this.repo.findOne(accountId)
+      .then(account => {
+        _.keys(data)
+          .forEach(key => {
+            account[key] = data[key];
+          })
+
+        return account.save()
+      })
+      .then(account => account)
       .catch(err => {
         throw new InternalServerErrorException(err)
       })

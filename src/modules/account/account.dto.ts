@@ -34,6 +34,25 @@ export class CreateAccountDTO {
   pin: string;
 }
 
+export class UpdateAccountDTO {
+  gender: Gender;
+  birthday: Date;
+  job: string;
+  academicRank: string;
+  degree: string;
+  company: string;
+  position: string;
+
+  @IsEmpty()
+  email: string;
+
+  @IsEmpty()
+  password: string;
+
+  @IsEmpty()
+  pin: string;
+}
+
 export class WriteAccountDTO {
   email: string;
   password: string;
