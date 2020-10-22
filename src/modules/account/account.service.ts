@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, BadRequestException, InternalServerError
 import { InjectRepository } from "@nestjs/typeorm";
 import * as _ from 'lodash';
 import { AccountEntity } from './account.entity';
-import { CreateAccountDTO, VerifyRegisterEmailDTO, SendPinDTO, UpdateAccountDTO } from './account.dto';
+import { CreateAccountDTO, VerifyRegisterEmailDTO, SendPinDTO, UpdateAccountDTO, UpdatePasswordDTO } from './account.dto';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from "bcrypt";
@@ -107,20 +107,40 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
 
         return account.save()
       })
-      .then(account => account)
       .catch(err => {
         throw new InternalServerErrorException(err)
       })
   }
 
-  async updatePassword(password: String): Promise<String> {
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      const hash = await bcrypt.hash(password, salt);
+  async updatePassword(accountId: number, data: UpdatePasswordDTO): Promise<any> {
+    let account: AccountEntity;
+    return this.repo.findOne(accountId)
+      .then(_account => {
+        if (!_account) throw new NotFoundException("Account Not Found")
+        account = _account;
 
-      return hash;
-    }
+        return bcrypt.compare(data.oldPassword, account.password)
+      })
+      .then(isMatched => {
+        console.log("AccountService -> isMatched", isMatched)
+        if (!isMatched) throw new BadRequestException("Wrong password")
 
-    return null;
+        return bcrypt.genSalt(10)
+      })
+      .then(salt => {
+        return bcrypt.hash(data.newPassword, salt)
+      })
+      .then(hash => {
+        account.password = hash;
+        return account.save()
+      })
+      .then(() => {
+        return {
+          message: "Update password successfully"
+        }
+      })
+      .catch(err => {
+        throw new InternalServerErrorException(err)
+      })
   }
 }

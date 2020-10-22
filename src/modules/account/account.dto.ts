@@ -1,9 +1,11 @@
-import { IsEmail, IsNotEmpty, IsEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, IsEmpty, Validate, Matches } from "class-validator";
 import { Gender } from "../../interfaces/index";
+import { IsUniqueEmail } from "src/validator/IsUniqueEmail";
 
 export class CreateAccountDTO {
   @IsEmail()
   @IsNotEmpty()
+  @Validate(IsUniqueEmail, { message: "This email already exists" })
   email: string;
 
   @IsNotEmpty()
@@ -76,4 +78,16 @@ export class VerifyRegisterEmailDTO {
 export class SendPinDTO {
   @IsNotEmpty()
   email: string;
+}
+
+export class UpdatePasswordDTO {
+  @IsNotEmpty()
+  oldPassword: string;
+
+  @IsNotEmpty()
+  newPassword: string;
+
+  @IsNotEmpty()
+  @Matches(this.newPassword)
+  newPassword2: string
 }

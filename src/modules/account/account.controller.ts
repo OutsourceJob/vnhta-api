@@ -1,6 +1,6 @@
 import { Controller, Post, Patch, Get, UseInterceptors, NotFoundException, Body, Param } from '@nestjs/common';
 import { AccountService } from './account.service';
-import { CreateAccountDTO, WriteAccountDTO, VerifyRegisterEmailDTO, SendPinDTO, UpdateAccountDTO } from './account.dto';
+import { CreateAccountDTO, WriteAccountDTO, VerifyRegisterEmailDTO, SendPinDTO, UpdateAccountDTO, UpdatePasswordDTO } from './account.dto';
 import { SerializerInterceptor } from '../../serialization/serializer.interceptor';
 import * as _ from "lodash";
 import { sendEmail } from "../../utils/sendEmail";
@@ -44,5 +44,13 @@ export class AccountController {
     @Body() data: UpdateAccountDTO
   ) {
     return this.service.updateAccount(accountId, data);
+  }
+
+  @Patch("/:accountId/update-password")
+  updatePassword(
+    @Param("accountId") accountId: number,
+    @Body() data: UpdatePasswordDTO
+  ) {
+    return this.service.updatePassword(accountId, data);
   }
 }
