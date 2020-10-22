@@ -10,7 +10,7 @@ export class AppController {
   async getHello() {
     const articleIdArray = [1, 2, 3, 4, 5, 6];
 
-    const test = await this.service.getQLDataCollectingMethodStatistics(articleIdArray);
+    const test = await this.service.getCEOutcomeStatistics(articleIdArray);
 
     console.log("test", test);
 
