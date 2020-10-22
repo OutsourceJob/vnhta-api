@@ -54,7 +54,7 @@ export class AccountController {
     return this.service.updatePassword(accountId, data);
   }
 
-  @Patch("/:accountId/reset-password")
+  @Patch("/reset-password")
   resetPassword(
     @Body() data: ResetPasswordDTO
   ) {
