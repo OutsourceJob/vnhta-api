@@ -1,8 +1,8 @@
-import { Controller } from "@nestjs/common";
 import { Connection } from 'typeorm';
 import * as _ from "lodash";
+import { Injectable } from '@nestjs/common';
 
-@Controller()
+@Injectable()
 export class StatisticsService {
   constructor(
     private connection: Connection
@@ -13,7 +13,7 @@ export class StatisticsService {
       SELECT year, COUNT(*) AS quantity
       FROM
         article
-      WHERE id IN (1, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
+      WHERE id IN (${_.toString(articleIdArray)})
       GROUP BY year;
     `)
   }
@@ -30,5 +30,51 @@ export class StatisticsService {
       WHERE article.id IN (1, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
       GROUP BY pathology.id
     `)
+  }
+
+  async getJournalStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        journal.fullName, 
+        COUNT(*) AS quantity
+      FROM 
+        article
+      LEFT JOIN 
+        journal ON journal.id = article.journal_id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        journal.id;
+    `);
+  }
+
+  async getLanguageStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        language, 
+        COUNT(*) AS quantity
+      FROM 
+        article
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        language;
+    `);
+  }
+
+  async getAuthorStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        journal.fullName, 
+        COUNT(*) AS quantity
+      FROM 
+        article
+      LEFT JOIN 
+        journal ON journal.id = article.journal_id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        journal.id;
+    `);
   }
 }
