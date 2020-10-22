@@ -31,6 +31,13 @@ export class AccountController {
     return this.service.sendPinViaEmail(data);
   }
 
+  @Get("/:accountId")
+  getAccountById(
+    @Param("accountId") accountId: number
+  ) {
+    return this.service.getAccountById(accountId)
+  }
+
   @Patch("/:accountId")
   updateAccount(
     @Param("accountId") accountId: number,

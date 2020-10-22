@@ -6,7 +6,7 @@ import {
 import * as bcrypt from "bcrypt";
 import { ArticleEntity } from '../article/article.entity';
 import { Exclude } from "class-transformer";
-import { ExclusionMetadata } from 'typeorm/metadata/ExclusionMetadata';
+import * as _ from "lodash";
 
 @Entity({ name: "account" })
 export class AccountEntity extends BaseEntity {
@@ -73,5 +73,10 @@ export class AccountEntity extends BaseEntity {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(this.password, salt);
     this.password = hash;
+  }
+
+  constructor(partial: Partial<AccountEntity>) {
+    super();
+    _.assign(this, partial);
   }
 } 
