@@ -7,8 +7,9 @@ import * as _ from "lodash";
 import { WriteQualityOfLifeDTO } from './quality-of-life.dto';
 import { QualityOfLifeEntity } from './quality-of-life.entity';
 import { Icd20Service } from '../../catalog/icd-20/icd-20.service';
-import { NotFoundException } from '@nestjs/common';
+import { NotFoundException, Injectable } from '@nestjs/common';
 
+@Injectable()
 export class QualityOfLifeService extends TypeOrmCrudService<QualityOfLifeEntity> {
   constructor(
     @InjectRepository(QualityOfLifeEntity) repo: Repository<QualityOfLifeEntity>,

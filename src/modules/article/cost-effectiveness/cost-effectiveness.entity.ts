@@ -184,8 +184,8 @@ export class CostEffectivenessEntity extends BaseEntity {
   //   { onDelete: "SET NULL" }
   // )
   // @JoinColumn({ name: 'effectiveness_data_collecting_method_id' })
-  @Column({ name: "effectiveness_data_collecting_method_id", nullable: true })
-  effectivenessDataCollectingMethodId: number;
+  @Column({ name: "effectiveness_data_collecting_method_id_array", type: "json" })
+  effectivenessDataCollectingMethodIdArray: number[] = [];
 
   @ManyToOne(
     type => DiscountRateEntity,

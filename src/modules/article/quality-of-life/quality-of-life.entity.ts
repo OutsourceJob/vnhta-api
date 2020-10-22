@@ -33,6 +33,7 @@ export class QualityOfLifeEntity extends BaseEntity {
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: 'article_id' })
+  @Column({ name: "article_id", nullable: true })
   articleId: number;
 
   @ManyToOne(
@@ -48,11 +49,12 @@ export class QualityOfLifeEntity extends BaseEntity {
 
   @ManyToMany(
     type => Icd20Entity,
+    i => i.qualityOfLives
   )
   @JoinTable({
     name: 'quality_of_life_icd_20',
     joinColumns: [{ name: 'quality_of_life_id' }],
-    inverseJoinColumns: [{ name: 'icd_20_id' }]
+    inverseJoinColumns: [{ name: "icd_20_id" }]
   })
   icd20s: Icd20Entity[];
 
@@ -89,8 +91,8 @@ export class QualityOfLifeEntity extends BaseEntity {
   //   onDelete: "SET NULL"
   // })
   // @JoinColumn({ name: 'data_collecting_method_id' })
-  @Column({ name: 'data_collecting_method_id', nullable: true })
-  dataCollectingMethodId: number;
+  @Column({ name: 'data_collecting_method_id_array', type: "json" })
+  dataCollectingMethodIdArray: number[] = [];
 
   @Column({ name: 'quality_of_life_toolkit', nullable: true })
   qualityOfLifeToolkit: string;
@@ -120,6 +122,9 @@ export class QualityOfLifeEntity extends BaseEntity {
 
   @Column({ name: 'end_sampling_time', nullable: true })
   endSamplingTime: Date;
+
+  @Column({ name: 'real_world_sample_size', nullable: true })
+  realWorldSampleSize: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

@@ -34,13 +34,13 @@ export class QualityOfLifeController {
    getOne(
       @ParsedRequest() req: CrudRequest,
    ) {
-      let costBenefitId: number;
+      let qualityOfLifeId: number;
       const fieldId = req.parsed.paramsFilter.find(item => item.field === "id")
       if (!fieldId) throw new BadRequestException("QualityOfLife Id is required")
 
-      if (fieldId) costBenefitId = fieldId.value;
+      if (fieldId) qualityOfLifeId = fieldId.value;
 
-      return this.service.getQualityOfLifeById(costBenefitId)
+      return this.service.getQualityOfLifeById(qualityOfLifeId)
    }
 
    @Override()
@@ -48,12 +48,12 @@ export class QualityOfLifeController {
       @ParsedRequest() req: CrudRequest,
       @ParsedBody() data: WriteQualityOfLifeDTO
    ) {
-      let costBenefitId: number;
+      let qualityOfLifeId: number;
       const fieldId = req.parsed.paramsFilter.find(item => item.field === "id")
       if (!fieldId) throw new BadRequestException("QualityOfLife Id is required")
 
-      if (fieldId) costBenefitId = fieldId.value;
+      if (fieldId) qualityOfLifeId = fieldId.value;
 
-      return this.service.updateQualityOfLifeById(costBenefitId, data)
+      return this.service.updateQualityOfLifeById(qualityOfLifeId, data)
    }
 }

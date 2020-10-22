@@ -6,7 +6,7 @@ export class WriteQualityOfLifeDTO {
    interventionIdArray?: number[];
    studyLocationIdArray?: number[];
    studyDesignId?: number;
-   dataCollectingMethodId?: number;
+   dataCollectingMethodIdArray?: number[];
    qualityOfLifeToolkit?: string;
    sampleSizeId?: number;
    samplingMethodId?: number;
@@ -14,4 +14,5 @@ export class WriteQualityOfLifeDTO {
    exclusionCriteria?: string;
    startSamplingTime?: Date;
    endSamplingTime?: Date;
+   realWorldSampleSize?: number;
 }
