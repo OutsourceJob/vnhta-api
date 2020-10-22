@@ -31,6 +31,7 @@ import { UncertaintyAnalysisMethodModule } from './modules/catalog/uncertainty-a
 import { UncertaintyAnalysisResultModule } from "./modules/catalog/uncertainty-analysis-result/uncertainty-analysis-result.module";
 import { TableModule } from './modules/catalog/table/table.module';
 import { CEStudyDesignModule } from './modules/catalog/ce-study-design/ce-study-design.module';
+import { StatisticsModule } from './modules/statistics/statistics.module';
 
 @Module({
   imports: [
@@ -73,7 +74,10 @@ import { CEStudyDesignModule } from './modules/catalog/ce-study-design/ce-study-
     CEStudyDesignModule,
 
     // table
-    TableModule
+    TableModule,
+
+    // statistics
+    StatisticsModule
   ],
   controllers: [AppController],
 })

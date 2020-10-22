@@ -1,6 +1,7 @@
 import { Connection } from 'typeorm';
 import * as _ from "lodash";
 import { Injectable } from '@nestjs/common';
+import * as catalogs from "../../data/catalogs";
 
 @Injectable()
 export class StatisticsService {
@@ -21,7 +22,7 @@ export class StatisticsService {
   async getPathologyStatistics(articleIdArray: number[]) {
     return await this.connection.query(`
       SELECT 
-        pathology.name,
+        pathology.name AS pathology,
         COUNT(*) AS quantity
       FROM
         article
@@ -35,7 +36,7 @@ export class StatisticsService {
   async getJournalStatistics(articleIdArray: number[]): Promise<any[]> {
     return await this.connection.query(`
       SELECT 
-        journal.fullName, 
+        journal.fullName AS journal, 
         COUNT(*) AS quantity
       FROM 
         article
@@ -62,26 +63,10 @@ export class StatisticsService {
     `);
   }
 
-  async getAuthorStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
-      SELECT 
-        journal.fullName, 
-        COUNT(*) AS quantity
-      FROM 
-        article
-      LEFT JOIN 
-        journal ON journal.id = article.journal_id
-      WHERE 
-        article.id IN (${_.toString(articleIdArray)})
-      GROUP BY 
-        journal.id;
-    `);
-  }
-
   async getIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
     return await this.connection.query(`
       SELECT 
-        icd_20.code AS Icd20,
+        icd_20.code AS icd20,
         COUNT(*) AS quantity
       FROM
         article
@@ -95,13 +80,13 @@ export class StatisticsService {
         article.id IN (${_.toString(articleIdArray)})
       GROUP BY 
         icd_20.id
-  `)
+    `)
   }
 
   async getInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
     return await this.connection.query(`
       SELECT 
-        intervention.name AS Intervention,
+        intervention.name AS intervention,
         COUNT(*) AS quantity
       FROM
         article
@@ -115,6 +100,76 @@ export class StatisticsService {
         article.id IN (${_.toString(articleIdArray)})
       GROUP BY 
         intervention.id
-  `)
+    `)
+  }
+
+  async getStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        study_location.name AS studyLocation,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_benefit ON cost_benefit.article_id = article.id
+      LEFT JOIN 
+        cost_benefit_study_location ON cost_benefit_study_location.cost_benefit_id = cost_benefit.id
+      LEFT JOIN 
+        study_location ON cost_benefit_study_location.study_location_id = study_location.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        study_location.id
+    `)
+  }
+
+  async getStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        cost_benefit.study_design_id AS studyDesignId,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_benefit ON cost_benefit.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        cost_benefit.study_design_id
+    `)
+  }
+
+  async getDataCollectingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
+    const res = _.chain(catalogs.dataCollectingMethods).map(method => {
+      if (method.id >= 2) {
+        return (`
+            UNION
+            SELECT 
+              "${method.id}" AS label,
+              COUNT(*) AS quantity
+            FROM
+              article
+            LEFT JOIN 
+              cost_benefit ON cost_benefit.article_id = article.id
+            WHERE 
+              article.id IN (1, 2, 3, 4, 5, 6) AND
+              cost_benefit.data_collecting_method_id_array LIKE "%${method.id}%"
+          `)
+      }
+    }).join('').value();
+
+    return await this.connection.query(`
+    SELECT 
+      "1" AS label,
+      COUNT(*) AS quantity
+    FROM
+      article
+    LEFT JOIN 
+      cost_benefit ON cost_benefit.article_id = article.id
+    WHERE 
+      article.id IN (1, 2, 3, 4, 5, 6) AND
+      cost_benefit.data_collecting_method_id_array REGEXP "1"
+    ${res}
+    `)
   }
 }
