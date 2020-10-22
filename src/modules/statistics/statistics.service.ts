@@ -25,9 +25,9 @@ export class StatisticsService {
         COUNT(*) AS quantity
       FROM
         article
-      LEFT JOIN cost_benefit ON cost_benefit.id = article.id
+      LEFT JOIN cost_benefit ON cost_benefit.article_id = article.id
       LEFT JOIN pathology ON pathology.id = cost_benefit.pathology_id
-      WHERE article.id IN (1, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
+      WHERE article.id IN (${_.toString(articleIdArray)})
       GROUP BY pathology.id
     `)
   }
@@ -76,5 +76,45 @@ export class StatisticsService {
       GROUP BY 
         journal.id;
     `);
+  }
+
+  async getIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        icd_20.code AS Icd20,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_benefit ON cost_benefit.article_id = article.id
+      LEFT JOIN 
+        cost_benefit_icd_20 ON cost_benefit_icd_20.cost_benefit_id = cost_benefit.id
+      LEFT JOIN 
+        icd_20 ON cost_benefit_icd_20.icd_20_id = icd_20.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        icd_20.id
+  `)
+  }
+
+  async getInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        intervention.name AS Intervention,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_benefit ON cost_benefit.article_id = article.id
+      LEFT JOIN 
+        cost_benefit_intervention ON cost_benefit_intervention.cost_benefit_id = cost_benefit.id
+      LEFT JOIN 
+        intervention ON cost_benefit_intervention.intervention_id = intervention.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        intervention.id
+  `)
   }
 }
