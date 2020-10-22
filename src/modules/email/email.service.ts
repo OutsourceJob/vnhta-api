@@ -41,7 +41,7 @@ export class EmailService {
 
     transporter.sendMail(mailOptions, err => {
       if (err) return console.log(err)
-      console.log("Success")
+      console.log("sendConfirmRegisterEmail Success")
     })
   }
 
@@ -61,7 +61,27 @@ export class EmailService {
 
     transporter.sendMail(mailOptions, err => {
       if (err) return console.log(err)
-      console.log("Success")
+      console.log("sendPinViaEmail Success")
+    })
+  }
+
+  public resetPassword(email: string, newPassword: string): void {
+    const transporter = this.createTransporter();
+    const templatePath = path.join(__dirname, "../../../templates/reset-password.template.hjs")
+    const template = fs.readFileSync(templatePath, "utf-8")
+    const compiledTemplate = hogan.compile(template);
+    const mailOptions = {
+      from: config.EMAIL,
+      to: email,
+      subject: "VNHTA - Reset password",
+      html: compiledTemplate.render({
+        password: newPassword
+      })
+    }
+
+    transporter.sendMail(mailOptions, err => {
+      if (err) return console.log(err)
+      console.log("resetPassword Success")
     })
   }
 }

@@ -2,13 +2,14 @@ import { Injectable, NotFoundException, BadRequestException, InternalServerError
 import { InjectRepository } from "@nestjs/typeorm";
 import * as _ from 'lodash';
 import { AccountEntity } from './account.entity';
-import { CreateAccountDTO, VerifyRegisterEmailDTO, SendPinDTO, UpdateAccountDTO, UpdatePasswordDTO } from './account.dto';
+import { CreateAccountDTO, VerifyRegisterEmailDTO, SendPinDTO, UpdateAccountDTO, UpdatePasswordDTO, ResetPasswordDTO } from './account.dto';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from "bcrypt";
 import * as gpc from "generate-pincode";
 import * as moment from "moment";
 import { EmailService } from "../email/email.service";
+import * as pwGenerator from "generate-password"
 
 @Injectable()
 export class AccountService extends TypeOrmCrudService<AccountEntity> {
@@ -137,6 +138,38 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
       .then(() => {
         return {
           message: "Update password successfully"
+        }
+      })
+      .catch(err => {
+        throw new InternalServerErrorException(err)
+      })
+  }
+
+  async resetPassword(data: ResetPasswordDTO) {
+    const { email } = data;
+    let account: AccountEntity;
+    let newPassword: string;
+    return this.repo.findOne({ email })
+      .then(_account => {
+        if (!_account) throw new NotFoundException("Account Not Found")
+
+        account = _account;
+
+        return bcrypt.genSalt(10)
+      })
+      .then(salt => {
+        newPassword = pwGenerator.generate({ length: 10, numbers: true })
+        return bcrypt.hash(newPassword, salt)
+      })
+      .then(hash => {
+        account.password = hash;
+        return account.save()
+      })
+      .then(() => {
+        this.emailService.resetPassword(email, newPassword);
+
+        return {
+          message: "New password has been sent to email"
         }
       })
       .catch(err => {

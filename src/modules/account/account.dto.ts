@@ -91,3 +91,8 @@ export class UpdatePasswordDTO {
   @Matches(this.newPassword)
   newPassword2: string
 }
+
+export class ResetPasswordDTO {
+  @IsNotEmpty()
+  email: string;
+}
