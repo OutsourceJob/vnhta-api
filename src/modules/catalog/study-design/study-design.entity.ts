@@ -18,10 +18,10 @@ export class StudyDesignEntity extends BaseEntity {
 
   // Relation
 
-  @OneToMany(type => QualityOfLifeEntity, q => q.studyDesignId, {
-    onDelete: "SET NULL"
-  })
-  qualityOfLives: QualityOfLifeEntity[]
+  // @OneToMany(type => QualityOfLifeEntity, q => q.studyDesignId, {
+  //   onDelete: "SET NULL"
+  // })
+  // qualityOfLives: QualityOfLifeEntity[]
 
   // @OneToMany(
   //   type => CostEffectivenessEntity,

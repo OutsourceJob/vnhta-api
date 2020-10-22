@@ -604,4 +604,20 @@ export class StatisticsService {
         study_location.id
     `)
   }
+
+  async getCEStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        cost_effectiveness.study_design_id AS studyDesignId,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        cost_effectiveness.study_design_id
+    `)
+  }
 }

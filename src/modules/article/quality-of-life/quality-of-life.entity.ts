@@ -84,8 +84,8 @@ export class QualityOfLifeEntity extends BaseEntity {
   //   onDelete: "SET NULL"
   // })
   // @JoinColumn({ name: 'study_design_id' })
-  @Column({ name: 'study_design_id', nullable: true })
-  studyDesignId: number;
+  @Column({ name: 'ql_study_design_id', nullable: true })
+  qlStudyDesignId: number;
 
   // @ManyToOne(type => DataCollectingMethodEntity, d => d.qualityOfLives, {
   //   onDelete: "SET NULL"

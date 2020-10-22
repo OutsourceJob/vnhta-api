@@ -5,7 +5,7 @@ export class WriteQualityOfLifeDTO {
    icd20IdArray?: number[];
    interventionIdArray?: number[];
    studyLocationIdArray?: number[];
-   studyDesignId?: number;
+   qlStudyDesignId?: number;
    dataCollectingMethodIdArray?: number[];
    qualityOfLifeToolkit?: string;
    sampleSizeId?: number;
