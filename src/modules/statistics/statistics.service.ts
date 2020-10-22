@@ -159,17 +159,99 @@ export class StatisticsService {
     }).join('').value();
 
     return await this.connection.query(`
-    SELECT 
-      "1" AS label,
-      COUNT(*) AS quantity
-    FROM
-      article
-    LEFT JOIN 
-      cost_benefit ON cost_benefit.article_id = article.id
-    WHERE 
-      article.id IN (1, 2, 3, 4, 5, 6) AND
-      cost_benefit.data_collecting_method_id_array REGEXP "1"
-    ${res}
+      SELECT 
+        "1" AS label,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_benefit ON cost_benefit.article_id = article.id
+      WHERE 
+        article.id IN (1, 2, 3, 4, 5, 6) AND
+        cost_benefit.data_collecting_method_id_array REGEXP "1"
+      ${res}
+    `)
+  }
+
+  async getSampleSizeStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        cost_benefit.sample_size_id AS samplesSize,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_benefit ON cost_benefit.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        cost_benefit.sample_size_id
+    `)
+  }
+
+  async getSamplingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        cost_benefit.sampling_method_id AS samplingMethod,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_benefit ON cost_benefit.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        cost_benefit.sampling_method_id
+    `)
+  }
+
+  async getCostTypeStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        cost_benefit.cost_type_id AS costType,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_benefit ON cost_benefit.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        cost_benefit.cost_type_id
+    `)
+  }
+
+  async getCostComponentStatistics(articleIdArray: number[]): Promise<any[]> {
+    const res = _.chain(catalogs.costComponents).map(cost => {
+      if (cost.id >= 2) {
+        return (`
+            UNION
+            SELECT 
+              "${cost.id}" AS label,
+              COUNT(*) AS quantity
+            FROM
+              article
+            LEFT JOIN 
+              cost_benefit ON cost_benefit.article_id = article.id
+            WHERE 
+              article.id IN (${_.toString(articleIdArray)}) AND
+              cost_benefit.cost_component_id_array LIKE "%${cost.id}%"
+          `)
+      }
+    }).join('').value();
+
+    return await this.connection.query(`
+      SELECT 
+        "1" AS label,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_benefit ON cost_benefit.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)}) AND
+        cost_benefit.cost_component_id_array REGEXP "1"
+      ${res}
     `)
   }
 }
