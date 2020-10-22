@@ -394,7 +394,7 @@ export class StatisticsService {
   async getQLStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
     return await this.connection.query(`
       SELECT 
-        quality_of_life.study_design_id AS studyDesignId,
+        quality_of_life.ql_study_design_id AS studyDesignId,
         COUNT(*) AS quantity
       FROM
         article
@@ -403,7 +403,7 @@ export class StatisticsService {
       WHERE 
         article.id IN (${_.toString(articleIdArray)})
       GROUP BY 
-        quality_of_life.study_design_id
+        quality_of_life.ql_study_design_id
     `)
   }
 
@@ -608,7 +608,7 @@ export class StatisticsService {
   async getCEStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
     return await this.connection.query(`
       SELECT 
-        cost_effectiveness.study_design_id AS studyDesignId,
+        cost_effectiveness.ce_study_design_id AS studyDesignId,
         COUNT(*) AS quantity
       FROM
         article
@@ -617,7 +617,297 @@ export class StatisticsService {
       WHERE 
         article.id IN (${_.toString(articleIdArray)})
       GROUP BY 
-        cost_effectiveness.study_design_id
+        cost_effectiveness.ce_study_design_id
+    `)
+  }
+
+  async getCEAnalysisMethodStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        cost_effectiveness.analysis_method_id AS studyDesignId,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        cost_effectiveness.analysis_method_id
+    `)
+  }
+
+  async getCEModelTypeStatistics(articleIdArray: number[]): Promise<any[]> {
+    const res = _.chain(catalogs.modelTypes).map(item => {
+      if (item.id >= 2) {
+        return (`
+            UNION
+            SELECT 
+              "${item.id}" AS label,
+              COUNT(*) AS quantity
+            FROM
+              article
+            LEFT JOIN 
+              cost_effectiveness ON cost_effectiveness.article_id = article.id
+            WHERE 
+              article.id IN (${_.toString(articleIdArray)}) AND
+              cost_effectiveness.model_type_id_array LIKE "%${item.id}%"
+          `)
+      }
+    }).join('').value();
+
+    return await this.connection.query(`
+      SELECT 
+        "1" AS label,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)}) AND
+        cost_effectiveness.model_type_id_array REGEXP "1"
+      ${res}
+    `)
+  }
+
+  async getCEStudyPerspectiveStatistics(articleIdArray: number[]): Promise<any[]> {
+    const res = _.chain(catalogs.studyPerspectives).map(item => {
+      if (item.id >= 2) {
+        return (`
+            UNION
+            SELECT 
+              "${item.id}" AS label,
+              COUNT(*) AS quantity
+            FROM
+              article
+            LEFT JOIN 
+              cost_effectiveness ON cost_effectiveness.article_id = article.id
+            WHERE 
+              article.id IN (${_.toString(articleIdArray)}) AND
+              cost_effectiveness.study_perspective_id_array LIKE "%${item.id}%"
+          `)
+      }
+    }).join('').value();
+
+    return await this.connection.query(`
+      SELECT 
+        "1" AS label,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)}) AND
+        cost_effectiveness.study_perspective_id_array REGEXP "1"
+      ${res}
+    `)
+  }
+
+  async getCEEffectivenessDataCollectingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
+    const res = _.chain(catalogs.effectivenessDataCollectingMethods).map(item => {
+      if (item.id >= 2) {
+        return (`
+            UNION
+            SELECT 
+              "${item.id}" AS label,
+              COUNT(*) AS quantity
+            FROM
+              article
+            LEFT JOIN 
+              cost_effectiveness ON cost_effectiveness.article_id = article.id
+            WHERE 
+              article.id IN (${_.toString(articleIdArray)}) AND
+              cost_effectiveness.effectiveness_data_collecting_method_id_array LIKE "%${item.id}%"
+          `)
+      }
+    }).join('').value();
+
+    return await this.connection.query(`
+      SELECT 
+        "1" AS label,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)}) AND
+        cost_effectiveness.effectiveness_data_collecting_method_id_array REGEXP "1"
+      ${res}
+    `)
+  }
+
+  async getCETypeOfEffectivenessStatistics(articleIdArray: number[]): Promise<any[]> {
+    const res = _.chain(catalogs.typeOfEffectiveness).map(item => {
+      if (item.id >= 2) {
+        return (`
+            UNION
+            SELECT 
+              "${item.id}" AS label,
+              COUNT(*) AS quantity
+            FROM
+              article
+            LEFT JOIN 
+              cost_effectiveness ON cost_effectiveness.article_id = article.id
+            WHERE 
+              article.id IN (${_.toString(articleIdArray)}) AND
+              cost_effectiveness.type_of_effectiveness_id_array LIKE "%${item.id}%"
+          `)
+      }
+    }).join('').value();
+
+    return await this.connection.query(`
+      SELECT 
+        "1" AS label,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)}) AND
+        cost_effectiveness.type_of_effectiveness_id_array REGEXP "1"
+      ${res}
+    `)
+  }
+
+  async getCECostComponentStatistics(articleIdArray: number[]): Promise<any[]> {
+    const res = _.chain(catalogs.costComponents).map(item => {
+      if (item.id >= 2) {
+        return (`
+            UNION
+            SELECT 
+              "${item.id}" AS label,
+              COUNT(*) AS quantity
+            FROM
+              article
+            LEFT JOIN 
+              cost_effectiveness ON cost_effectiveness.article_id = article.id
+            WHERE 
+              article.id IN (${_.toString(articleIdArray)}) AND
+              cost_effectiveness.cost_component_id_array LIKE "%${item.id}%"
+          `)
+      }
+    }).join('').value();
+
+    return await this.connection.query(`
+      SELECT 
+        "1" AS label,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)}) AND
+        cost_effectiveness.cost_component_id_array REGEXP "1"
+      ${res}
+    `)
+  }
+
+  async getCEYearOfCostStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        cost_effectiveness.year_of_cost, 
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+      cost_effectiveness.year_of_cost;
+    `)
+  }
+
+  async getCEHeterogeneityAnalysisStatistics(articleIdArray: number[]): Promise<any[]> {
+    const res = _.chain(catalogs.heterogeneityAnalysis).map(item => {
+      if (item.id >= 2) {
+        return (`
+            UNION
+            SELECT 
+              "${item.id}" AS label,
+              COUNT(*) AS quantity
+            FROM
+              article
+            LEFT JOIN 
+              cost_effectiveness ON cost_effectiveness.article_id = article.id
+            WHERE 
+              article.id IN (${_.toString(articleIdArray)}) AND
+              cost_effectiveness.heterogeneity_analysis_id_array LIKE "%${item.id}%"
+          `)
+      }
+    }).join('').value();
+
+    return await this.connection.query(`
+      SELECT 
+        "1" AS label,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)}) AND
+        cost_effectiveness.heterogeneity_analysis_id_array REGEXP "1"
+      ${res}
+    `)
+  }
+
+  async getCEUncertaintyAnalysisMethodStatistics(articleIdArray: number[]): Promise<any[]> {
+    return await this.connection.query(`
+      SELECT 
+        uncertainty_analysis_method.name AS icd20,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      LEFT JOIN 
+        cost_effectiveness_uncertainty_analysis_method ON cost_effectiveness_uncertainty_analysis_method.cost_effectiveness_id = cost_effectiveness.id
+      LEFT JOIN 
+        uncertainty_analysis_method ON cost_effectiveness_uncertainty_analysis_method.uncertainty_analysis_method_id = uncertainty_analysis_method.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        uncertainty_analysis_method.id
+    `)
+  }
+
+  async getCEUncertaintyAnalysisResultStatistics(articleIdArray: number[]): Promise<any[]> {
+    const res = _.chain(catalogs.uncertaintyAnalysisResults).map(item => {
+      if (item.id >= 2) {
+        return (`
+            UNION
+            SELECT 
+              "${item.id}" AS label,
+              COUNT(*) AS quantity
+            FROM
+              article
+            LEFT JOIN 
+              cost_effectiveness ON cost_effectiveness.article_id = article.id
+            WHERE 
+              article.id IN (${_.toString(articleIdArray)}) AND
+              cost_effectiveness.uncertainty_analysis_result_id_array LIKE "%${item.id}%"
+          `)
+      }
+    }).join('').value();
+
+    return await this.connection.query(`
+      SELECT 
+        "1" AS label,
+        COUNT(*) AS quantity
+      FROM
+        article
+      LEFT JOIN 
+        cost_effectiveness ON cost_effectiveness.article_id = article.id
+      WHERE 
+        article.id IN (${_.toString(articleIdArray)}) AND
+        cost_effectiveness.uncertainty_analysis_result_id_array REGEXP "1"
+      ${res}
     `)
   }
 }

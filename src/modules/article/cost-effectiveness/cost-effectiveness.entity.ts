@@ -246,9 +246,9 @@ export class CostEffectivenessEntity extends BaseEntity {
     u => u.costEffectiveness
   )
   @JoinTable({
-    name: "cost_effectiveness_uncertainty_analysis",
+    name: "cost_effectiveness_uncertainty_analysis_method",
     joinColumns: [{ name: 'cost_effectiveness_id' }],
-    inverseJoinColumns: [{ name: "uncertainty_analysis_id" }]
+    inverseJoinColumns: [{ name: "uncertainty_analysis_method_id" }]
   })
   uncertaintyAnalysisMethods: UncertaintyAnalysisMethodEntity[];
 
