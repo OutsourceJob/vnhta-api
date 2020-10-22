@@ -38,6 +38,13 @@ export class AccountController {
     return this.service.getAccountById(accountId)
   }
 
+  @Patch("/reset-password")
+  resetPassword(
+    @Body() data: ResetPasswordDTO
+  ) {
+    return this.service.resetPassword(data);
+  }
+
   @Patch("/:accountId")
   updateAccount(
     @Param("accountId") accountId: number,
@@ -52,12 +59,5 @@ export class AccountController {
     @Body() data: UpdatePasswordDTO
   ) {
     return this.service.updatePassword(accountId, data);
-  }
-
-  @Patch("/reset-password")
-  resetPassword(
-    @Body() data: ResetPasswordDTO
-  ) {
-    return this.service.resetPassword(data);
   }
 }
