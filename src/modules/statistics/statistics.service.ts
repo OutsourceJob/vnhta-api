@@ -9,8 +9,21 @@ export class StatisticsService {
     private connection: Connection
   ) { }
 
+  formatResponse(res: any, label: string) {
+    return _.chain(res)
+      .map(item => {
+        return {
+          ...item,
+          quantity: _.parseInt(item.quantity)
+        }
+      })
+      .orderBy(["year"])
+      .filter(label)
+      .value()
+  }
+
   async getYearStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    let res = await this.connection.query(`
       SELECT 
         year, 
         COUNT(*) AS quantity
@@ -21,6 +34,8 @@ export class StatisticsService {
       GROUP BY 
         year;
     `)
+
+    return this.formatResponse(res, "year");
   }
 
   async getPathologyStatistics(articleIdArray: number[]) {
