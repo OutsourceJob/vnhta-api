@@ -10,11 +10,15 @@ export class StatisticsService {
   ) { }
 
   formatResponse(res: any, label: string) {
+    console.log(res)
+    const sum = _.sumBy(res, (item: any) => _.parseInt(item.quantity))
+    console.log("StatisticsService -> formatResponse -> sum", sum)
     return _.chain(res)
       .map(item => {
         return {
           ...item,
-          quantity: _.parseInt(item.quantity)
+          quantity: _.parseInt(item.quantity),
+          percent: _.round(item.quantity * 100 / sum, 2)
         }
       })
       .orderBy(["year"])
