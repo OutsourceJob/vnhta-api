@@ -10,10 +10,13 @@ export class StatisticsService {
   ) { }
 
   formatResponse(res: any, label: string) {
-    console.log(res)
-    const sum = _.sumBy(res, (item: any) => _.parseInt(item.quantity))
+    let formatRes = _.filter(res, item => item[label]);
+    const sum = _.sumBy(formatRes, (item: any) => _.parseInt(item.quantity))
+
+    console.log("formatRes", formatRes);
     console.log("StatisticsService -> formatResponse -> sum", sum)
-    return _.chain(res)
+
+    return _.chain(formatRes)
       .map(item => {
         return {
           ...item,
@@ -21,7 +24,7 @@ export class StatisticsService {
           percent: _.round(item.quantity * 100 / sum, 2)
         }
       })
-      .orderBy(["year"])
+      .orderBy([label])
       .filter(label)
       .value()
   }
@@ -43,7 +46,7 @@ export class StatisticsService {
   }
 
   async getPathologyStatistics(articleIdArray: number[]) {
-    return await this.connection.query(`
+    let res = await this.connection.query(`
       SELECT 
         pathology.name AS pathology,
         COUNT(*) AS quantity
@@ -58,10 +61,12 @@ export class StatisticsService {
       GROUP BY 
         pathology.id
     `)
+
+    return this.formatResponse(res, "pathology");
   }
 
   async getJournalStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    let res = await this.connection.query(`
       SELECT 
         journal.fullName AS journal, 
         COUNT(*) AS quantity
@@ -74,10 +79,12 @@ export class StatisticsService {
       GROUP BY 
         journal.id;
     `);
+
+    return this.formatResponse(res, "journal");
   }
 
   async getLanguageStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    let res = await this.connection.query(`
       SELECT 
         language, 
         COUNT(*) AS quantity
@@ -88,10 +95,12 @@ export class StatisticsService {
       GROUP BY 
         language;
     `);
+
+    return this.formatResponse(res, "language");
   }
 
   async getIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    let res = await this.connection.query(`
       SELECT 
         icd_20.code AS icd20,
         COUNT(*) AS quantity
@@ -108,10 +117,12 @@ export class StatisticsService {
       GROUP BY 
         icd_20.id
     `)
+
+    return this.formatResponse(res, "icd20");
   }
 
   async getInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    let res = await this.connection.query(`
       SELECT 
         intervention.name AS intervention,
         COUNT(*) AS quantity
@@ -128,10 +139,12 @@ export class StatisticsService {
       GROUP BY 
         intervention.id
     `)
+
+    return this.formatResponse(res, "intervention");
   }
 
   async getStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    let res = await this.connection.query(`
       SELECT 
         study_location.name AS studyLocation,
         COUNT(*) AS quantity
@@ -148,6 +161,8 @@ export class StatisticsService {
       GROUP BY 
         study_location.id
     `)
+
+    return this.formatResponse(res, "studyLocation");
   }
 
   async getStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
