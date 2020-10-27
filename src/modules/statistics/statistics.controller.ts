@@ -111,4 +111,60 @@ export class StatisticsController {
   ) {
     return this.statisticsService.getStudyPerspectiveStatistics(articleIdArray);
   }
+
+  @Post("/ql-pathologies")
+  getQLPathologyStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getQLPathologyStatistics(articleIdArray);
+  }
+
+  @Post("/ql-icd20s")
+  getQLIcd20Statistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getQLIcd20Statistics(articleIdArray);
+  }
+
+  @Post("/ql-interventions")
+  getQLInterventionStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getQLInterventionStatistics(articleIdArray);
+  }
+
+  @Post("/ql-study-locations")
+  getQLStudyLocationStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getQLStudyLocationStatistics(articleIdArray);
+  }
+
+  @Post("/ql-study-designs")
+  getQLStudyDesignStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getQLStudyDesignStatistics(articleIdArray);
+  }
+
+  @Post("/ql-data-collecting-methods")
+  getQLDataCollectingMethodStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getQLDataCollectingMethodStatistics(articleIdArray);
+  }
+
+  @Post("/ql-sample-sizes")
+  getQLSampleSizeStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getQLSampleSizeStatistics(articleIdArray);
+  }
+
+  @Post("/ql-sampling-methods")
+  getQLSamplingMethodStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getQLSamplingMethodStatistics(articleIdArray);
+  }
 }

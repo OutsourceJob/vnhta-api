@@ -419,7 +419,7 @@ export class StatisticsService {
   }
 
   async getQLPathologyStatistics(articleIdArray: number[]) {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         pathology.name AS pathology,
         COUNT(*) AS quantity
@@ -434,10 +434,12 @@ export class StatisticsService {
       GROUP BY 
         pathology.id
     `)
+
+    return this.formatResponse(res, "pathology");
   }
 
   async getQLIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         icd_20.code AS icd20,
         COUNT(*) AS quantity
@@ -454,10 +456,12 @@ export class StatisticsService {
       GROUP BY 
         icd_20.id
     `)
+
+    return this.formatResponse(res, "icd20");
   }
 
   async getQLInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         intervention.name AS intervention,
         COUNT(*) AS quantity
@@ -474,10 +478,12 @@ export class StatisticsService {
       GROUP BY 
         intervention.id
     `)
+
+    return this.formatResponse(res, "intervention");
   }
 
   async getQLStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         study_location.name AS studyLocation,
         COUNT(*) AS quantity
@@ -494,12 +500,14 @@ export class StatisticsService {
       GROUP BY 
         study_location.id
     `)
+
+    return this.formatResponse(res, "studyLocation");
   }
 
   async getQLStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
-        quality_of_life.ql_study_design_id AS studyDesignId,
+        quality_of_life.ql_study_design_id AS studyDesign,
         COUNT(*) AS quantity
       FROM
         article
@@ -510,6 +518,15 @@ export class StatisticsService {
       GROUP BY 
         quality_of_life.ql_study_design_id
     `)
+
+    const formatRes = this.formatResponse(res, "studyDesign");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      studyDesign: catalogs
+        .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.studyDesign)]
+        .name
+    }));
   }
 
   async getQLDataCollectingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -518,7 +535,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${method.id}" AS label,
+              "${method.id}" AS dataCollectingMethod,
               COUNT(*) AS quantity
             FROM
               article
@@ -531,9 +548,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS dataCollectingMethod,
         COUNT(*) AS quantity
       FROM
         article
@@ -544,10 +561,21 @@ export class StatisticsService {
         quality_of_life.data_collecting_method_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "dataCollectingMethod");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      dataCollectingMethod: catalogs
+        .dataCollectingMethods[_.findIndex(catalogs.dataCollectingMethods, catalogItem => catalogItem.id.toString() === item.dataCollectingMethod)]
+        .name
+    }));
   }
 
   async getQLSampleSizeStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         quality_of_life.sample_size_id AS samplesSize,
         COUNT(*) AS quantity
@@ -560,10 +588,19 @@ export class StatisticsService {
       GROUP BY 
         quality_of_life.sample_size_id
     `)
+
+    const formatRes = this.formatResponse(res, "samplesSize");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      samplesSize: catalogs
+        .sampleSizes[_.findIndex(catalogs.sampleSizes, catalogItem => catalogItem.id === item.samplesSize)]
+        .name
+    }));
   }
 
   async getQLSamplingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         quality_of_life.sampling_method_id AS samplingMethod,
         COUNT(*) AS quantity
@@ -576,6 +613,15 @@ export class StatisticsService {
       GROUP BY 
         quality_of_life.sampling_method_id
     `)
+
+    const formatRes = this.formatResponse(res, "samplingMethod");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      samplingMethod: catalogs
+        .samplingMethods[_.findIndex(catalogs.samplingMethods, catalogItem => catalogItem.id === item.samplingMethod)]
+        .name
+    }));
   }
 
   async getCEPathologyStatistics(articleIdArray: number[]) {
