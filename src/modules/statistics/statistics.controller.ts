@@ -55,4 +55,11 @@ export class StatisticsController {
   ) {
     return this.statisticsService.getStudyLocationStatistics(articleIdArray);
   }
+
+  @Post("/study-designs")
+  getStudyDesignStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getStudyDesignStatistics(articleIdArray);
+  }
 }

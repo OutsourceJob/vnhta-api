@@ -166,9 +166,9 @@ export class StatisticsService {
   }
 
   async getStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    let res = await this.connection.query(`
       SELECT 
-        cost_benefit.study_design_id AS studyDesignId,
+        cost_benefit.study_design_id AS studyDesign,
         COUNT(*) AS quantity
       FROM
         article
@@ -179,6 +179,13 @@ export class StatisticsService {
       GROUP BY 
         cost_benefit.study_design_id
     `)
+
+    const formatRes = this.formatResponse(res, "studyDesign");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      studyDesign: catalogs.studyDesigns[_.findIndex(catalogs.studyDesigns, studyDesignItem => studyDesignItem.id === item.studyDesign)].name
+    }));
   }
 
   async getDataCollectingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
