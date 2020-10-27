@@ -184,7 +184,9 @@ export class StatisticsService {
 
     return _.map(formatRes, item => ({
       ...item,
-      studyDesign: catalogs.studyDesigns[_.findIndex(catalogs.studyDesigns, studyDesignItem => studyDesignItem.id === item.studyDesign)].name
+      studyDesign: catalogs
+        .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.studyDesign)]
+        .name
     }));
   }
 
@@ -194,7 +196,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${method.id}" AS label,
+              ${method.id} AS dataCollectingMethod,
               COUNT(*) AS quantity
             FROM
               article
@@ -207,9 +209,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    const newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        1 AS dataCollectingMethod,
         COUNT(*) AS quantity
       FROM
         article
@@ -220,10 +222,19 @@ export class StatisticsService {
         cost_benefit.data_collecting_method_id_array REGEXP "1"
       ${res}
     `)
+
+    const formatRes = this.formatResponse(newRes, "dataCollectingMethod");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      dataCollectingMethod: catalogs
+        .dataCollectingMethods[_.findIndex(catalogs.dataCollectingMethods, catalogItem => catalogItem.id.toString() === item.dataCollectingMethod)]
+        .name
+    }));
   }
 
   async getSampleSizeStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         cost_benefit.sample_size_id AS samplesSize,
         COUNT(*) AS quantity
@@ -236,6 +247,15 @@ export class StatisticsService {
       GROUP BY 
         cost_benefit.sample_size_id
     `)
+
+    const formatRes = this.formatResponse(res, "samplesSize");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      samplesSize: catalogs
+        .sampleSizes[_.findIndex(catalogs.sampleSizes, catalogItem => catalogItem.id === item.samplesSize)]
+        .name
+    }));
   }
 
   async getSamplingMethodStatistics(articleIdArray: number[]): Promise<any[]> {

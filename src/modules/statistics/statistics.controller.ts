@@ -62,4 +62,18 @@ export class StatisticsController {
   ) {
     return this.statisticsService.getStudyDesignStatistics(articleIdArray);
   }
+
+  @Post("/data-collecting-methods")
+  getDataCollectingMethodStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getDataCollectingMethodStatistics(articleIdArray);
+  }
+
+  @Post("/sample-sizes")
+  getSampleSizeStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getSampleSizeStatistics(articleIdArray);
+  }
 }
