@@ -625,7 +625,7 @@ export class StatisticsService {
   }
 
   async getCEPathologyStatistics(articleIdArray: number[]) {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         pathology.name AS pathology,
         COUNT(*) AS quantity
@@ -640,10 +640,12 @@ export class StatisticsService {
       GROUP BY 
         pathology.id
     `)
+
+    return this.formatResponse(res, "pathology");
   }
 
   async getCEIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         icd_20.code AS icd20,
         COUNT(*) AS quantity
@@ -660,10 +662,12 @@ export class StatisticsService {
       GROUP BY 
         icd_20.id
     `)
+
+    return this.formatResponse(res, "icd20");
   }
 
   async getCEInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    let res = await this.connection.query(`
       SELECT 
         intervention.name AS intervention,
         COUNT(*) AS quantity
@@ -680,10 +684,12 @@ export class StatisticsService {
       GROUP BY 
         intervention.id
     `)
+
+    return this.formatResponse(res, "intervention");
   }
 
   async getCEComparatorStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         comparator.name AS comparator,
         COUNT(*) AS quantity
@@ -700,6 +706,8 @@ export class StatisticsService {
       GROUP BY 
         comparator.id
     `)
+
+    return this.formatResponse(res, "comparator");
   }
 
   async getCEOutcomeStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -708,7 +716,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS label,
+              "${item.id}" AS outcome,
               COUNT(*) AS quantity
             FROM
               article
@@ -721,9 +729,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS outcome,
         COUNT(*) AS quantity
       FROM
         article
@@ -734,10 +742,21 @@ export class StatisticsService {
         cost_effectiveness.outcome_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "outcome");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      outcome: catalogs
+        .outcomes[_.findIndex(catalogs.outcomes, catalogItem => catalogItem.id.toString() === item.outcome)]
+        .name
+    }));
   }
 
   async getCEStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         study_location.name AS studyLocation,
         COUNT(*) AS quantity
@@ -754,12 +773,14 @@ export class StatisticsService {
       GROUP BY 
         study_location.id
     `)
+
+    return this.formatResponse(res, "studyLocation");
   }
 
   async getCEStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
-        cost_effectiveness.ce_study_design_id AS studyDesignId,
+        cost_effectiveness.ce_study_design_id AS studyDesign,
         COUNT(*) AS quantity
       FROM
         article
@@ -770,12 +791,21 @@ export class StatisticsService {
       GROUP BY 
         cost_effectiveness.ce_study_design_id
     `)
+
+    const formatRes = this.formatResponse(res, "studyDesign");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      studyDesign: catalogs
+        .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.studyDesign)]
+        .name
+    }));
   }
 
   async getCEAnalysisMethodStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
-        cost_effectiveness.analysis_method_id AS studyDesignId,
+        cost_effectiveness.analysis_method_id AS analysisMethod,
         COUNT(*) AS quantity
       FROM
         article
@@ -786,6 +816,15 @@ export class StatisticsService {
       GROUP BY 
         cost_effectiveness.analysis_method_id
     `)
+
+    const formatRes = this.formatResponse(res, "analysisMethod");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      analysisMethod: catalogs
+        .analysisMethods[_.findIndex(catalogs.analysisMethods, catalogItem => catalogItem.id === item.analysisMethod)]
+        .name
+    }));
   }
 
   async getCEModelTypeStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -794,7 +833,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS label,
+              "${item.id}" AS modelType,
               COUNT(*) AS quantity
             FROM
               article
@@ -807,9 +846,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS modelType,
         COUNT(*) AS quantity
       FROM
         article
@@ -820,6 +859,17 @@ export class StatisticsService {
         cost_effectiveness.model_type_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "modelType");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      modelType: catalogs
+        .modelTypes[_.findIndex(catalogs.modelTypes, catalogItem => catalogItem.id.toString() === item.modelType)]
+        .name
+    }));
   }
 
   async getCEStudyPerspectiveStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -828,7 +878,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS label,
+              "${item.id}" AS studyPerspective,
               COUNT(*) AS quantity
             FROM
               article
@@ -841,10 +891,10 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
         "1" AS label,
-        COUNT(*) AS quantity
+        COUNT(*) AS studyPerspective
       FROM
         article
       LEFT JOIN 
@@ -854,6 +904,17 @@ export class StatisticsService {
         cost_effectiveness.study_perspective_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "studyPerspective");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      studyPerspective: catalogs
+        .studyPerspectives[_.findIndex(catalogs.studyPerspectives, catalogItem => catalogItem.id.toString() === item.studyPerspective)]
+        .name
+    }));
   }
 
   async getCEEffectivenessDataCollectingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -862,7 +923,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS label,
+              "${item.id}" AS dataCollectingMethod,
               COUNT(*) AS quantity
             FROM
               article
@@ -875,9 +936,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS dataCollectingMethod,
         COUNT(*) AS quantity
       FROM
         article
@@ -888,6 +949,17 @@ export class StatisticsService {
         cost_effectiveness.effectiveness_data_collecting_method_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "dataCollectingMethod");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      dataCollectingMethod: catalogs
+        .effectivenessDataCollectingMethods[_.findIndex(catalogs.effectivenessDataCollectingMethods, catalogItem => catalogItem.id.toString() === item.dataCollectingMethod)]
+        .name
+    }));
   }
 
   async getCETypeOfEffectivenessStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -896,7 +968,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS label,
+              "${item.id}" AS effectivenessType,
               COUNT(*) AS quantity
             FROM
               article
@@ -909,9 +981,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS effectivenessType,
         COUNT(*) AS quantity
       FROM
         article
@@ -922,6 +994,17 @@ export class StatisticsService {
         cost_effectiveness.type_of_effectiveness_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "effectivenessType");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      effectivenessType: catalogs
+        .typeOfEffectiveness[_.findIndex(catalogs.typeOfEffectiveness, catalogItem => catalogItem.id.toString() === item.effectivenessType)]
+        .name
+    }));
   }
 
   async getCECostComponentStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -930,7 +1013,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS label,
+              "${item.id}" AS costComponent,
               COUNT(*) AS quantity
             FROM
               article
@@ -943,9 +1026,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS costComponent,
         COUNT(*) AS quantity
       FROM
         article
@@ -956,12 +1039,23 @@ export class StatisticsService {
         cost_effectiveness.cost_component_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "costComponent");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      costComponent: catalogs
+        .costComponents[_.findIndex(catalogs.costComponents, catalogItem => catalogItem.id.toString() === item.costComponent)]
+        .name
+    }));
   }
 
   async getCEYearOfCostStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
-        cost_effectiveness.year_of_cost, 
+        cost_effectiveness.year_of_cost AS yearOfCost,
         COUNT(*) AS quantity
       FROM
         article
@@ -972,6 +1066,8 @@ export class StatisticsService {
       GROUP BY 
       cost_effectiveness.year_of_cost;
     `)
+
+    return this.formatResponse(res, "yearOfCost");
   }
 
   async getCEHeterogeneityAnalysisStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -980,7 +1076,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS label,
+              "${item.id}" AS heterogeneityAnalysis,
               COUNT(*) AS quantity
             FROM
               article
@@ -993,9 +1089,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS heterogeneityAnalysis,
         COUNT(*) AS quantity
       FROM
         article
@@ -1006,12 +1102,23 @@ export class StatisticsService {
         cost_effectiveness.heterogeneity_analysis_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "heterogeneityAnalysis");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      heterogeneityAnalysis: catalogs
+        .heterogeneityAnalysis[_.findIndex(catalogs.heterogeneityAnalysis, catalogItem => catalogItem.id.toString() === item.heterogeneityAnalysis)]
+        .name
+    }));
   }
 
   async getCEUncertaintyAnalysisMethodStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
-        uncertainty_analysis_method.name AS icd20,
+        uncertainty_analysis_method.name AS uncertaintyAnalysisMethod,
         COUNT(*) AS quantity
       FROM
         article
@@ -1026,6 +1133,8 @@ export class StatisticsService {
       GROUP BY 
         uncertainty_analysis_method.id
     `)
+
+    return this.formatResponse(res, "uncertaintyAnalysisMethod");
   }
 
   async getCEUncertaintyAnalysisResultStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -1034,7 +1143,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS label,
+              "${item.id}" AS uncertaintyAnalysisResult,
               COUNT(*) AS quantity
             FROM
               article
@@ -1047,9 +1156,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS uncertaintyAnalysisResult,
         COUNT(*) AS quantity
       FROM
         article
@@ -1060,5 +1169,16 @@ export class StatisticsService {
         cost_effectiveness.uncertainty_analysis_result_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "uncertaintyAnalysisResult");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      uncertaintyAnalysisResult: catalogs
+        .uncertaintyAnalysisResults[_.findIndex(catalogs.uncertaintyAnalysisResults, catalogItem => catalogItem.id.toString() === item.uncertaintyAnalysisResult)]
+        .name
+    }));
   }
 }

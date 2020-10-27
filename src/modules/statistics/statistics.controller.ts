@@ -167,4 +167,123 @@ export class StatisticsController {
   ) {
     return this.statisticsService.getQLSamplingMethodStatistics(articleIdArray);
   }
+
+  @Post("/ce-pathologies")
+  getCEPathologyStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEPathologyStatistics(articleIdArray);
+  }
+
+  @Post("/ce-icd20s")
+  getCEIcd20Statistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEIcd20Statistics(articleIdArray);
+  }
+
+  @Post("/ce-interventions")
+  getCEInterventionStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEInterventionStatistics(articleIdArray);
+  }
+
+  @Post("/ce-comparators")
+  getCEComparatorStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEComparatorStatistics(articleIdArray);
+  }
+
+  @Post("/ce-outcomes")
+  getCEOutcomeStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEOutcomeStatistics(articleIdArray);
+  }
+
+  @Post("/ce-study-locations")
+  getCEStudyLocationStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEStudyLocationStatistics(articleIdArray);
+  }
+
+  @Post("/ce-study-designs")
+  getCEStudyDesignStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEStudyDesignStatistics(articleIdArray);
+  }
+
+  @Post("/ce-analysis-methods")
+  getCEAnalysisMethodStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEAnalysisMethodStatistics(articleIdArray);
+  }
+
+  @Post("/ce-model-types")
+  getCEModelTypeStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEModelTypeStatistics(articleIdArray);
+  }
+
+  @Post("/ce-study-perspectives")
+  getCEStudyPerspectiveStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEStudyPerspectiveStatistics(articleIdArray);
+  }
+
+  @Post("/ce-data-collecting-methods")
+  getCEEffectivenessDataCollectingMethodStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEEffectivenessDataCollectingMethodStatistics(articleIdArray);
+  }
+
+  @Post("/ce-effectiveness-types")
+  getCETypeOfEffectivenessStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCETypeOfEffectivenessStatistics(articleIdArray);
+  }
+
+  @Post("/ce-cost-components")
+  getCECostComponentStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCECostComponentStatistics(articleIdArray);
+  }
+
+  @Post("/ce-year-of-costs")
+  getCEYearOfCostStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEYearOfCostStatistics(articleIdArray);
+  }
+
+  @Post("/heterogeneity-analysis")
+  getCEHeterogeneityAnalysisStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEHeterogeneityAnalysisStatistics(articleIdArray);
+  }
+
+  @Post("/uncertainty-analysis-methods")
+  getCEUncertaintyAnalysisMethodStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEUncertaintyAnalysisMethodStatistics(articleIdArray);
+  }
+
+  @Post("/uncertainty-analysis-results")
+  getCEUncertaintyAnalysisResultStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCEUncertaintyAnalysisResultStatistics(articleIdArray);
+  }
 }
