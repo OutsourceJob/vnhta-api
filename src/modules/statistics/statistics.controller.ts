@@ -76,4 +76,39 @@ export class StatisticsController {
   ) {
     return this.statisticsService.getSampleSizeStatistics(articleIdArray);
   }
+
+  @Post("/sampling-methods")
+  getSamplingMethodStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getSamplingMethodStatistics(articleIdArray);
+  }
+
+  @Post("/cost-types")
+  getCostTypeStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCostTypeStatistics(articleIdArray);
+  }
+
+  @Post("/cost-components")
+  getCostComponentStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getCostComponentStatistics(articleIdArray);
+  }
+
+  @Post("/year-of-costs")
+  getYearOfCostStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getYearOfCostStatistics(articleIdArray);
+  }
+
+  @Post("/study-perspectives")
+  getStudyPerspectiveStatistics(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.getStudyPerspectiveStatistics(articleIdArray);
+  }
 }

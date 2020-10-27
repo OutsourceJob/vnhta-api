@@ -209,7 +209,7 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    const newRes = await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
         1 AS dataCollectingMethod,
         COUNT(*) AS quantity
@@ -222,6 +222,8 @@ export class StatisticsService {
         cost_benefit.data_collecting_method_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
     const formatRes = this.formatResponse(newRes, "dataCollectingMethod");
 
@@ -259,7 +261,7 @@ export class StatisticsService {
   }
 
   async getSamplingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         cost_benefit.sampling_method_id AS samplingMethod,
         COUNT(*) AS quantity
@@ -272,10 +274,19 @@ export class StatisticsService {
       GROUP BY 
         cost_benefit.sampling_method_id
     `)
+
+    const formatRes = this.formatResponse(res, "samplingMethod");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      samplingMethod: catalogs
+        .samplingMethods[_.findIndex(catalogs.samplingMethods, catalogItem => catalogItem.id === item.samplingMethod)]
+        .name
+    }));
   }
 
   async getCostTypeStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
         cost_benefit.cost_type_id AS costType,
         COUNT(*) AS quantity
@@ -288,6 +299,15 @@ export class StatisticsService {
       GROUP BY 
         cost_benefit.cost_type_id
     `)
+
+    const formatRes = this.formatResponse(res, "costType");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      costType: catalogs
+        .costTypes[_.findIndex(catalogs.costTypes, catalogItem => catalogItem.id === item.costType)]
+        .name
+    }));
   }
 
   async getCostComponentStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -296,7 +316,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${cost.id}" AS label,
+              "${cost.id}" AS costComponent,
               COUNT(*) AS quantity
             FROM
               article
@@ -309,9 +329,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS costComponent,
         COUNT(*) AS quantity
       FROM
         article
@@ -322,12 +342,23 @@ export class StatisticsService {
         cost_benefit.cost_component_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "costComponent");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      costComponent: catalogs
+        .costComponents[_.findIndex(catalogs.costComponents, catalogItem => catalogItem.id.toString() === item.costComponent)]
+        .name
+    }));
   }
 
   async getYearOfCostStatistics(articleIdArray: number[]): Promise<any[]> {
-    return await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
-        cost_benefit.year_of_cost, 
+        cost_benefit.year_of_cost AS yearOfCost, 
         COUNT(*) AS quantity
       FROM
         article
@@ -338,6 +369,8 @@ export class StatisticsService {
       GROUP BY 
       cost_benefit.year_of_cost;
     `)
+
+    return this.formatResponse(res, "yearOfCost");
   }
 
   async getStudyPerspectiveStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -346,7 +379,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS label,
+              "${item.id}" AS studyPerspective,
               COUNT(*) AS quantity
             FROM
               article
@@ -359,9 +392,9 @@ export class StatisticsService {
       }
     }).join('').value();
 
-    return await this.connection.query(`
+    let newRes = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        "1" AS studyPerspective,
         COUNT(*) AS quantity
       FROM
         article
@@ -372,6 +405,17 @@ export class StatisticsService {
         cost_benefit.study_perspective_id_array REGEXP "1"
       ${res}
     `)
+
+    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
+
+    const formatRes = this.formatResponse(newRes, "studyPerspective");
+
+    return _.map(formatRes, item => ({
+      ...item,
+      studyPerspective: catalogs
+        .studyPerspectives[_.findIndex(catalogs.studyPerspectives, catalogItem => catalogItem.id.toString() === item.studyPerspective)]
+        .name
+    }));
   }
 
   async getQLPathologyStatistics(articleIdArray: number[]) {
