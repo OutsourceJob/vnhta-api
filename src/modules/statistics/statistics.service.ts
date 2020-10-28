@@ -38,7 +38,7 @@ export class StatisticsService {
   async getYearStatistics(articleIdArray: number[]): Promise<any[]> {
     let res = await this.connection.query(`
       SELECT 
-        year, 
+        year AS label, 
         COUNT(*) AS quantity
       FROM
         article
@@ -54,7 +54,7 @@ export class StatisticsService {
   async getPathologyStatistics(articleIdArray: number[]) {
     let res = await this.connection.query(`
       SELECT 
-        pathology.name AS pathology,
+        pathology.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -74,7 +74,7 @@ export class StatisticsService {
   async getJournalStatistics(articleIdArray: number[]): Promise<any[]> {
     let res = await this.connection.query(`
       SELECT 
-        journal.fullName AS journal, 
+        journal.fullName AS label, 
         COUNT(*) AS quantity
       FROM 
         article
@@ -92,7 +92,7 @@ export class StatisticsService {
   async getLanguageStatistics(articleIdArray: number[]): Promise<any[]> {
     let res = await this.connection.query(`
       SELECT 
-        language, 
+        language AS label, 
         COUNT(*) AS quantity
       FROM 
         article
@@ -108,7 +108,7 @@ export class StatisticsService {
   async getIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
     let res = await this.connection.query(`
       SELECT 
-        icd_20.code AS icd20,
+        icd_20.code AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -130,7 +130,7 @@ export class StatisticsService {
   async getInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
     let res = await this.connection.query(`
       SELECT 
-        intervention.name AS intervention,
+        intervention.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -152,7 +152,7 @@ export class StatisticsService {
   async getStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
     let res = await this.connection.query(`
       SELECT 
-        study_location.name AS studyLocation,
+        study_location.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -174,7 +174,7 @@ export class StatisticsService {
   async getStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
     let res = await this.connection.query(`
       SELECT 
-        cost_benefit.study_design_id AS studyDesign,
+        cost_benefit.study_design_id AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -202,7 +202,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              ${method.id} AS dataCollectingMethod,
+              ${method.id} AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -217,7 +217,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        1 AS dataCollectingMethod,
+        1 AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -244,7 +244,7 @@ export class StatisticsService {
   async getSampleSizeStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        cost_benefit.sample_size_id AS samplesSize,
+        cost_benefit.sample_size_id AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -269,7 +269,7 @@ export class StatisticsService {
   async getSamplingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        cost_benefit.sampling_method_id AS samplingMethod,
+        cost_benefit.sampling_method_id AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -294,7 +294,7 @@ export class StatisticsService {
   async getCostTypeStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        cost_benefit.cost_type_id AS costType,
+        cost_benefit.cost_type_id AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -322,7 +322,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${cost.id}" AS costComponent,
+              "${cost.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -337,7 +337,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS costComponent,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -364,7 +364,7 @@ export class StatisticsService {
   async getYearOfCostStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        cost_benefit.year_of_cost AS yearOfCost, 
+        cost_benefit.year_of_cost AS label, 
         COUNT(*) AS quantity
       FROM
         article
@@ -385,7 +385,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS studyPerspective,
+              "${item.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -400,7 +400,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS studyPerspective,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -427,7 +427,7 @@ export class StatisticsService {
   async getQLPathologyStatistics(articleIdArray: number[]) {
     const res = await this.connection.query(`
       SELECT 
-        pathology.name AS pathology,
+        pathology.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -447,7 +447,7 @@ export class StatisticsService {
   async getQLIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        icd_20.code AS icd20,
+        icd_20.code AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -469,7 +469,7 @@ export class StatisticsService {
   async getQLInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        intervention.name AS intervention,
+        intervention.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -491,7 +491,7 @@ export class StatisticsService {
   async getQLStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        study_location.name AS studyLocation,
+        study_location.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -513,7 +513,7 @@ export class StatisticsService {
   async getQLStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        quality_of_life.ql_study_design_id AS studyDesign,
+        quality_of_life.ql_study_design_id AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -541,7 +541,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${method.id}" AS dataCollectingMethod,
+              "${method.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -556,7 +556,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS dataCollectingMethod,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -583,7 +583,7 @@ export class StatisticsService {
   async getQLSampleSizeStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        quality_of_life.sample_size_id AS samplesSize,
+        quality_of_life.sample_size_id AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -608,7 +608,7 @@ export class StatisticsService {
   async getQLSamplingMethodStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        quality_of_life.sampling_method_id AS samplingMethod,
+        quality_of_life.sampling_method_id AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -633,7 +633,7 @@ export class StatisticsService {
   async getCEPathologyStatistics(articleIdArray: number[]) {
     const res = await this.connection.query(`
       SELECT 
-        pathology.name AS pathology,
+        pathology.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -653,7 +653,7 @@ export class StatisticsService {
   async getCEIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        icd_20.code AS icd20,
+        icd_20.code AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -675,7 +675,7 @@ export class StatisticsService {
   async getCEInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
     let res = await this.connection.query(`
       SELECT 
-        intervention.name AS intervention,
+        intervention.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -697,7 +697,7 @@ export class StatisticsService {
   async getCEComparatorStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        comparator.name AS comparator,
+        comparator.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -722,7 +722,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS outcome,
+              "${item.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -737,7 +737,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS outcome,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -764,7 +764,7 @@ export class StatisticsService {
   async getCEStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        study_location.name AS studyLocation,
+        study_location.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -786,7 +786,7 @@ export class StatisticsService {
   async getCEStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        cost_effectiveness.ce_study_design_id AS studyDesign,
+        cost_effectiveness.ce_study_design_id AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -811,7 +811,7 @@ export class StatisticsService {
   async getCEAnalysisMethodStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        cost_effectiveness.analysis_method_id AS analysisMethod,
+        cost_effectiveness.analysis_method_id AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -839,7 +839,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS modelType,
+              "${item.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -854,7 +854,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS modelType,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -884,7 +884,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS studyPerspective,
+              "${item.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -900,7 +900,7 @@ export class StatisticsService {
     let newRes = await this.connection.query(`
       SELECT 
         "1" AS label,
-        COUNT(*) AS studyPerspective
+        COUNT(*) AS quantity
       FROM
         article
       LEFT JOIN 
@@ -929,7 +929,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS dataCollectingMethod,
+              "${item.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -944,7 +944,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS dataCollectingMethod,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -974,7 +974,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS effectivenessType,
+              "${item.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -989,7 +989,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS effectivenessType,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -1019,7 +1019,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS costComponent,
+              "${item.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -1034,7 +1034,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS costComponent,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -1061,7 +1061,7 @@ export class StatisticsService {
   async getCEYearOfCostStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        cost_effectiveness.year_of_cost AS yearOfCost,
+        cost_effectiveness.year_of_cost AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -1082,7 +1082,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS heterogeneityAnalysis,
+              "${item.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -1097,7 +1097,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS heterogeneityAnalysis,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -1124,7 +1124,7 @@ export class StatisticsService {
   async getCEUncertaintyAnalysisMethodStatistics(articleIdArray: number[]): Promise<any[]> {
     const res = await this.connection.query(`
       SELECT 
-        uncertainty_analysis_method.name AS uncertaintyAnalysisMethod,
+        uncertainty_analysis_method.name AS label,
         COUNT(*) AS quantity
       FROM
         article
@@ -1149,7 +1149,7 @@ export class StatisticsService {
         return (`
             UNION
             SELECT 
-              "${item.id}" AS uncertaintyAnalysisResult,
+              "${item.id}" AS label,
               COUNT(*) AS quantity
             FROM
               article
@@ -1164,7 +1164,7 @@ export class StatisticsService {
 
     let newRes = await this.connection.query(`
       SELECT 
-        "1" AS uncertaintyAnalysisResult,
+        "1" AS label,
         COUNT(*) AS quantity
       FROM
         article
