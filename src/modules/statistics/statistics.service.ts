@@ -48,7 +48,7 @@ export class StatisticsService {
         year;
     `)
 
-    return this.formatResponse(res, "year");
+    return this.formatResponse(res, "label");
   }
 
   async getPathologyStatistics(articleIdArray: number[]) {
@@ -68,7 +68,7 @@ export class StatisticsService {
         pathology.id
     `)
 
-    return this.formatResponse(res, "pathology");
+    return this.formatResponse(res, "label");
   }
 
   async getJournalStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -86,7 +86,7 @@ export class StatisticsService {
         journal.id;
     `);
 
-    return this.formatResponse(res, "journal");
+    return this.formatResponse(res, "label");
   }
 
   async getLanguageStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -102,7 +102,7 @@ export class StatisticsService {
         language;
     `);
 
-    return this.formatResponse(res, "language");
+    return this.formatResponse(res, "label");
   }
 
   async getIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
@@ -124,7 +124,7 @@ export class StatisticsService {
         icd_20.id
     `)
 
-    return this.formatResponse(res, "icd20");
+    return this.formatResponse(res, "label");
   }
 
   async getInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -146,7 +146,7 @@ export class StatisticsService {
         intervention.id
     `)
 
-    return this.formatResponse(res, "intervention");
+    return this.formatResponse(res, "label");
   }
 
   async getStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -168,7 +168,7 @@ export class StatisticsService {
         study_location.id
     `)
 
-    return this.formatResponse(res, "studyLocation");
+    return this.formatResponse(res, "label");
   }
 
   async getStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -186,7 +186,7 @@ export class StatisticsService {
         cost_benefit.study_design_id
     `)
 
-    const formatRes = this.formatResponse(res, "studyDesign");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
@@ -231,12 +231,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "dataCollectingMethod");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      dataCollectingMethod: catalogs
-        .dataCollectingMethods[_.findIndex(catalogs.dataCollectingMethods, catalogItem => catalogItem.id.toString() === item.dataCollectingMethod)]
+      label: catalogs
+        .dataCollectingMethods[_.findIndex(catalogs.dataCollectingMethods, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -256,12 +256,12 @@ export class StatisticsService {
         cost_benefit.sample_size_id
     `)
 
-    const formatRes = this.formatResponse(res, "samplesSize");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      samplesSize: catalogs
-        .sampleSizes[_.findIndex(catalogs.sampleSizes, catalogItem => catalogItem.id === item.samplesSize)]
+      label: catalogs
+        .sampleSizes[_.findIndex(catalogs.sampleSizes, catalogItem => catalogItem.id === item.label)]
         .name
     }));
   }
@@ -281,12 +281,12 @@ export class StatisticsService {
         cost_benefit.sampling_method_id
     `)
 
-    const formatRes = this.formatResponse(res, "samplingMethod");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      samplingMethod: catalogs
-        .samplingMethods[_.findIndex(catalogs.samplingMethods, catalogItem => catalogItem.id === item.samplingMethod)]
+      label: catalogs
+        .samplingMethods[_.findIndex(catalogs.samplingMethods, catalogItem => catalogItem.id === item.label)]
         .name
     }));
   }
@@ -306,12 +306,12 @@ export class StatisticsService {
         cost_benefit.cost_type_id
     `)
 
-    const formatRes = this.formatResponse(res, "costType");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      costType: catalogs
-        .costTypes[_.findIndex(catalogs.costTypes, catalogItem => catalogItem.id === item.costType)]
+      label: catalogs
+        .costTypes[_.findIndex(catalogs.costTypes, catalogItem => catalogItem.id === item.label)]
         .name
     }));
   }
@@ -351,12 +351,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "costComponent");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      costComponent: catalogs
-        .costComponents[_.findIndex(catalogs.costComponents, catalogItem => catalogItem.id.toString() === item.costComponent)]
+      label: catalogs
+        .costComponents[_.findIndex(catalogs.costComponents, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -376,7 +376,7 @@ export class StatisticsService {
       cost_benefit.year_of_cost;
     `)
 
-    return this.formatResponse(res, "yearOfCost");
+    return this.formatResponse(res, "label");
   }
 
   async getStudyPerspectiveStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -414,12 +414,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "studyPerspective");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      studyPerspective: catalogs
-        .studyPerspectives[_.findIndex(catalogs.studyPerspectives, catalogItem => catalogItem.id.toString() === item.studyPerspective)]
+      label: catalogs
+        .studyPerspectives[_.findIndex(catalogs.studyPerspectives, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -441,7 +441,7 @@ export class StatisticsService {
         pathology.id
     `)
 
-    return this.formatResponse(res, "pathology");
+    return this.formatResponse(res, "label");
   }
 
   async getQLIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
@@ -463,7 +463,7 @@ export class StatisticsService {
         icd_20.id
     `)
 
-    return this.formatResponse(res, "icd20");
+    return this.formatResponse(res, "label");
   }
 
   async getQLInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -485,7 +485,7 @@ export class StatisticsService {
         intervention.id
     `)
 
-    return this.formatResponse(res, "intervention");
+    return this.formatResponse(res, "label");
   }
 
   async getQLStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -507,7 +507,7 @@ export class StatisticsService {
         study_location.id
     `)
 
-    return this.formatResponse(res, "studyLocation");
+    return this.formatResponse(res, "label");
   }
 
   async getQLStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -525,12 +525,12 @@ export class StatisticsService {
         quality_of_life.ql_study_design_id
     `)
 
-    const formatRes = this.formatResponse(res, "studyDesign");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      studyDesign: catalogs
-        .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.studyDesign)]
+      label: catalogs
+        .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.label)]
         .name
     }));
   }
@@ -570,12 +570,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "dataCollectingMethod");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      dataCollectingMethod: catalogs
-        .dataCollectingMethods[_.findIndex(catalogs.dataCollectingMethods, catalogItem => catalogItem.id.toString() === item.dataCollectingMethod)]
+      label: catalogs
+        .dataCollectingMethods[_.findIndex(catalogs.dataCollectingMethods, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -595,12 +595,12 @@ export class StatisticsService {
         quality_of_life.sample_size_id
     `)
 
-    const formatRes = this.formatResponse(res, "samplesSize");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      samplesSize: catalogs
-        .sampleSizes[_.findIndex(catalogs.sampleSizes, catalogItem => catalogItem.id === item.samplesSize)]
+      label: catalogs
+        .sampleSizes[_.findIndex(catalogs.sampleSizes, catalogItem => catalogItem.id === item.label)]
         .name
     }));
   }
@@ -620,12 +620,12 @@ export class StatisticsService {
         quality_of_life.sampling_method_id
     `)
 
-    const formatRes = this.formatResponse(res, "samplingMethod");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      samplingMethod: catalogs
-        .samplingMethods[_.findIndex(catalogs.samplingMethods, catalogItem => catalogItem.id === item.samplingMethod)]
+      label: catalogs
+        .samplingMethods[_.findIndex(catalogs.samplingMethods, catalogItem => catalogItem.id === item.label)]
         .name
     }));
   }
@@ -647,7 +647,7 @@ export class StatisticsService {
         pathology.id
     `)
 
-    return this.formatResponse(res, "pathology");
+    return this.formatResponse(res, "label");
   }
 
   async getCEIcd20Statistics(articleIdArray: number[]): Promise<any[]> {
@@ -669,7 +669,7 @@ export class StatisticsService {
         icd_20.id
     `)
 
-    return this.formatResponse(res, "icd20");
+    return this.formatResponse(res, "label");
   }
 
   async getCEInterventionStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -691,7 +691,7 @@ export class StatisticsService {
         intervention.id
     `)
 
-    return this.formatResponse(res, "intervention");
+    return this.formatResponse(res, "label");
   }
 
   async getCEComparatorStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -713,7 +713,7 @@ export class StatisticsService {
         comparator.id
     `)
 
-    return this.formatResponse(res, "comparator");
+    return this.formatResponse(res, "label");
   }
 
   async getCEOutcomeStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -751,12 +751,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "outcome");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      outcome: catalogs
-        .outcomes[_.findIndex(catalogs.outcomes, catalogItem => catalogItem.id.toString() === item.outcome)]
+      label: catalogs
+        .outcomes[_.findIndex(catalogs.outcomes, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -780,7 +780,7 @@ export class StatisticsService {
         study_location.id
     `)
 
-    return this.formatResponse(res, "studyLocation");
+    return this.formatResponse(res, "label");
   }
 
   async getCEStudyDesignStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -798,12 +798,12 @@ export class StatisticsService {
         cost_effectiveness.ce_study_design_id
     `)
 
-    const formatRes = this.formatResponse(res, "studyDesign");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      studyDesign: catalogs
-        .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.studyDesign)]
+      label: catalogs
+        .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.label)]
         .name
     }));
   }
@@ -823,12 +823,12 @@ export class StatisticsService {
         cost_effectiveness.analysis_method_id
     `)
 
-    const formatRes = this.formatResponse(res, "analysisMethod");
+    const formatRes = this.formatResponse(res, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      analysisMethod: catalogs
-        .analysisMethods[_.findIndex(catalogs.analysisMethods, catalogItem => catalogItem.id === item.analysisMethod)]
+      label: catalogs
+        .analysisMethods[_.findIndex(catalogs.analysisMethods, catalogItem => catalogItem.id === item.label)]
         .name
     }));
   }
@@ -868,12 +868,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "modelType");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      modelType: catalogs
-        .modelTypes[_.findIndex(catalogs.modelTypes, catalogItem => catalogItem.id.toString() === item.modelType)]
+      label: catalogs
+        .modelTypes[_.findIndex(catalogs.modelTypes, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -913,12 +913,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "studyPerspective");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      studyPerspective: catalogs
-        .studyPerspectives[_.findIndex(catalogs.studyPerspectives, catalogItem => catalogItem.id.toString() === item.studyPerspective)]
+      label: catalogs
+        .studyPerspectives[_.findIndex(catalogs.studyPerspectives, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -958,12 +958,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "dataCollectingMethod");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      dataCollectingMethod: catalogs
-        .effectivenessDataCollectingMethods[_.findIndex(catalogs.effectivenessDataCollectingMethods, catalogItem => catalogItem.id.toString() === item.dataCollectingMethod)]
+      label: catalogs
+        .effectivenessDataCollectingMethods[_.findIndex(catalogs.effectivenessDataCollectingMethods, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -1003,12 +1003,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "effectivenessType");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      effectivenessType: catalogs
-        .typeOfEffectiveness[_.findIndex(catalogs.typeOfEffectiveness, catalogItem => catalogItem.id.toString() === item.effectivenessType)]
+      label: catalogs
+        .typeOfEffectiveness[_.findIndex(catalogs.typeOfEffectiveness, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -1048,12 +1048,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "costComponent");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      costComponent: catalogs
-        .costComponents[_.findIndex(catalogs.costComponents, catalogItem => catalogItem.id.toString() === item.costComponent)]
+      label: catalogs
+        .costComponents[_.findIndex(catalogs.costComponents, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -1073,7 +1073,7 @@ export class StatisticsService {
       cost_effectiveness.year_of_cost;
     `)
 
-    return this.formatResponse(res, "yearOfCost");
+    return this.formatResponse(res, "label");
   }
 
   async getCEHeterogeneityAnalysisStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -1111,12 +1111,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "heterogeneityAnalysis");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      heterogeneityAnalysis: catalogs
-        .heterogeneityAnalysis[_.findIndex(catalogs.heterogeneityAnalysis, catalogItem => catalogItem.id.toString() === item.heterogeneityAnalysis)]
+      label: catalogs
+        .heterogeneityAnalysis[_.findIndex(catalogs.heterogeneityAnalysis, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
@@ -1140,7 +1140,7 @@ export class StatisticsService {
         uncertainty_analysis_method.id
     `)
 
-    return this.formatResponse(res, "uncertaintyAnalysisMethod");
+    return this.formatResponse(res, "label");
   }
 
   async getCEUncertaintyAnalysisResultStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -1178,12 +1178,12 @@ export class StatisticsService {
 
     newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
 
-    const formatRes = this.formatResponse(newRes, "uncertaintyAnalysisResult");
+    const formatRes = this.formatResponse(newRes, "label");
 
     return _.map(formatRes, item => ({
       ...item,
-      uncertaintyAnalysisResult: catalogs
-        .uncertaintyAnalysisResults[_.findIndex(catalogs.uncertaintyAnalysisResults, catalogItem => catalogItem.id.toString() === item.uncertaintyAnalysisResult)]
+      label: catalogs
+        .uncertaintyAnalysisResults[_.findIndex(catalogs.uncertaintyAnalysisResults, catalogItem => catalogItem.id.toString() === item.label)]
         .name
     }));
   }
