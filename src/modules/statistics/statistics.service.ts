@@ -12,21 +12,27 @@ export class StatisticsService {
   formatResponse(res: any, label: string) {
     let formatRes = _.filter(res, item => item[label]);
     const sum = _.sumBy(formatRes, (item: any) => _.parseInt(item.quantity))
+    let temp = 0;
 
-    console.log("formatRes", formatRes);
-    console.log("StatisticsService -> formatResponse -> sum", sum)
-
-    return _.chain(formatRes)
+    let lastRes = _.chain(formatRes)
       .map(item => {
-        return {
+        const newItem = {
           ...item,
           quantity: _.parseInt(item.quantity),
-          percent: _.round(item.quantity * 100 / sum, 2)
+          percent: item[label] === formatRes[formatRes.length - 1][label]
+            ? _.round(100 - temp, 2)
+            : _.round(item.quantity * 100 / sum, 2)
         }
+
+        temp += newItem.percent;
+
+        return newItem;
       })
       .orderBy([label])
       .filter(label)
       .value()
+
+    return lastRes;
   }
 
   async getYearStatistics(articleIdArray: number[]): Promise<any[]> {
