@@ -95,6 +95,9 @@ export class ArticleEntity extends BaseEntity {
   @Column({ nullable: true })
   language: Language;
 
+  @Column({ type: "json", name: "key_words" })
+  keyWords: Array<string> = []
+
   @CreateDateColumn({
     name: "created_at"
   })

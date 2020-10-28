@@ -93,15 +93,16 @@ export class ArticleController {
     const text = query.text
     const advanced = query.advanced
 
-    if (advanced) return this.service.searchAdvance(text)
+    // if (advanced) return this.service.searchAdvance(text)
 
     if (!text) return this.service.getMany(req);
 
-    if (text === "cost" || text === "chi phí") return await this.service.searchCost(text)
-    if (
-      text === "chi phí hiệu quả" || text === "chi phí - hiệu quả" ||
-      text === "cost - effectiveness" || text === "cost effectiveness"
-    ) return await this.service.searchCostEffectiveness(text)
+    // if (text === "cost" || text === "chi phí") return await this.service.searchCost(text)
+    // if (
+    //   text === "chi phí hiệu quả" || text === "chi phí - hiệu quả" ||
+    //   text === "cost - effectiveness" || text === "cost effectiveness"
+    // ) return await this.service.searchCostEffectiveness(text)
+
 
     return [];
   }
