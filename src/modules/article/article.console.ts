@@ -11,6 +11,7 @@ export class ArticleConsole {
     command: "translate <word>"
   })
   translate(word: string) {
+    // console.log(word)
     return this.searchService.generateWords(word);
   }
 }

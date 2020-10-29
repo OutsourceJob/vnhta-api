@@ -16,7 +16,7 @@ import { ConsoleModule } from 'nestjs-console';
 @Module({
     imports: [
         TypeOrmModule.forFeature([ArticleEntity]),
-        UploadModule,
+        UploadModule, ConsoleModule,
 
         // sub-article
         CostBenefitModule, QualityOfLifeModule,

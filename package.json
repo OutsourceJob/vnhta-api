@@ -52,7 +52,7 @@
     "bcrypt": "^5.0.0",
     "class-transformer": "^0.3.1",
     "class-validator": "^0.12.2",
-    "commander": "^6.1.0",
+    "commander": "^6.2.0",
     "dotenv": "^8.2.0",
     "generate-password": "^1.5.1",
     "generate-pincode": "^5.0.3",

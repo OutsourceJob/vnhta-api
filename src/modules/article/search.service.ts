@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import * as _ from "lodash"
-import translate from "translate";
+import * as translate from "translate";
 
 @Injectable()
 export class SearchService {
@@ -30,7 +30,7 @@ export class SearchService {
   }
 
   async generateWords(word: string): Promise<string[]> {
-    return translate(word, { from: "en", to: "vn" })
+    return translate(word, { from: "en", to: "vi" })
       .then(text => {
         console.log(text);
       })

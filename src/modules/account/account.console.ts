@@ -11,6 +11,7 @@ export class AccountConsole {
     command: "create-account <email> <password>"
   })
   async createAccount(email: string, password: string) {
+    console.log(email, password)
     // await this.accountService.createAccount({ email, password })
   }
 }
