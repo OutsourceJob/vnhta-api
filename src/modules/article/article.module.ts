@@ -9,6 +9,9 @@ import { CostBenefitModule } from './cost-benefit/cost-benefit.module';
 import { QualityOfLifeModule } from './quality-of-life/quality-of-life.module';
 import { CostEffectivenessModule } from './cost-effectiveness/cost-effectiveness.module';
 import { UploadModule } from '../upload/upload.module';
+import { SearchService } from './search.service';
+import { ArticleConsole } from './article.console';
+import { ConsoleModule } from 'nestjs-console';
 
 @Module({
     imports: [
@@ -23,6 +26,6 @@ import { UploadModule } from '../upload/upload.module';
         AuthorModule, JournalModule,
     ],
     controllers: [ArticleController],
-    providers: [ArticleService],
+    providers: [ArticleService, SearchService, ArticleConsole],
 })
 export class ArticleModule { }

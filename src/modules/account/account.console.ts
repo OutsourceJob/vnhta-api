@@ -1,6 +1,5 @@
 import { Console, Command } from "nestjs-console";
 import { AccountService } from './account.service';
-import commander = require("commander");
 
 @Console()
 export class AccountConsole {
