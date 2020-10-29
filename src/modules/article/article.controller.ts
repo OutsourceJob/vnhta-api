@@ -7,6 +7,7 @@ import { SerializerInterceptor } from '../../serialization/serializer.intercepto
 import * as _ from "lodash";
 import { UploadService } from '../upload/upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { SearchService } from './search.service';
 
 @UseInterceptors(SerializerInterceptor)
 @Crud({
@@ -29,7 +30,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class ArticleController {
   constructor(
     public service: ArticleService,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private searchService: SearchService
   ) { }
 
   @Override()
@@ -93,7 +95,7 @@ export class ArticleController {
     const text = query.text
     const advanced = query.advanced
 
-    if (advanced) return this.service.searchAdvance(text)
+    if (advanced) return this.searchService.searchAdvanced(text);
 
     if (!text) return this.service.getMany(req);
 
@@ -105,4 +107,6 @@ export class ArticleController {
 
     return [];
   }
+
+
 }
