@@ -91,7 +91,7 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: 'data_collecting_method_id_array', type: "json" })
   dataCollectingMethodIdArray: number[] = [];
 
-  @Column({ name: 'quality_of_life_toolkit', nullable: true })
+  @Column({ name: 'quality_of_life_toolkit', nullable: true, type: "longtext" })
   qualityOfLifeToolkit: string;
 
   // @ManyToOne(type => SampleSizeEntity, s => s.qualityOfLives, {
@@ -101,10 +101,10 @@ export class QualityOfLifeEntity extends BaseEntity {
   @Column({ name: 'sample_size_id', nullable: true })
   sampleSizeId: number;
 
-  @Column({ name: 'inclusion_criteria', nullable: true })
+  @Column({ name: 'inclusion_criteria', nullable: true, type: "longtext" })
   inclusionCriteria: string;
 
-  @Column({ name: 'exclusion_criteria', nullable: true })
+  @Column({ name: 'exclusion_criteria', nullable: true, type: "longtext" })
   exclusionCriteria: string;
 
   // @ManyToOne(type => SamplingMethodEntity, s => s.qualityOfLives, {
