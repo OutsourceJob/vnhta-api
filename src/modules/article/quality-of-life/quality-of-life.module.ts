@@ -6,12 +6,13 @@ import { QualityOfLifeService } from "./quality-of-life.service";
 import { QualityOfLifeEntity } from "./quality-of-life.entity";
 import { QualityOfLifeController } from './quality-of-life.controller';
 import { Icd20Module } from '../../catalog/icd-20/icd-20.module';
+import { TableModule } from '../../catalog/table/table.module';
 
 @Module({
    imports: [
       TypeOrmModule.forFeature([QualityOfLifeEntity]),
       StudyLocationModule, InterventionModule,
-      Icd20Module
+      Icd20Module, TableModule
    ],
    controllers: [QualityOfLifeController],
    providers: [QualityOfLifeService],

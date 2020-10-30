@@ -8,6 +8,7 @@ import { WriteQualityOfLifeDTO } from './quality-of-life.dto';
 import { QualityOfLifeEntity } from './quality-of-life.entity';
 import { Icd20Service } from '../../catalog/icd-20/icd-20.service';
 import { NotFoundException, Injectable } from '@nestjs/common';
+import { TableService } from '../../catalog/table/table.service';
 
 @Injectable()
 export class QualityOfLifeService extends TypeOrmCrudService<QualityOfLifeEntity> {
@@ -17,6 +18,7 @@ export class QualityOfLifeService extends TypeOrmCrudService<QualityOfLifeEntity
     private interventionService: InterventionService,
     private icd20Service: Icd20Service,
     private connection: Connection,
+    private tableService: TableService,
   ) {
     super(repo);
   }
@@ -30,12 +32,38 @@ export class QualityOfLifeService extends TypeOrmCrudService<QualityOfLifeEntity
     const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
     const icd20s = await this.icd20Service.findIcd20ByIdArray(icd20IdArray);
 
+    const qualitativeTable = await this.tableService.createTable({
+      name: "Qualitative Characteristics",
+      parameterCodeArray: ["n", "percent"]
+    })
+    const quantitativeTable = await this.tableService.createTable({
+      name: "Quantitative Characteristics",
+      parameterCodeArray: ["mean", "median", "sd", "se", "min", "max", "iqr_25", "iqr_75"]
+    })
+    const costTable = await this.tableService.createTable({
+      name: "Cost",
+      parameterCodeArray: ["mean", "median", "sd", "se", "min", "max", "iqr_25", "iqr_75"]
+    })
+    const qualitativeFactorTable = await this.tableService.createTable({
+      name: "Qualitative Factor",
+      parameterCodeArray: ["test", "mean_diff", "lower_95", "upper_95"]
+    })
+    const quantitativeFactorTable = await this.tableService.createTable({
+      name: "Quantitative Factor",
+      parameterCodeArray: ["p_value", "test_value"]
+    })
+
     const newQualityOfLife = await this.repo
       .create({
         articleId: data.articleId,
         interventions,
         icd20s,
-        studyLocations
+        studyLocations,
+        qualitativeTableId: qualitativeTable.id,
+        quantitativeTableId: quantitativeTable.id,
+        costTableId: costTable.id,
+        qualitativeFactorTableId: qualitativeFactorTable.id,
+        quantitativeFactorTableId: quantitativeFactorTable.id
       })
       .save()
 

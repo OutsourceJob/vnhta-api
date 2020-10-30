@@ -1,10 +1,6 @@
-import { DataCollectingMethodEntity } from 'src/modules/catalog/data-collecting-method/data-collecting-method.entity';
 import { Icd20Entity } from 'src/modules/catalog/icd-20/icd-20.entity';
 import { InterventionEntity } from 'src/modules/catalog/intervention/intervention.entity';
 import { PathologyEntity } from 'src/modules/catalog/pathology/pathology.entity';
-import { SampleSizeEntity } from 'src/modules/catalog/sample-size/sample-size.entity';
-import { SamplingMethodEntity } from 'src/modules/catalog/sampling-method/sampling-method.entity';
-import { StudyDesignEntity } from 'src/modules/catalog/study-design/study-design.entity';
 import { StudyLocationEntity } from 'src/modules/catalog/study-location/study-location.entity';
 import { ArticleEntity } from '../article.entity';
 import {
@@ -18,6 +14,7 @@ import {
   UpdateDateColumn,
   OneToOne, ManyToMany, JoinTable
 } from 'typeorm';
+import { TableEntity } from 'src/modules/catalog/table/table.entity';
 
 @Entity({ name: 'quality_of_life' })
 export class QualityOfLifeEntity extends BaseEntity {
@@ -125,6 +122,48 @@ export class QualityOfLifeEntity extends BaseEntity {
 
   @Column({ name: 'real_world_sample_size', nullable: true })
   realWorldSampleSize: number;
+
+
+  // tables
+  @ManyToOne(
+    type => TableEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "qualitative_table_id", referencedColumnName: "id" })
+  @Column({ name: "qualitative_table_id", nullable: true })
+  qualitativeTableId: number;
+
+  @ManyToOne(
+    type => TableEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "quantitative_table_id", referencedColumnName: "id" })
+  @Column({ name: "quantitative_table_id", nullable: true })
+  quantitativeTableId: number;
+
+  @ManyToOne(
+    type => TableEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "cost_table_id", referencedColumnName: "id" })
+  @Column({ name: "cost_table_id", nullable: true })
+  costTableId: number;
+
+  @ManyToOne(
+    type => TableEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "qualitative_factor_table_id", referencedColumnName: "id" })
+  @Column({ name: "qualitative_factor_table_id", nullable: true })
+  qualitativeFactorTableId: number;
+
+  @ManyToOne(
+    type => TableEntity,
+    { onDelete: "SET NULL" }
+  )
+  @JoinColumn({ name: "quantitative_factor_table_id", referencedColumnName: "id" })
+  @Column({ name: "quantitative_factor_table_id", nullable: true })
+  quantitativeFactorTableId: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
