@@ -1,0 +1,16 @@
+DROP TABLE study_design;
+DROP TABLE data_collecting_method;
+DROP TABLE sample_size;
+DROP TABLE sampling_method;
+DROP TABLE cost_type;
+DROP TABLE cost_component;
+DROP TABLE study_perspective;
+DROP TABLE parameter;
+DROP TABLE outcome;
+DROP TABLE ce_study_design;
+DROP TABLE model_type;
+DROP TABLE analysis_method;
+DROP TABLE effectiveness_data_collecting_method;
+DROP TABLE currency_unit;
+DROP TABLE heterogeneity_analysis;
+DROP TABLE uncertainty_analysis_result;
