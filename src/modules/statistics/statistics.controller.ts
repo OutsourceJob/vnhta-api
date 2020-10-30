@@ -7,6 +7,13 @@ export class StatisticsController {
     private statisticsService: StatisticsService
   ) { }
 
+  @Post("/categorize-articles")
+  categorizeArticles(
+    @Body("articleIdArray") articleIdArray: number[]
+  ) {
+    return this.statisticsService.categorizeArticles(articleIdArray);
+  }
+
   @Post("/years")
   getYearStatistics(
     @Body("articleIdArray") articleIdArray: number[]

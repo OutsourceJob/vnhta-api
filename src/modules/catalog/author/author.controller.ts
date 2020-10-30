@@ -12,6 +12,14 @@ import { WriteAuthorDTO } from './author.dto';
   dto: {
     create: WriteAuthorDTO,
     update: WriteAuthorDTO
+  },
+  query: {
+    sort: [
+      {
+        field: "fullName",
+        order: "ASC"
+      }
+    ]
   }
 })
 @Controller("/authors")
