@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import * as _ from "lodash"
-import * as translate from "translate";
 import { Connection } from "typeorm";
 import { ArticleService } from "./article.service";
 
