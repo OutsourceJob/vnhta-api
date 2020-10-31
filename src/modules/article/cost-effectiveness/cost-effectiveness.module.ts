@@ -24,7 +24,7 @@ import { Icd20Module } from '../../catalog/icd-20/icd-20.module';
       UncertaintyAnalysisResultModule,
       UncertaintyAnalysisMethodModule,
       TableModule, AnalysisMethodModule,
-      Icd20Module
+      Icd20Module, OutcomeModule
    ],
    controllers: [CostEffectivenessController],
    providers: [CostEffectivenessService],

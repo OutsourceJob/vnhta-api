@@ -48,7 +48,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
 
       const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
       const comparators = await this.comparatorService.findComparatorByIdArray(comparatorIdArray);
-      // const outcomes = await this.outcomeService.findOutcomeByIdArray(outcomeIdArray);
+      const outcomes = await this.outcomeService.findOutcomeByIdArray(outcomeIdArray);
       const studyLocations = await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
       // const modelTypes = await this.modelTypeService.findModelTypeByIdArray(modelTypeIdArray);
       // const heterogeneityAnalysis = await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
@@ -85,7 +85,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          .leftJoinAndSelect("cost_effectiveness.interventions", "intervention")
          .leftJoinAndSelect("cost_effectiveness.comparators", "comparator")
          .leftJoinAndSelect("cost_effectiveness.icd20s", "icd_20")
-         // .leftJoinAndSelect("cost_effectiveness.outcomes", "outcome")
+         .leftJoinAndSelect("cost_effectiveness.outcomes", "outcome")
          .leftJoinAndSelect("cost_effectiveness.studyLocations", "study_location")
          // .leftJoinAndSelect("cost_effectiveness.modelTypes", "model_type")
          // .leftJoinAndSelect("cost_effectiveness.heterogeneityAnalysis", "heterogeneity_analysis")
@@ -100,7 +100,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          interventionIdArray: _.map(costEffectiveness.interventions, "id"),
          comparatorIdArray: _.map(costEffectiveness.comparators, "id"),
          icd20IdArray: _.map(costEffectiveness.icd20s, "id"),
-         // outcomeIdArray: _.map(costEffectiveness.outcomes, "id"),
+         outcomeIdArray: _.map(costEffectiveness.outcomes, "id"),
          studyLocationIdArray: _.map(costEffectiveness.studyLocations, "id"),
          // modelTypeIdArray: _.map(costEffectiveness.modelTypes, "id"),
          // heterogeneityAnalysisIdArray: _.map(costEffectiveness.heterogeneityAnalysis, "id"),
@@ -109,7 +109,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          interventions: undefined,
          comparators: undefined,
          icd20s: undefined,
-         // outcomes: undefined,
+         outcomes: undefined,
          studyLocations: undefined,
          // modelTypes: undefined,
          // heterogeneityAnalysis: undefined,
@@ -127,7 +127,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const interventionIdArray = _.get(data, "interventionIdArray");
       const comparatorIdArray = _.get(data, "comparatorIdArray");
       const icd20IdArray = _.get(data, "icd20IdArray");
-      // const outcomeIdArray = _.get(data, "outcomeIdArray");
+      const outcomeIdArray = _.get(data, "outcomeIdArray");
       const studyLocationIdArray = _.get(data, "studyLocationIdArray");
       // const modelTypeIdArray = _.get(data, "modelTypeIdArray");
       // const heterogeneityAnalysisIdArray = _.get(data, "heterogeneityAnalysisIdArray");
@@ -137,7 +137,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const interventions = interventionIdArray && await this.interventionService.findInterventionByIdArray(interventionIdArray);
       const comparators = comparatorIdArray && await this.comparatorService.findComparatorByIdArray(comparatorIdArray);
       const icd20s = icd20IdArray && await this.icd20Service.findIcd20ByIdArray(icd20IdArray);
-      // const outcomes = outcomeIdArray && await this.outcomeService.findOutcomeByIdArray(outcomeIdArray);
+      const outcomes = outcomeIdArray && await this.outcomeService.findOutcomeByIdArray(outcomeIdArray);
       const studyLocations = studyLocationIdArray && await this.studyLocationService.findStudyLocationByIdArray(studyLocationIdArray);
       // const modelTypes = modelTypeIdArray && await this.modelTypeService.findModelTypeByIdArray(modelTypeIdArray);
       // const heterogeneityAnalysis = heterogeneityAnalysisIdArray && await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
@@ -148,7 +148,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          interventions,
          comparators,
          icd20s,
-         // outcomes,
+         outcomes,
          studyLocations,
          // modelTypes,
          // heterogeneityAnalysis,
@@ -161,7 +161,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
             "interventionIdArray",
             "comparatorIdArray",
             "icd20IdArray",
-            // "outcomeIdArray",
+            "outcomeIdArray",
             "studyLocationIdArray",
             // "modelTypeIdArray",
             // "heterogeneityAnalysisIdArray",

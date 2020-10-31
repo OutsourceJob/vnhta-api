@@ -80,18 +80,18 @@ export class CostEffectivenessEntity extends BaseEntity {
   })
   comparators: ComparatorEntity[];
 
-  // @ManyToMany(
-  //   type => OutcomeEntity,
-  //   o => o.costEffectiveness
-  // )
-  // @JoinTable({
-  //   name: "cost_effectiveness_outcome",
-  //   joinColumns: [{ name: 'cost_effectiveness_id' }],
-  //   inverseJoinColumns: [{ name: "outcome_id" }]
-  // })
-  @Column({ type: "json", name: "outcome_id_array" })
-  // outcomes: OutcomeEntity[] = [];
-  outcomeIdArray: number[] = []
+  @ManyToMany(
+    type => OutcomeEntity,
+    o => o.costEffectiveness
+  )
+  @JoinTable({
+    name: "cost_effectiveness_outcome",
+    joinColumns: [{ name: 'cost_effectiveness_id' }],
+    inverseJoinColumns: [{ name: "outcome_id" }]
+  })
+  // @Column({ type: "json", name: "outcome_id_array" })
+  outcomes: OutcomeEntity[];
+  // outcomeIdArray: number[] = []
 
   @ManyToMany(
     type => StudyLocationEntity,
