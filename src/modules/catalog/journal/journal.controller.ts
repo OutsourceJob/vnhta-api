@@ -14,6 +14,14 @@ import { SerializerInterceptor } from '../../../serialization/serializer.interce
   dto: {
     create: WriteJournalDTO,
     update: WriteJournalDTO
+  },
+  query: {
+    sort: [
+      {
+        field: "fullName",
+        order: "ASC"
+      }
+    ]
   }
 })
 @Controller("/journals")
