@@ -129,7 +129,7 @@ export class CostEffectivenessEntity extends BaseEntity {
   /**
   @todo Model states
   */
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "longtext" })
   modelStates: string;
 
   /**
@@ -151,7 +151,7 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: 'time_horizon_unit_id', nullable: true })
   timeHorizonUnitId: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "longtext" })
   assumption: string;
 
   // @ManyToOne(
@@ -175,7 +175,7 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: 'type_of_effectiveness_id_array', type: "json" })
   typeOfEffectivenessIdArray: number[] = [];
 
-  @Column({ name: 'clinical_criteria', nullable: true })
+  @Column({ name: 'clinical_criteria', nullable: true, type: "longtext" })
   clinicalCriteria: string;
 
   // @ManyToOne(
@@ -214,7 +214,7 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: 'cost_component_id_array', type: "json" })
   costComponentIdArray: number[] = [];
 
-  @Column({ name: 'cost_data_collecting_method', nullable: true })
+  @Column({ name: 'cost_data_collecting_method', nullable: true, type: "longtext" })
   costDataCollectingMethod: string;
 
   // @ManyToOne(
@@ -272,7 +272,7 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: "base_case_table_id", nullable: true })
   baseCaseTableId: number;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: "longtext" })
   sponsor: string;
 
   @CreateDateColumn({

@@ -92,10 +92,10 @@ export class CostBenefitEntity extends BaseEntity {
   @Column({ name: "sample_size_id", nullable: true })
   sampleSizeId: number;
 
-  @Column({ name: "inclusion_criteria", nullable: true })
+  @Column({ name: "inclusion_criteria", nullable: true, type: "longtext" })
   inclusionCriteria: string;
 
-  @Column({ name: "exclusive_criteria", nullable: true })
+  @Column({ name: "exclusive_criteria", nullable: true, type: "longtext" })
   exclusiveCriteria: string;
 
   // @ManyToOne(
