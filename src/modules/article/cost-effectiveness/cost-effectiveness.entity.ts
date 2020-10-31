@@ -18,6 +18,7 @@ import { UncertaintyAnalysisMethodEntity } from "src/modules/catalog/uncertainty
 import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { ArticleEntity } from "../article.entity";
 import { TableEntity } from '../../catalog/table/table.entity';
+import { EffectivenessTypeEntity } from "src/modules/catalog/effectiveness-type/effectiveness-type.entity";
 
 @Entity({ name: 'cost_effectiveness' })
 export class CostEffectivenessEntity extends BaseEntity {
@@ -172,8 +173,16 @@ export class CostEffectivenessEntity extends BaseEntity {
   @Column({ name: 'study_perspective_id_array', type: "json" })
   studyPerspectiveIdArray: number[] = [];
 
-  @Column({ name: 'type_of_effectiveness_id_array', type: "json" })
-  typeOfEffectivenessIdArray: number[] = [];
+  @ManyToMany(
+    type => EffectivenessTypeEntity,
+    e => e.costEffectiveness
+  )
+  @JoinTable({
+    name: "cost_effectiveness_effectiveness_type",
+    joinColumns: [{ name: "cost_effectiveness_id" }],
+    inverseJoinColumns: [{ name: "effectiveness_type_id" }]
+  })
+  effectivenessTypes: EffectivenessTypeEntity[];
 
   @Column({ name: 'clinical_criteria', nullable: true, type: "longtext" })
   clinicalCriteria: string;

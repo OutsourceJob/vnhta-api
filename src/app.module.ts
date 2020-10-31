@@ -20,6 +20,7 @@ import { AnalysisMethodModule } from './modules/catalog/analysis-method/analysis
 import { UncertaintyAnalysisMethodModule } from './modules/catalog/uncertainty-analysis-method/uncertainty-analysis-method.module';
 import { TableModule } from './modules/catalog/table/table.module';
 import { StatisticsModule } from './modules/statistics/statistics.module';
+import { EffectivenessTypeModule } from './modules/catalog/effectiveness-type/effectiveness-type.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { StatisticsModule } from './modules/statistics/statistics.module';
     DiscountRateModule,
     AnalysisMethodModule,
     UncertaintyAnalysisMethodModule,
+    EffectivenessTypeModule,
 
     // table
     TableModule,
