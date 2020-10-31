@@ -15,6 +15,7 @@ import { UncertaintyAnalysisResultService } from "src/modules/catalog/uncertaint
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { TableService } from '../../catalog/table/table.service';
 import { Icd20Service } from '../../catalog/icd-20/icd-20.service';
+import { EffectivenessTypeService } from "src/modules/catalog/effectiveness-type/effectiveness-type.service";
 
 @Injectable()
 export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivenessEntity> {
@@ -30,7 +31,8 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       private uncertaintyAnalysisResultService: UncertaintyAnalysisResultService,
       private connection: Connection,
       private tableService: TableService,
-      private icd20Service: Icd20Service
+      private icd20Service: Icd20Service,
+      private effectivenessTypeService: EffectivenessTypeService
    ) {
       super(repo);
    }
@@ -45,6 +47,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       const heterogeneityAnalysisIdArray = _.get(data, "heterogeneityAnalysisIdArray", []);
       const uncertaintyAnalysisMethodIdArray = _.get(data, "uncertaintyAnalysisMethodIdArray", []);
       // const uncertaintyAnalysisResultIdArray = _.get(data, "uncertaintyAnalysisResultIdArray", []);
+      const effectivenessTypeIdArray = _.get(data, "effectivenessTypeIdArray", []);
 
       const interventions = await this.interventionService.findInterventionByIdArray(interventionIdArray);
       const comparators = await this.comparatorService.findComparatorByIdArray(comparatorIdArray);
@@ -54,6 +57,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       // const heterogeneityAnalysis = await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
       const uncertaintyAnalysisMethods = await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisMethodIdArray);
       // const uncertaintyAnalysisResults = await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
+      const effectivenessTypes = await this.effectivenessTypeService.findEffectivenessTypeByIdArray(effectivenessTypeIdArray);
 
       // const baseCaseTable = await this.tableService.createTable({
       //    name: "Base case result",
@@ -91,6 +95,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          // .leftJoinAndSelect("cost_effectiveness.heterogeneityAnalysis", "heterogeneity_analysis")
          .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysisMethods", "uncertainty_analysis")
          // .leftJoinAndSelect("cost_effectiveness.uncertaintyAnalysisResults", "uncertainty_analysis_result")
+         .leftJoinAndSelect("cost_effectiveness.effectivenessTypes", "effectiveness_type")
          .where("cost_effectiveness.id = :id", { id: costEffectivenessId })
          .getOne()
 
@@ -106,6 +111,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          // heterogeneityAnalysisIdArray: _.map(costEffectiveness.heterogeneityAnalysis, "id"),
          uncertaintyAnalysisMethodIdArray: _.map(costEffectiveness.uncertaintyAnalysisMethods, "id"),
          // uncertaintyAnalysisResultIdArray: _.map(costEffectiveness.uncertaintyAnalysisResults, "id"),
+         effectivenessTypeIdArray: _.map(costEffectiveness.effectivenessTypes, "id"),
          interventions: undefined,
          comparators: undefined,
          icd20s: undefined,
@@ -115,6 +121,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          // heterogeneityAnalysis: undefined,
          uncertaintyAnalysisMethods: undefined,
          // uncertaintyAnalysisResults: undefined
+         effectivenessTypes: undefined
       })
 
       return costEffectiveness;
@@ -133,6 +140,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       // const heterogeneityAnalysisIdArray = _.get(data, "heterogeneityAnalysisIdArray");
       const uncertaintyAnalysisMethodIdArray = _.get(data, "uncertaintyAnalysisMethodIdArray");
       // const uncertaintyAnalysisResultIdArray = _.get(data, "uncertaintyAnalysisResultIdArray");
+      const effectivenessTypeIdArray = _.get(data, "effectivenessTypeIdArray");
 
       const interventions = interventionIdArray && await this.interventionService.findInterventionByIdArray(interventionIdArray);
       const comparators = comparatorIdArray && await this.comparatorService.findComparatorByIdArray(comparatorIdArray);
@@ -143,6 +151,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
       // const heterogeneityAnalysis = heterogeneityAnalysisIdArray && await this.heterogeneityAnalysisService.findHeterogeneityAnalysisByIdArray(heterogeneityAnalysisIdArray);
       const uncertaintyAnalysisMethods = uncertaintyAnalysisMethodIdArray && await this.uncertaintyAnalysisService.findUncertaintyAnalysisByIdArray(uncertaintyAnalysisMethodIdArray);
       // const uncertaintyAnalysisResults = uncertaintyAnalysisResultIdArray && await this.uncertaintyAnalysisResultService.findUncertaintyAnalysisResultByIdArray(uncertaintyAnalysisResultIdArray);
+      const effectivenessTypes = effectivenessTypeIdArray && await this.effectivenessTypeService.findEffectivenessTypeByIdArray(effectivenessTypeIdArray);
 
       _.assign(data, {
          interventions,
@@ -154,6 +163,7 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
          // heterogeneityAnalysis,
          uncertaintyAnalysisMethods,
          // uncertaintyAnalysisResults
+         effectivenessTypes
       })
 
       _.chain(data)
@@ -166,7 +176,8 @@ export class CostEffectivenessService extends TypeOrmCrudService<CostEffectivene
             // "modelTypeIdArray",
             // "heterogeneityAnalysisIdArray",
             "uncertaintyAnalysisMethodIdArray",
-            // "uncertaintyAnalysisResultIdArray"
+            // "uncertaintyAnalysisResultIdArray",
+            "effectivenessTypeIdArray"
          ])
          .keys()
          .value()
