@@ -739,48 +739,25 @@ export class StatisticsService {
   }
 
   async getCEOutcomeStatistics(articleIdArray: number[]): Promise<any[]> {
-    const res = _.chain(catalogs.outcomes).map(item => {
-      if (item.id >= 2) {
-        return (`
-            UNION
-            SELECT 
-              "${item.id}" AS label,
-              COUNT(*) AS quantity
-            FROM
-              article
-            LEFT JOIN 
-              cost_effectiveness ON cost_effectiveness.article_id = article.id
-            WHERE 
-              article.id IN (${_.toString(articleIdArray)}) AND
-              cost_effectiveness.outcome_id_array LIKE "%${item.id}%"
-          `)
-      }
-    }).join('').value();
-
-    let newRes = await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        outcome.name AS label,
         COUNT(*) AS quantity
       FROM
         article
       LEFT JOIN 
         cost_effectiveness ON cost_effectiveness.article_id = article.id
+      LEFT JOIN 
+        cost_effectiveness_outcome ON cost_effectiveness_outcome.cost_effectiveness_id = cost_effectiveness.id
+      LEFT JOIN 
+        outcome ON cost_effectiveness_outcome.outcome_id = outcome.id
       WHERE 
-        article.id IN (${_.toString(articleIdArray)}) AND
-        cost_effectiveness.outcome_id_array REGEXP "1"
-      ${res}
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        outcome.id
     `)
 
-    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
-
-    const formatRes = this.formatResponse(newRes, "label");
-
-    return _.map(formatRes, item => ({
-      ...item,
-      label: catalogs
-        .outcomes[_.findIndex(catalogs.outcomes, catalogItem => catalogItem.id.toString() === item.label)]
-        .name
-    }));
+    return this.formatResponse(res, "label");
   }
 
   async getCEStudyLocationStatistics(articleIdArray: number[]): Promise<any[]> {
@@ -991,48 +968,25 @@ export class StatisticsService {
   }
 
   async getCETypeOfEffectivenessStatistics(articleIdArray: number[]): Promise<any[]> {
-    const res = _.chain(catalogs.typeOfEffectiveness).map(item => {
-      if (item.id >= 2) {
-        return (`
-            UNION
-            SELECT 
-              "${item.id}" AS label,
-              COUNT(*) AS quantity
-            FROM
-              article
-            LEFT JOIN 
-              cost_effectiveness ON cost_effectiveness.article_id = article.id
-            WHERE 
-              article.id IN (${_.toString(articleIdArray)}) AND
-              cost_effectiveness.type_of_effectiveness_id_array LIKE "%${item.id}%"
-          `)
-      }
-    }).join('').value();
-
-    let newRes = await this.connection.query(`
+    const res = await this.connection.query(`
       SELECT 
-        "1" AS label,
+        effectiveness_type.name AS label,
         COUNT(*) AS quantity
       FROM
         article
       LEFT JOIN 
         cost_effectiveness ON cost_effectiveness.article_id = article.id
+      LEFT JOIN 
+        cost_effectiveness_effectiveness_type ON cost_effectiveness_effectiveness_type.cost_effectiveness_id = cost_effectiveness.id
+      LEFT JOIN 
+        effectiveness_type ON cost_effectiveness_effectiveness_type.effectiveness_type_id = effectiveness_type.id
       WHERE 
-        article.id IN (${_.toString(articleIdArray)}) AND
-        cost_effectiveness.type_of_effectiveness_id_array REGEXP "1"
-      ${res}
+        article.id IN (${_.toString(articleIdArray)})
+      GROUP BY 
+        effectiveness_type.id
     `)
 
-    newRes = _.filter(newRes, item => _.parseInt(item.quantity) > 0);
-
-    const formatRes = this.formatResponse(newRes, "label");
-
-    return _.map(formatRes, item => ({
-      ...item,
-      label: catalogs
-        .typeOfEffectiveness[_.findIndex(catalogs.typeOfEffectiveness, catalogItem => catalogItem.id.toString() === item.label)]
-        .name
-    }));
+    return this.formatResponse(res, "label");
   }
 
   async getCECostComponentStatistics(articleIdArray: number[]): Promise<any[]> {
