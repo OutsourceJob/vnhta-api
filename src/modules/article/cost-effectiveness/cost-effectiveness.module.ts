@@ -14,6 +14,7 @@ import { ModelTypeModule } from "src/modules/catalog/model-type/model-type.modul
 import { TableModule } from '../../catalog/table/table.module';
 import { AnalysisMethodModule } from "src/modules/catalog/analysis-method/analysis-method.module";
 import { Icd20Module } from '../../catalog/icd-20/icd-20.module';
+import { EffectivenessTypeModule } from "src/modules/catalog/effectiveness-type/effectiveness-type.module";
 
 @Module({
    imports: [
@@ -24,7 +25,7 @@ import { Icd20Module } from '../../catalog/icd-20/icd-20.module';
       UncertaintyAnalysisResultModule,
       UncertaintyAnalysisMethodModule,
       TableModule, AnalysisMethodModule,
-      Icd20Module
+      Icd20Module, EffectivenessTypeModule,
    ],
    controllers: [CostEffectivenessController],
    providers: [CostEffectivenessService],
