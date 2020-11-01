@@ -1,4 +1,4 @@
-import { Controller, Body, UseInterceptors, BadRequestException, Post, Param, UploadedFile, Get, Query } from '@nestjs/common';
+import { Controller, Body, UseInterceptors, BadRequestException, Post, Param, UploadedFile, Get, Query, UseGuards, Request } from '@nestjs/common';
 import { Crud, Override, ParsedRequest, CrudRequest, ParsedBody } from "@nestjsx/crud";
 import { ArticleEntity } from './article.entity';
 import { WriteArticleDTO } from './article.dto';
@@ -8,6 +8,7 @@ import * as _ from "lodash";
 import { UploadService } from '../upload/upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { SearchService } from './search.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @UseInterceptors(SerializerInterceptor)
 @Crud({
@@ -34,11 +35,17 @@ export class ArticleController {
     private searchService: SearchService
   ) { }
 
+  @UseGuards(JwtAuthGuard)
   @Override()
   createOne(
-    @ParsedRequest() req: CrudRequest,
-    @ParsedBody() data: WriteArticleDTO
+    // @ParsedRequest() req: CrudRequest,
+    @ParsedBody() data: WriteArticleDTO,
+    @Request() req
   ) {
+    _.assign(
+      data,
+      { accountId: _.get(req, "user.id") }
+    )
     return this.service.createArticle(data)
   }
 
