@@ -115,5 +115,13 @@ export class ArticleController {
     return [];
   }
 
+  @Post("/:articleId/request-verify")
+  async requestVerifyArticle(@Param("articleId") id: number): Promise<ArticleEntity> {
+    return await this.service.requestVerifyArticle(id);
+  }
 
+  @Post("/:articleId/verify")
+  async verifyArticle(@Param("articleId") id: number): Promise<ArticleEntity> {
+    return await this.service.verifyArticle(id);
+  }
 }
