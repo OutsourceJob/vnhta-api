@@ -1,17 +1,19 @@
 import { Controller, Get, Query, Post, Body } from "@nestjs/common";
 import { StatisticsService } from "./statistics.service";
+import { TopicStatisticsService } from "./topic-statistics.service";
 
 @Controller("/statistics")
 export class StatisticsController {
   constructor(
-    private statisticsService: StatisticsService
+    private statisticsService: StatisticsService,
+    private topicStatisticsService: TopicStatisticsService
   ) { }
 
   @Post("/categorize-articles")
   categorizeArticles(
     @Body("articleIdArray") articleIdArray: number[]
   ) {
-    return this.statisticsService.categorizeArticles(articleIdArray);
+    return this.topicStatisticsService.categorizeArticles(articleIdArray);
   }
 
   @Post("/years")
