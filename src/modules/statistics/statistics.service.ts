@@ -190,7 +190,7 @@ export class StatisticsService {
 
     return _.map(formatRes, item => ({
       ...item,
-      studyDesign: catalogs
+      label: catalogs
         .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.label)]
         .name
     }));
