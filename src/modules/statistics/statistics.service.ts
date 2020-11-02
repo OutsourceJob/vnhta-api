@@ -35,8 +35,6 @@ export class StatisticsService {
     return lastRes;
   }
 
-
-
   async getYearStatistics(articleIdArray: number[]): Promise<any[]> {
     let res = await this.connection.query(`
       SELECT 
@@ -193,7 +191,7 @@ export class StatisticsService {
     return _.map(formatRes, item => ({
       ...item,
       studyDesign: catalogs
-        .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.studyDesign)]
+        .studyDesigns[_.findIndex(catalogs.studyDesigns, catalogItem => catalogItem.id === item.label)]
         .name
     }));
   }
