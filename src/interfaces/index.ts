@@ -22,7 +22,8 @@ export enum FileType {
 
 export enum ArticleStatus {
   Unverified = "Unverified",
-  Verified = "Verified"
+  Verified = "Verified",
+  RequestVerified = "RequestVerified"
 }
 
 export enum Vartype {

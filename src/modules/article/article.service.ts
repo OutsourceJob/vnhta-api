@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { ArticleEntity } from './article.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,6 +11,8 @@ import { JournalService } from '../catalog/journal/journal.service';
 import { CostBenefitService } from './cost-benefit/cost-benefit.service';
 import { QualityOfLifeService } from './quality-of-life/quality-of-life.service';
 import { CostEffectivenessService } from './cost-effectiveness/cost-effectiveness.service';
+
+import { ArticleStatus } from "../../interfaces";
 
 @Injectable()
 export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
@@ -234,5 +236,43 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
       formattedArticles.push(formattedArticle)
     }
     return formattedArticles;
+  }
+
+  async requestVerifyArticle(id: number): Promise<ArticleEntity> {
+    const foundArticle = await this.connection
+      .getRepository(ArticleEntity)
+      .createQueryBuilder("article")
+      .where("article.id = :id", { id })
+      .getOne()
+
+    if (_.isEmpty(foundArticle)) throw new NotFoundException("Not found article!");
+
+    if (foundArticle.status === ArticleStatus.Unverified) {
+      foundArticle.status = ArticleStatus.RequestVerified;
+      await foundArticle.save();
+
+      return foundArticle;
+    }
+
+    throw new NotFoundException("Not found unverified request's article!");
+  }
+
+  async verifyArticle(id: number): Promise<ArticleEntity> {
+    const foundArticle = await this.connection
+      .getRepository(ArticleEntity)
+      .createQueryBuilder("article")
+      .where("article.id = :id", { id })
+      .getOne()
+
+    if (_.isEmpty(foundArticle)) throw new NotFoundException("Not found article!");
+
+    if (foundArticle.status === ArticleStatus.RequestVerified) {
+      foundArticle.status = ArticleStatus.Verified;
+      await foundArticle.save();
+
+      return foundArticle;
+    }
+
+    throw new NotFoundException("Not found verified request's article!");
   }
 }
