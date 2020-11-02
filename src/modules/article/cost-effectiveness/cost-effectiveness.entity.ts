@@ -252,10 +252,10 @@ export class CostEffectivenessEntity extends BaseEntity {
 
   @ManyToMany(
     type => UncertaintyAnalysisMethodEntity,
-    u => u.costEffectiveness
+    u => u.costEffectiveness,
   )
   @JoinTable({
-    name: "cost_effectiveness_uncertainty_analysis_method",
+    name: "cost_effectiveness_uncertainty_analysis_method_bk",
     joinColumns: [{ name: 'cost_effectiveness_id' }],
     inverseJoinColumns: [{ name: "uncertainty_analysis_method_id" }]
   })
