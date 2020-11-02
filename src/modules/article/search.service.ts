@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import * as _ from "lodash"
 import { Connection } from "typeorm";
 import { ArticleService } from "./article.service";
+import { NormalSearchDTO } from "./article.dto";
 
 @Injectable()
 export class SearchService {
@@ -84,6 +85,28 @@ export class SearchService {
       FROM article
       WHERE 
         ${sqlWhereCondition}
+    `
+
+    const articles = await this.connection.query(query);
+    return this.articleService.formatRawArticles(articles)
+  }
+
+  async searchNormal(data: NormalSearchDTO) {
+    const text = _.get(data, "text", "")
+    const startYear = _.get(data, "startYear", 1990)
+    const endYear = _.get(data, "endYear", 2100)
+    const languages = _.toString(_.get(data, "languages", []))
+
+    const textStatement = this.generateConditionStatement([text])
+
+    const query = `
+      SELECT *
+      FROM article
+      WHERE 
+        ${textStatement}
+        AND year BETWEEN ${startYear} 
+        and ${endYear}
+        ${languages ? "language IN (" + languages + ")" : ""}        
     `
 
     const articles = await this.connection.query(query);

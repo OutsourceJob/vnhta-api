@@ -15,3 +15,10 @@ export class WriteArticleDTO {
   abstract: string;
   language: Language
 }
+
+export class NormalSearchDTO {
+  text: string;
+  startYear: number;
+  endYear: number;
+  languages: Language[];
+}

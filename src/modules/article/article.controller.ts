@@ -100,17 +100,13 @@ export class ArticleController {
     @Query() query
   ) {
     const text = query.text
-    const advanced = query.advanced
+    const mode = query.mode
 
-    if (advanced) return this.searchService.searchAdvanced(text);
+    if (mode === "Advanced") return this.searchService.searchAdvanced(text);
+
+    if (mode === "Normal") return this.searchService.searchNormal(query);
 
     if (!text) return this.service.getMany(req);
-
-    if (text === "cost" || text === "chi phí") return await this.service.searchCost(text)
-    if (
-      text === "chi phí hiệu quả" || text === "chi phí - hiệu quả" ||
-      text === "cost - effectiveness" || text === "cost effectiveness"
-    ) return await this.service.searchCostEffectiveness(text)
 
     return [];
   }
