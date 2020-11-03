@@ -38,6 +38,13 @@ export enum ParameterType {
   Epidemiology = "Epidemiology"
 }
 
+export enum ArticleTopic {
+  CostBenefit = "CostBenefit",
+  CostEffectiveness = "CostEffectiveness",
+  QualityOfLife = "QualityOfLife",
+  Epidemiology = "Epidemiology"
+}
+
 export enum PicoType {
   Intervention = "Intervention",
   Comparator = "Comparator"

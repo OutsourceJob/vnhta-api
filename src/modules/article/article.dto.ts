@@ -28,5 +28,5 @@ export class NormalSearchDTO {
   text: string;
   startYear: number;
   endYear: number;
-  languages: Language[];
+  languages: string;
 }

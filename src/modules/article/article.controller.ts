@@ -102,9 +102,9 @@ export class ArticleController {
     const text = query.text
     const mode = query.mode
 
-    if (mode === "Advanced") return this.searchService.searchAdvanced(text);
+    if (mode === "Advanced") return this.searchService.searchAdvanced(query);
 
-    if (mode === "Normal") return this.searchService.searchNormal(query);
+    // if (mode === "Normal") return this.searchService.searchNormal(query);
 
     return this.service.getArticles(query);
     // if (!text) return this.service.getMany(req);
