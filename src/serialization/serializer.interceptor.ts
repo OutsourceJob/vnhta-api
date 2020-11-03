@@ -23,7 +23,7 @@ export class SerializerInterceptor implements NestInterceptor {
   serializeResource(response: any): JsonApiResource {
     return {
       id: response.id,
-      attributes: _.omit(response, ["id", "password", "createdAt", "updatedAt"]),
+      attributes: _.omit(response, ["id", "password", "createdAt", "updatedAt", "pin", "pinCreatedAt"]),
       meta: {
         createdAt: response.createdAt,
         updatedAt: response.updatedAt

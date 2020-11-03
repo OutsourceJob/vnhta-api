@@ -123,7 +123,6 @@ export class AccountService extends TypeOrmCrudService<AccountEntity> {
         return bcrypt.compare(data.oldPassword, account.password)
       })
       .then(isMatched => {
-        console.log("AccountService -> isMatched", isMatched)
         if (!isMatched) throw new BadRequestException("Wrong password")
 
         return bcrypt.genSalt(10)
