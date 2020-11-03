@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { config } from '../../config/index';
+import * as _ from "lodash"
 
 @Controller("/auth")
 export class AuthController {
@@ -28,7 +29,8 @@ export class AuthController {
   }
 
   @Post("/verify")
-  async verifyToken(@Headers("Authorization") token: string) {
+  async verifyToken(@Headers("Authorization") authorization: string) {
+    const token = _.chain(authorization).split(" ").last().value()
     return this.authService.verifyToken(token);
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
+import { Injectable, NotFoundException, BadRequestException, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AccountRepository } from '../account/account.repository';
 import * as _ from "lodash"
@@ -22,6 +22,8 @@ export class AuthService {
     const isMatched = await bcrypt.compare(password, foundAccount.password)
 
     if (!isMatched) return null;
+
+    if (!foundAccount.isActive) throw new UnauthorizedException("This account has not been verified yet")
 
     return foundAccount
   }
