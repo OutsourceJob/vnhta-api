@@ -1,4 +1,4 @@
-import { Language } from '../../interfaces/index';
+import { Language, ArticleStatus } from '../../interfaces/index';
 export class WriteArticleDTO {
   accountId: number;
   title: string;
@@ -14,6 +14,13 @@ export class WriteArticleDTO {
   year: number;
   abstract: string;
   language: Language
+}
+
+export class GetArticlesDTO {
+  limit?: number;
+  offset?: number;
+  status?: ArticleStatus;
+  accountId?: number;
 }
 
 export class NormalSearchDTO {

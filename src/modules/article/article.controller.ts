@@ -1,4 +1,4 @@
-import { Controller, Body, UseInterceptors, BadRequestException, Post, Param, UploadedFile, Get, Query, UseGuards, Request } from '@nestjs/common';
+import { Controller, Body, UseInterceptors, BadRequestException, Post, Param, UploadedFile, Get, Query, UseGuards, Request, ParseIntPipe } from '@nestjs/common';
 import { Crud, Override, ParsedRequest, CrudRequest, ParsedBody } from "@nestjsx/crud";
 import { ArticleEntity } from './article.entity';
 import { WriteArticleDTO } from './article.dto';
@@ -97,7 +97,7 @@ export class ArticleController {
   @Override()
   async getMany(
     @ParsedRequest() req: CrudRequest,
-    @Query() query
+    @Query() query,
   ) {
     const text = query.text
     const mode = query.mode
@@ -106,7 +106,8 @@ export class ArticleController {
 
     if (mode === "Normal") return this.searchService.searchNormal(query);
 
-    if (!text) return this.service.getMany(req);
+    return this.service.getArticles(query);
+    // if (!text) return this.service.getMany(req);
 
     return [];
   }

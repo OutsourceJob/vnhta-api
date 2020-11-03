@@ -3,14 +3,14 @@ import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { ArticleEntity } from './article.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { WriteArticleDTO } from './article.dto';
+import { WriteArticleDTO, GetArticlesDTO } from './article.dto';
 import * as _ from "lodash";
 import { AuthorService } from '../catalog/author/author.service';
 import { Connection } from "typeorm";
-import { JournalService } from '../catalog/journal/journal.service';
 import { CostBenefitService } from './cost-benefit/cost-benefit.service';
 import { QualityOfLifeService } from './quality-of-life/quality-of-life.service';
 import { CostEffectivenessService } from './cost-effectiveness/cost-effectiveness.service';
+import { paginate } from "../../utils/paginate";
 
 import { ArticleStatus } from "../../interfaces";
 
@@ -19,7 +19,6 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
   constructor(
     @InjectRepository(ArticleEntity) repo: Repository<ArticleEntity>,
     private authorService: AuthorService,
-    // private journalService: JournalService,
     private connection: Connection,
     private costBenefitService: CostBenefitService,
     private qualityOfLifeService: QualityOfLifeService,
@@ -116,94 +115,20 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     return await article.save()
   }
 
-  async searchCost(text: string) {
-    const articles = await this.connection.query(`
-        SELECT
-          article.*,
-          author.fullName AS author_name,
-          journal.fullName AS journal_name 
-        FROM article 
-        LEFT JOIN article_author
-          ON article_author.article_id = article.id
-        LEFT JOIN author
-          ON author.id = article_author.author_id
-        LEFT JOIN journal
-          ON journal.id = article.journal_id
-        WHERE 
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost"))
-        ORDER BY year DESC
-      `)
-    return this.formatRawArticles(articles);
-  }
+  async getArticles(data: GetArticlesDTO) {
+    const limit = _.get(data, "limit", 1000000000)
+    const offset = _.get(data, "offset", 0)
 
-  async searchCostEffectiveness(text: string) {
-    const articles = await this.connection.query(`
-        SELECT 
-            article.*,
-            author.fullName AS author_name,
-            journal.fullName AS journal_name 
-        FROM article 
-        LEFT JOIN article_author
-          ON article_author.article_id = article.id
-        LEFT JOIN author
-          ON author.id = article_author.author_id
-        LEFT JOIN journal
-          ON journal.id = article.journal_id
-        WHERE 
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí hiệu quả")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - hiệu quả")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost - effectiveness")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost effectiveness"))
-        ORDER BY year DESC
-      `)
-    return this.formatRawArticles(articles);
-  }
+    const where = {}
 
-  async searchAdvance(text: string) {
-    const articles = await this.connection.query(`
-        SELECT 
-          article.*,
-          author.fullName AS author_name,
-          journal.fullName AS journal_name
-        FROM article 
-        LEFT JOIN article_author
-          ON article_author.article_id = article.id
-        LEFT JOIN author
-          ON author.id = article_author.author_id
-        LEFT JOIN journal
-          ON journal.id = article.journal_id
-        WHERE 
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí lợi ích")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - lợi ích")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-lợi ích")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí benefit")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - benefit")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-benefit")) OR
-          
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí hiệu quả")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - hiệu quả")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-hiệu quả")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost - effectiveness")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost-effectiveness")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("cost effectiveness")) OR
-          
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí thỏa dụng")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - thỏa dụng")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-thỏa dụng")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí utility")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - utility")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-utility")) OR
-          
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí tối thiểu hóa")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí minimization")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí - minimization")) OR
-          TRIM(LOWER(title)) REGEXP TRIM(LOWER("chi phí-minimization"))
-        ORDER BY year DESC
-      `)
-    return this.formatRawArticles(articles);
+    if (data.accountId) _.assign(where, { accountId: data.accountId })
+    if (data.status) _.assign(where, { status: data.status })
+
+    const articles = await this.repo.find({
+      where: where,
+    })
+
+    return paginate(articles, { offset, limit })
   }
 
   formatRawArticles(articles: Array<any>) {
