@@ -66,6 +66,7 @@ LEFT JOIN author ON author.id = article_author.author_id
 LEFT JOIN cost_benefit ON cost_benefit.article_id = article.id
 LEFT JOIN cost_effectiveness ON cost_effectiveness.article_id = article.id
 
+
 -- Cost - pathology
 LEFT JOIN pathology ON pathology.id = cost_benefit.pathology_id
 

@@ -1,9 +1,19 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { AccountEntity } from 'src/modules/account/account.entity';
 
 @Entity({ name: "author" })
 export class AuthorEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @ManyToOne(
+    type => AccountEntity,
+    {
+      onDelete: "SET NULL"
+    }
+  )
+  @Column()
+  accountId: number;
 
   @Column()
   fullName: string;

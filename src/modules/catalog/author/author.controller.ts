@@ -1,9 +1,11 @@
-import { Controller, UseInterceptors } from '@nestjs/common';
-import { Crud } from "@nestjsx/crud";
+import { Controller, UseInterceptors, UseGuards, Request } from '@nestjs/common';
+import { Crud, Override, ParsedBody, ParsedRequest } from "@nestjsx/crud";
 import { AuthorEntity } from './author.entity';
 import { AuthorService } from './author.service';
 import { SerializerInterceptor } from '../../../serialization/serializer.interceptor';
 import { WriteAuthorDTO } from './author.dto';
+import { JwtAuthGuard } from 'src/modules/auth/guards/jwt-auth.guard';
+import * as _ from "lodash"
 
 @Crud({
   model: {
@@ -26,4 +28,18 @@ import { WriteAuthorDTO } from './author.dto';
 @UseInterceptors(SerializerInterceptor)
 export class AuthorController {
   constructor(public service: AuthorService) { }
+
+  @UseGuards(JwtAuthGuard)
+  @Override()
+  createOne(
+    @ParsedRequest() crudReq: any,
+    @ParsedBody() data: WriteAuthorDTO,
+    @Request() req: any
+  ) {
+    _.assign(
+      data,
+      { accountId: _.get(req, "user.id") }
+    )
+    return this.service.createOne(crudReq, data)
+  }
 }
