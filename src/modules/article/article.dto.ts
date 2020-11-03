@@ -13,7 +13,8 @@ export class WriteArticleDTO {
   endPage: number;
   year: number;
   abstract: string;
-  language: Language
+  language: Language;
+  keyWords: Array<string>;
 }
 
 export class NormalSearchDTO {

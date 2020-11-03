@@ -79,7 +79,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     const foundArticle = await this.repo.findOne(id);
     if (!foundArticle) if (!foundArticle) throw new NotFoundException("Article Not Found")
 
-    const { accountId, title, title2, vol, issue, number, startPage, endPage, year, authorIdArray, journalId, language, abstract } = data;
+    const { accountId, title, title2, vol, issue, number, startPage, endPage, year, authorIdArray, journalId, language, abstract, keyWords } = data;
 
     if (accountId) foundArticle.accountId = accountId;
     if (title) foundArticle.title = title;
@@ -93,6 +93,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     if (journalId) foundArticle.journalId = journalId;
     if (language) foundArticle.language = language;
     if (abstract) foundArticle.abstract = abstract;
+    if (keyWords) foundArticle.keyWords = keyWords;
 
     if (authorIdArray && _.isArray(authorIdArray)) foundArticle.authors = await this.authorService.findAuthorsByIdArray(authorIdArray)
     // if (journalIdArray && _.isArray(journalIdArray)) foundArticle.journals = await this.journalService.findJournalsByIdArray(journalIdArray)
@@ -228,6 +229,7 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
         fullTextUrl: foundArticle.full_text_url,
         abstract: foundArticle.abstract,
         title2: foundArticle.title2,
+        keyWords: foundArticle.keyWords,
         authorNameArray: _.chain(articles)
           .filter({ id: articleId })
           .map(article => article.author_name)
