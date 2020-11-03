@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { ArticleEntity } from './article.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, IsNull } from 'typeorm';
 import { WriteArticleDTO, GetArticlesDTO } from './article.dto';
 import * as _ from "lodash";
 import { AuthorService } from '../catalog/author/author.service';
@@ -120,16 +120,16 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
     const limit = _.get(data, "limit", 1000000000)
     const offset = _.get(data, "offset", 0)
 
-    const where = {}
+    const articles = await this.connection
+      .getRepository(ArticleEntity)
+      .createQueryBuilder("article")
+      .where(`${data.accountId ? "article.account_id = :account_id" : ""}`, { account_id: data.accountId })
+      .andWhere(`${data.status ? "article.status = :status" : "article.status IN ('Verified', 'Unverified', 'RequestVerified')"}`, { status: data.status })
+      .leftJoinAndSelect("article.authors", "author")
+      .getMany()
 
-    if (data.accountId) _.assign(where, { accountId: data.accountId })
-    if (data.status) _.assign(where, { status: data.status })
-
-    const articles = await this.repo.find({
-      where: where,
-    })
-
-    return paginate(articles, { offset, limit })
+    return articles;
+    // return paginate(articles, { offset, limit })
   }
 
   formatRawArticles(articles: Array<any>) {

@@ -12,4 +12,5 @@ export const paginate = (data: Array<any>, pagination: Pagination) => {
   if (offset && limit) return _.slice(data, offset, offset + limit)
   if (offset && !limit) return _.slice(data, offset)
   if (!offset && limit) return _.slice(data, 0, limit)
+  if (!offset && !limit) return data;
 }

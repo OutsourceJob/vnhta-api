@@ -3,6 +3,7 @@ import { Observable, from, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import * as _ from "lodash";
 import { JsonApiResource, JsonApiCollection } from './serializer.interface';
+import { paginate } from 'src/utils/paginate';
 
 @Injectable()
 export class SerializerInterceptor implements NestInterceptor {
@@ -35,14 +36,26 @@ export class SerializerInterceptor implements NestInterceptor {
     const limit = parseInt(_.get(request, "query.limit"), 10)
     const offset = parseInt(_.get(request, "query.offset"), 10)
 
-    return {
+    if (request._parsedUrl.pathname.indexOf("articles") === -1) return {
       meta: {
         count: response.length,
-        totalPages: _.ceil(response.length / limit),
+        totalPages: 1,
+        limit: 0,
+        skip: 0
+      },
+      data: _.map(response, resource => this.serializeResource(resource))
+    }
+
+    const res = paginate(response, { limit, offset })
+
+    return {
+      meta: {
+        count: res.length,
+        totalPages: limit ? _.ceil(response.length / limit) : 1,
         limit: limit || 0,
         skip: offset || 0
       },
-      data: _.map(response, resource => this.serializeResource(resource))
+      data: _.map(res, resource => this.serializeResource(resource))
     }
   }
 }
