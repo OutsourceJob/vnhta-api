@@ -1,4 +1,4 @@
-USE vnhta;
+USE `vnhta-prod`;
 
 SELECT
 	-- ARTICLE
@@ -14,7 +14,7 @@ SELECT
 	intervention.name AS intervention_name,
 	study_location.id AS study_location_id, study_location.name AS study_location_name,
 	cost_benefit.study_design_id AS cost_benefit_study_design_id,
-	cost_benefit.data_collecting_method_id AS cost_benefit_data_collecting_method_id,
+	/* cost_benefit.data_collecting_method_id AS cost_benefit_data_collecting_method_id, */
 	cost_benefit.sample_size_id AS cost_benefit_sample_size_id,
 	cost_benefit.inclusion_criteria AS cost_benefit_inclusion_criteria,
 	cost_benefit.exclusive_criteria AS cost_benefit_exclusive_criteria,
@@ -36,7 +36,7 @@ SELECT
 	cost_effectiveness.pathology_id AS cost_effectiveness_pathology_id, cea_pathology.name AS cost_effectiveness_name,
 	cea_icd_20.code AS cea_icd_20_code,
 	cea_intervention.name AS cea_intervention_name,
-	cost_effectiveness.outcome_id_array AS cost_effectiveness_outcome_id_array,
+	/* cost_effectiveness.outcome_id_array AS cost_effectiveness_outcome_id_array, */
 	cost_effectiveness.ce_study_design_id AS cost_effectiveness_ce_study_design_id,
 	cost_effectiveness.model_type_id_array AS cost_effectiveness_model_type_id_array,
 	cost_effectiveness.modelStates AS cost_effectiveness_modelStates,
@@ -47,9 +47,9 @@ SELECT
 	cost_effectiveness.assumption AS cost_effectiveness_assumption,
 	cost_effectiveness.analysis_method_id AS cost_effectiveness_analysis_method_id,
 	cost_effectiveness.study_perspective_id_array AS cost_effectiveness_study_perspective_id_array,
-	cost_effectiveness.type_of_effectiveness_id_array AS cost_effectiveness_type_of_effectiveness_id_array,
+	/* cost_effectiveness.type_of_effectiveness_id_array AS cost_effectiveness_type_of_effectiveness_id_array, */
 	cost_effectiveness.clinical_criteria AS cost_effectiveness_clinical_criteria,
-	cost_effectiveness.effectiveness_data_collecting_method_id AS cost_effectiveness_effectiveness_data_collecting_method_id,
+	/* cost_effectiveness.effectiveness_data_collecting_method_id AS cost_effectiveness_effectiveness_data_collecting_method_id, */
 	cost_effectiveness.eff_discount_rate_id AS cost_effectiveness_discount_rate_id,
 	cost_effectiveness.cost_component_id_array AS cost_effectiveness_cost_component_id_array,
 	cost_effectiveness.cost_data_collecting_method AS cost_effectiveness_cost_data_collecting_method,

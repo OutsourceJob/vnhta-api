@@ -21,6 +21,9 @@ import { UncertaintyAnalysisMethodModule } from './modules/catalog/uncertainty-a
 import { TableModule } from './modules/catalog/table/table.module';
 import { StatisticsModule } from './modules/statistics/statistics.module';
 import { EffectivenessTypeModule } from './modules/catalog/effectiveness-type/effectiveness-type.module';
+import { SheetModule } from './modules/sheet/sheet.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -56,7 +59,14 @@ import { EffectivenessTypeModule } from './modules/catalog/effectiveness-type/ef
     TableModule,
 
     // statistics
-    StatisticsModule
+    StatisticsModule,
+    SheetModule,
+
+    // static folder
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'downloads'),
+      serveRoot: "/downloads"
+    }),
   ],
   controllers: [AppController],
 })
