@@ -91,13 +91,16 @@ export class SearchService {
     const startYear = _.get(data, "startYear", 1990)
     const endYear = _.get(data, "endYear", 2100)
     const languages = _.get(data, "languages", "")
+
+    const authorFullName = _.get(data, "authorFullName")
+    const journalFullName = _.get(data, "journalFullName")
+
     const topics = _.get(data, "topics")
     const filterCostBenefitTopic = _.includes(topics, ArticleTopic.CostBenefit)
     const filterCostEffectivenessTopic = _.includes(topics, ArticleTopic.CostEffectiveness)
     const filterQualityOfLifeTopic = _.includes(topics, ArticleTopic.QualityOfLife)
 
     const sqlWhereCondition = text.includes("~") ? this.extractCondition(text) : this.generateConditionStatement([text]);
-    console.log("SearchService -> searchAdvanced -> sqlWhereCondition", sqlWhereCondition)
 
     const filterTopics = [filterCostBenefitTopic, filterCostEffectivenessTopic, filterQualityOfLifeTopic]
 
@@ -112,17 +115,25 @@ export class SearchService {
       .value() + ")" : ""
 
     const query = `
-      SELECT article.*
+      SELECT 
+        article.*, 
+        author.fullName AS author_name,
+        journal.fullName AS journal_name
       FROM article
       LEFT JOIN cost_benefit ON cost_benefit.article_id = article.id
       LEFT JOIN cost_effectiveness ON cost_effectiveness.article_id = article.id
       LEFT JOIN quality_of_life ON quality_of_life.article_id = article.id
+      LEFT JOIN article_author ON article_author.article_id = article.id
+      LEFT JOIN author ON author.id = article_author.author_id
+      LEFT JOIN journal ON journal.id = article.journal_id
       WHERE 
         ${sqlWhereCondition}
         AND (year BETWEEN ${startYear} and ${endYear}) 
         ${languages ? "AND language IN (" + languages + ")" : ""} 
         ${filterTopicStatement}
     `
+
+    console.log(query)
 
     const articles = await this.connection.query(query);
     return this.articleService.formatRawArticles(articles)
