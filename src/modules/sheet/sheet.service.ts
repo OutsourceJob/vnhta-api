@@ -50,26 +50,27 @@ export class SheetService {
       cea_study_location.name AS cea_study_location_name,
       cost_effectiveness.ce_study_design_id AS cost_effectiveness_ce_study_design_id,
       cost_effectiveness.model_type_id_array AS cost_effectiveness_model_type_id_array,
-      cost_effectiveness.modelStates AS cost_effectiveness_modelStates,
+      cost_effectiveness.analysis_method_id AS cost_effectiveness_analysis_method_id,
       cost_effectiveness.model_cycle_quantity AS cost_effectiveness_model_cycle_quantity,
       cost_effectiveness.model_cycle_unit_id AS cost_effectiveness_model_cycle_unit_id,
       cost_effectiveness.time_horizon_quantity AS cost_effectiveness_time_horizon_quantity,
       cost_effectiveness.time_horizon_unit_id AS cost_effectiveness_time_horizon_unit_id,
+      cost_effectiveness.modelStates AS cost_effectiveness_modelStates,
       cost_effectiveness.assumption AS cost_effectiveness_assumption,
-      cost_effectiveness.analysis_method_id AS cost_effectiveness_analysis_method_id,
       cost_effectiveness.study_perspective_id_array AS cost_effectiveness_study_perspective_id_array,
-      /* cost_effectiveness.type_of_effectiveness_id_array AS cost_effectiveness_type_of_effectiveness_id_array, */
-      cost_effectiveness.clinical_criteria AS cost_effectiveness_clinical_criteria,
-      /* cost_effectiveness.effectiveness_data_collecting_method_id AS cost_effectiveness_effectiveness_data_collecting_method_id, */
       cost_effectiveness.eff_discount_rate_id AS cost_effectiveness_discount_rate_id,
+      cost_effectiveness.effectiveness_data_collecting_method_id_array AS cost_effectiveness_effectiveness_data_collecting_method_id_array,
+      effectiveness_type.name AS effectiveness_type_name,
       cost_effectiveness.cost_component_id_array AS cost_effectiveness_cost_component_id_array,
-      cost_effectiveness.cost_data_collecting_method AS cost_effectiveness_cost_data_collecting_method,
-      cost_effectiveness.currency_unit_id AS cost_effectiveness_currency_unit_id,
       cost_effectiveness.year_of_cost AS cost_effectiveness_year_of_cost,
+      cost_effectiveness.currency_unit_id AS cost_effectiveness_currency_unit_id,
+      cost_effectiveness.cost_data_collecting_method AS cost_effectiveness_cost_data_collecting_method,
+      cost_effectiveness.clinical_criteria AS cost_effectiveness_clinical_criteria,
       cost_effectiveness.heterogeneity_analysis_id_array AS cost_effectiveness_heterogeneity_analysis_id_array,
       cost_effectiveness.uncertainty_analysis_result_id_array AS cost_effectiveness_uncertainty_analysis_result_id_array,
-      cost_effectiveness.base_case_table_id AS cost_effectiveness_base_case_table_id,
+      uncertainty_analysis_method.name AS uncertainty_analysis_method_name,
       cost_effectiveness.sponsor AS cost_effectiveness_sponsor,
+      cost_effectiveness.base_case_table_id AS cost_effectiveness_base_case_table_id,
 
       -- QUALITY OF LIFE
       quality_of_life.pathology_id AS quality_of_life_pathology_id, qol_pathology.name AS quality_of_life_pathology_name,
@@ -138,6 +139,14 @@ export class SheetService {
     -- CEA - Study location
     LEFT JOIN cost_effectiveness_study_location ON cost_effectiveness_study_location.cost_effectiveness_id = cost_effectiveness.id
     LEFT JOIN study_location AS cea_study_location ON cea_study_location.id = cost_effectiveness_study_location.study_location_id
+
+    -- CEA - Effectiveness type
+    LEFT JOIN cost_effectiveness_effectiveness_type ON cost_effectiveness_effectiveness_type.cost_effectiveness_id = cost_effectiveness.id
+    LEFT JOIN effectiveness_type ON effectiveness_type.id = cost_effectiveness_effectiveness_type.effectiveness_type_id
+
+    -- CEA - Uncertainty analysis method
+    LEFT JOIN cost_effectiveness_uncertainty_analysis_method_bk ON cost_effectiveness_uncertainty_analysis_method_bk.cost_effectiveness_id = cost_effectiveness.id
+    LEFT JOIN uncertainty_analysis_method ON uncertainty_analysis_method.id = cost_effectiveness_uncertainty_analysis_method_bk.uncertainty_analysis_method_id
 
     -- QOL - pathology
     LEFT JOIN pathology AS qol_pathology ON qol_pathology.id = quality_of_life.pathology_id
