@@ -1085,9 +1085,9 @@ export class StatisticsService {
       LEFT JOIN 
         cost_effectiveness ON cost_effectiveness.article_id = article.id
       LEFT JOIN 
-        cost_effectiveness_uncertainty_analysis_method ON cost_effectiveness_uncertainty_analysis_method.cost_effectiveness_id = cost_effectiveness.id
+        cost_effectiveness_uncertainty_analysis_method_bk ON cost_effectiveness_uncertainty_analysis_method_bk.cost_effectiveness_id = cost_effectiveness.id
       LEFT JOIN 
-        uncertainty_analysis_method ON cost_effectiveness_uncertainty_analysis_method.uncertainty_analysis_method_id = uncertainty_analysis_method.id
+        uncertainty_analysis_method ON cost_effectiveness_uncertainty_analysis_method_bk.uncertainty_analysis_method_id = uncertainty_analysis_method.id
       WHERE 
         article.id IN (${_.toString(articleIdArray)})
       GROUP BY 
