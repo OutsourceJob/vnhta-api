@@ -8,7 +8,10 @@ export class SheetController {
   ) { }
 
   @Get("/download")
-  downloadCsvFile() {
-    return this.sheetService.queryRawFile()
+  async downloadCsvFile() {
+    await this.sheetService.queryRawFile()
+    return {
+      link: process.env.SELF_HOST + "/downloads/report.csv"
+    }
   }
 }
