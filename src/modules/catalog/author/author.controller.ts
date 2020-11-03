@@ -1,5 +1,5 @@
 import { Controller, UseInterceptors, UseGuards, Request } from '@nestjs/common';
-import { Crud, Override, ParsedBody, ParsedRequest } from "@nestjsx/crud";
+import { Crud, Override, ParsedBody, ParsedRequest, CrudRequest } from "@nestjsx/crud";
 import { AuthorEntity } from './author.entity';
 import { AuthorService } from './author.service';
 import { SerializerInterceptor } from '../../../serialization/serializer.interceptor';
@@ -32,7 +32,7 @@ export class AuthorController {
   @UseGuards(JwtAuthGuard)
   @Override()
   createOne(
-    @ParsedRequest() crudReq: any,
+    @ParsedRequest() crudReq: CrudRequest,
     @ParsedBody() data: WriteAuthorDTO,
     @Request() req: any
   ) {

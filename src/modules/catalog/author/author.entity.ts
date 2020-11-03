@@ -1,4 +1,4 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { AccountEntity } from 'src/modules/account/account.entity';
 
 @Entity({ name: "author" })
@@ -12,7 +12,8 @@ export class AuthorEntity extends BaseEntity {
       onDelete: "SET NULL"
     }
   )
-  @Column()
+  @JoinColumn({ name: "account_id" })
+  @Column({ name: "account_id", nullable: true })
   accountId: number;
 
   @Column()
