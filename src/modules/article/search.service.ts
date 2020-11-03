@@ -47,7 +47,6 @@ export class SearchService {
   }
 
   extractCondition(text: string) {
-    console.log("extractCondition")
     const sentences = text.split(/[~]/)
 
     for (const index in sentences) {
@@ -90,12 +89,16 @@ export class SearchService {
     const text = _.get(data, "text", "")
     const startYear = _.get(data, "startYear", 1990)
     const endYear = _.get(data, "endYear", 2100)
-    const languages = _.get(data, "languages", "")
+    const languages = _.get(data, "languages")
 
     const authorFullName = _.get(data, "authorFullName")
     const journalFullName = _.get(data, "journalFullName")
 
     const topics = _.get(data, "topics")
+
+    if (!_.isUndefined(topics) && topics === "") return []
+    if (!_.isUndefined(languages) && languages === "") return []
+
     const filterCostBenefitTopic = _.includes(topics, ArticleTopic.CostBenefit)
     const filterCostEffectivenessTopic = _.includes(topics, ArticleTopic.CostEffectiveness)
     const filterQualityOfLifeTopic = _.includes(topics, ArticleTopic.QualityOfLife)
@@ -132,8 +135,6 @@ export class SearchService {
         ${languages ? "AND language IN (" + languages + ")" : ""} 
         ${filterTopicStatement}
     `
-
-    console.log(query)
 
     const articles = await this.connection.query(query);
     return this.articleService.formatRawArticles(articles)
