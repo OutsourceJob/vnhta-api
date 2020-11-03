@@ -15,6 +15,11 @@ export class SearchService {
     const titleCondition = _.map(words, word => {
       return `title REGEXP "${word}"`
     })
+
+    const title2Condition = _.map(words, word => {
+      return `title2 REGEXP "${word}"`
+    })
+
     const abstractCondition = _.map(words, word => {
       return `abstract REGEXP "${word}"`
     })
@@ -25,6 +30,7 @@ export class SearchService {
     const conditions = _.chain(
       [
         titleCondition,
+        title2Condition,
         abstractCondition,
         keyWordsCondition
       ]
