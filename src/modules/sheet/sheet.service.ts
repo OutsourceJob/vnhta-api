@@ -43,10 +43,11 @@ export class SheetService {
       cost_benefit.quantitative_factor_table_id AS cost_benefit_quantitative_factor_table_id,
       
       -- COST EFFECTIVENESS
-      cost_effectiveness.pathology_id AS cost_effectiveness_pathology_id, cea_pathology.name AS cost_effectiveness_name,
+      cost_effectiveness.pathology_id AS cost_effectiveness_pathology_id, cea_pathology.name AS cost_effectiveness_pathology_name,
       cea_icd_20.code AS cea_icd_20_code,
       cea_intervention.name AS cea_intervention_name,
-      /* cost_effectiveness.outcome_id_array AS cost_effectiveness_outcome_id_array, */
+      cea_outcome.name AS cea_outcome_name,
+      cea_study_location.name AS cea_study_location_name,
       cost_effectiveness.ce_study_design_id AS cost_effectiveness_ce_study_design_id,
       cost_effectiveness.model_type_id_array AS cost_effectiveness_model_type_id_array,
       cost_effectiveness.modelStates AS cost_effectiveness_modelStates,
@@ -68,13 +69,36 @@ export class SheetService {
       cost_effectiveness.heterogeneity_analysis_id_array AS cost_effectiveness_heterogeneity_analysis_id_array,
       cost_effectiveness.uncertainty_analysis_result_id_array AS cost_effectiveness_uncertainty_analysis_result_id_array,
       cost_effectiveness.base_case_table_id AS cost_effectiveness_base_case_table_id,
-      cost_effectiveness.sponsor AS cost_effectiveness_sponsor
+      cost_effectiveness.sponsor AS cost_effectiveness_sponsor,
+
+      -- QUALITY OF LIFE
+      quality_of_life.pathology_id AS quality_of_life_pathology_id, qol_pathology.name AS quality_of_life_pathology_name,
+      qol_icd_20.code AS qol_icd_20_code,
+      qol_intervention.name AS qol_intervention_name,
+      qol_study_location.name AS qol_study_location_name,
+      quality_of_life.ql_study_design_id AS quality_of_life_ql_study_design_id,
+      quality_of_life.data_collecting_method_id_array AS quality_of_life_data_collecting_method_id_array,
+      quality_of_life.quality_of_life_toolkit,
+      quality_of_life.sample_size_id AS quality_of_life_sample_size_id,
+      quality_of_life.sampling_method_id AS quality_of_life_sampling_method_id,
+      quality_of_life.start_sampling_time AS quality_of_life_start_sampling_time,
+      quality_of_life.end_sampling_time AS quality_of_life_end_sampling_time,
+      quality_of_life.inclusion_criteria AS quality_of_life_inclusion_criteria,
+      quality_of_life.exclusion_criteria AS quality_of_life_exclusion_criteria,
+      quality_of_life.real_world_sample_size AS quality_of_life_real_world_sample_size,
+      quality_of_life.qualitative_table_id AS quality_of_life_qualitative_table_id,
+      quality_of_life.quantitative_table_id AS quality_of_life_quantitative_table_id,
+      quality_of_life.cost_table_id AS quality_of_life_cost_table_id,
+      quality_of_life.qualitative_factor_table_id AS quality_of_life_qualitative_factor_table_id,
+      quality_of_life.quantitative_factor_table_id AS quality_of_life_quantitative_factor_table_id
+
     FROM article
     LEFT JOIN journal ON journal.id = article.journal_id
     LEFT JOIN article_author ON article_author.article_id = article.id
     LEFT JOIN author ON author.id = article_author.author_id
     LEFT JOIN cost_benefit ON cost_benefit.article_id = article.id
     LEFT JOIN cost_effectiveness ON cost_effectiveness.article_id = article.id
+    LEFT JOIN quality_of_life ON quality_of_life.article_id = article.id
 
 
     -- Cost - pathology
@@ -83,9 +107,11 @@ export class SheetService {
     -- Cost - ICD20
     LEFT JOIN cost_benefit_icd_20 ON cost_benefit_icd_20.cost_benefit_id = cost_benefit.id
     LEFT JOIN icd_20 ON icd_20.id = cost_benefit_icd_20.icd_20_id
+
     -- Cost - Intervention
     LEFT JOIN cost_benefit_intervention ON cost_benefit_intervention.cost_benefit_id = cost_benefit.id
     LEFT JOIN intervention ON intervention.id = cost_benefit_intervention.intervention_id
+
     -- Cost - Study Location
     LEFT JOIN cost_benefit_study_location ON cost_benefit_study_location.cost_benefit_id = cost_benefit.id
     LEFT JOIN study_location ON study_location.id = cost_benefit_study_location.study_location_id
@@ -104,6 +130,29 @@ export class SheetService {
     -- CEA - comparators
     LEFT JOIN cost_effectiveness_comparator ON cost_effectiveness_comparator.cost_effectiveness_id = cost_effectiveness.id
     LEFT JOIN comparator AS cea_comparator ON cea_comparator.id = cost_effectiveness_comparator.comparator_id
+
+    -- CEA - outcomes
+    LEFT JOIN cost_effectiveness_outcome ON cost_effectiveness_outcome.cost_effectiveness_id = cost_effectiveness.id
+    LEFT JOIN outcome AS cea_outcome ON cea_outcome.id = cost_effectiveness_outcome.outcome_id
+
+    -- CEA - Study location
+    LEFT JOIN cost_effectiveness_study_location ON cost_effectiveness_study_location.cost_effectiveness_id = cost_effectiveness.id
+    LEFT JOIN study_location AS cea_study_location ON cea_study_location.id = cost_effectiveness_study_location.study_location_id
+
+    -- QOL - pathology
+    LEFT JOIN pathology AS qol_pathology ON qol_pathology.id = quality_of_life.pathology_id
+
+    -- QOL - ICD20
+    LEFT JOIN quality_of_life_icd_20 ON quality_of_life_icd_20.quality_of_life_id = quality_of_life.id
+    LEFT JOIN icd_20 AS qol_icd_20 ON qol_icd_20.id = quality_of_life_icd_20.icd_20_id
+
+    -- QOL - Intervention
+    LEFT JOIN quality_of_life_intervention ON quality_of_life_intervention.quality_of_life_id = quality_of_life.id
+    LEFT JOIN intervention AS qol_intervention ON qol_intervention.id = quality_of_life_intervention.intervention_id
+
+    -- QOL - Study location
+    LEFT JOIN quality_of_life_study_location ON quality_of_life_study_location.quality_of_life_id = quality_of_life.id
+    LEFT JOIN study_location AS qol_study_location ON qol_study_location.id = quality_of_life_study_location.study_location_id
         `
 
     const articles = await this.connection.query(query);
