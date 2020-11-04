@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Connection } from "typeorm";
 import * as jsonToCsv from "json-to-csv";
+import * as _ from "lodash";
 
 @Injectable()
 export class SheetService {
@@ -8,7 +9,7 @@ export class SheetService {
     private connection: Connection
   ) { }
 
-  async queryRawFile() {
+  async queryRawFile(articleIdArray?: Array<number>) {
     const query = `
       SELECT
       -- ARTICLE
@@ -163,8 +164,15 @@ export class SheetService {
     -- QOL - Study location
     LEFT JOIN quality_of_life_study_location ON quality_of_life_study_location.quality_of_life_id = quality_of_life.id
     LEFT JOIN study_location AS qol_study_location ON qol_study_location.id = quality_of_life_study_location.study_location_id
-        `
 
+    ${!_.isEmpty(articleIdArray)
+        ? `
+        WHERE 
+          article.id IN (${_.toString(articleIdArray)})
+      `
+        : ""
+      }
+        `
     const articles = await this.connection.query(query);
     return jsonToCsv(articles, "downloads/report.csv")
   }

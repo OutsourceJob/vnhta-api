@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get } from "@nestjs/common";
 import { SheetService } from "./sheet.service";
 
 @Controller("/sheets")
@@ -8,8 +8,10 @@ export class SheetController {
   ) { }
 
   @Get("/download")
-  async downloadCsvFile() {
-    await this.sheetService.queryRawFile()
+  async downloadCsvFile(
+    @Body("articleIdArray") articleIdArray?: Array<number>
+  ) {
+    await this.sheetService.queryRawFile(articleIdArray);
     return {
       link: process.env.SELF_HOST + "/downloads/report.csv"
     }
