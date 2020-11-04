@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { SheetService } from "./sheet.service";
 
 @Controller("/sheets")
@@ -7,7 +7,7 @@ export class SheetController {
     private sheetService: SheetService
   ) { }
 
-  @Get("/download")
+  @Post("/download")
   async downloadCsvFile(
     @Body("articleIdArray") articleIdArray?: Array<number>
   ) {
