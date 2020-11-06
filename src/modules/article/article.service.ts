@@ -193,13 +193,9 @@ export class ArticleService extends TypeOrmCrudService<ArticleEntity> {
 
     if (_.isEmpty(foundArticle)) throw new NotFoundException("Not found article!");
 
-    if (foundArticle.status === ArticleStatus.RequestVerified) {
-      foundArticle.status = ArticleStatus.Verified;
-      await foundArticle.save();
+    foundArticle.status = ArticleStatus.Verified;
+    await foundArticle.save();
 
-      return foundArticle;
-    }
-
-    throw new NotFoundException("Not found verified request's article!");
+    return foundArticle;
   }
 }
